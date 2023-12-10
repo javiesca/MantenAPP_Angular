@@ -1,0 +1,17 @@
+<div class="col-md-6 offset-md-3">
+  <h3 class="text-center">Nuevo Vehículo</h3>
+  <form (ngSubmit) = "onSubmit()">
+    <div class="form-group">
+      <label>Marca</label>
+      <input type="text" class="form-control"
+        id="marca" [(ngModel)] = "vehiculo.marca" name="marca">
+      <label>Modelo</label>
+      <input type="text" class="form-control"
+        id="modelo" [(ngModel)] = "vehiculo.modelo" name="modelo">
+      <label>Fecha Compra</label>
+      <input type="date" class="form-control"
+        id="fechaCompra" [(ngModel)] = "vehiculo.fechaCompra" name="fechaCompra">
+      </div>
+      <button class="btn-success">Guardar</button>
+  </form>
+</div>

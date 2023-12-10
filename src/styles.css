@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+
+  .check {
+    color: green;
+  }
+
+  .aspa {
+    color: red;
+  }
+
+  .tabla{
+    margin-bottom: 40px;
+    background-color: rgba(128, 128, 128, 0.233);
+    padding: 20px;
+    text-align: center;
+  }
+
+  h1,h2,h3{
+    margin-bottom: 20px;
+  }
+
+  .elemento-form{
+    margin-top: 20px;
+  }
+
+  .boton-form{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .imagen-preview{
+    width: 60%;
+    margin-top: 20px;
+  }
+
+  .imagen-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .imagen-vehiculo{
+    max-height:200px;
+  }
+
+

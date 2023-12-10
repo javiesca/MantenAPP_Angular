@@ -1,0 +1,117 @@
+<h2 class="text-center">{{vehiculo.marca}} {{vehiculo.modelo}}</h2>
+
+
+<div class="tabla" *ngIf="filtrosList && filtrosList.length > 0">
+  <h3 class="text-center">Mantenimientos</h3>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Aceite</th>
+        <th>F. Aceite</th>
+        <th>F. Aire</th>
+        <th>F. Combustible</th>
+        <th>F. Habitaculo</th>
+        <th>Fecha</th>
+        <th>Kilometros</th>
+        <th>Precio</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let filtro of filtrosList">
+        <td><i class="fas" [ngClass]="{'fa-check check':filtro.aceite, 'fa-times aspa':!filtro.aceite}"></i></td>
+        <td><i class="fas" [ngClass]="{'fa-check check':filtro.filtroAceite, 'fa-times aspa':!filtro.filtroAceite}"></i></td>
+        <td><i class="fas" [ngClass]="{'fa-check check':filtro.filtroAire, 'fa-times aspa':!filtro.filtroAire}"></i></td>
+        <td><i class="fas" [ngClass]="{'fa-check check':filtro.filtroCombustible, 'fa-times aspa':!filtro.filtroCombustible}"></i></td>
+        <td><i class="fas" [ngClass]="{'fa-check check':filtro.filtroHabitaculo, 'fa-times aspa':!filtro.filtroHabitaculo}"></i></td>
+        <td>{{filtro.fechaCambio | date:'dd/MM/yyyy'}}</td>
+        <td>{{filtro.kilometros}}</td>
+        <td>{{filtro.precio}}€</td>
+        <td class="botones">
+          <button class="btn btn-info">Modificar</button>
+          <button class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
+          <button class="btn btn-primary" style="margin-left: 10px;">Detalles</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-center">
+    <button class="btn btn-success text-center">Añadir Mantenimiento</button>
+  </div>
+</div>
+
+<div *ngIf="filtrosList && filtrosList.length == 0">
+  <h3 class="text-center">No hay datos de mantenimientos de motor</h3>
+</div>
+
+<div class="tabla" *ngIf="piezasList && piezasList.length > 0">
+  <h3 class="text-center">Piezas</h3>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Kilómetros</th>
+        <th>Precio</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pieza of piezasList">
+        <td>{{pieza.descripcion}}</td>
+        <td>{{pieza.fechaCambio | date:'dd/MM/yyyy'}}</td>
+        <td>{{pieza.kilometros}}</td>
+        <td>{{pieza.precio}}€</td>
+        <td class="botones">
+          <button class="btn btn-info">Modificar</button>
+          <button class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
+          <button class="btn btn-primary" style="margin-left: 10px;">Detalles</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-center">
+    <button class="btn btn-success text-center">Añadir pieza</button>
+  </div>
+</div>
+
+<div *ngIf="piezasList && piezasList.length == 0">
+  <h3 class="text-center">No hay datos de cambios de piezas</h3>
+</div>
+
+<div class="tabla" *ngIf="ruedasList && ruedasList.length > 0">
+  <h3 class="text-center">Ruedas</h3>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Cantidad</th>
+        <th>Marca</th>
+        <th>Fecha</th>
+        <th>Kilómetros</th>
+        <th>Precio</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ruedas of ruedasList">
+        <td>{{ruedas.numeroRuedas}}</td>
+        <td>{{ruedas.marca}}</td>
+        <td>{{ruedas.fechaCambio | date:'dd/MM/yyyy'}}</td>
+        <td>{{ruedas.kilometros}}</td>
+        <td>{{ruedas.precio}}€</td>
+        <td class="botones">
+          <button class="btn btn-info">Modificar</button>
+          <button class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
+          <button class="btn btn-primary" style="margin-left: 10px;">Detalles</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-center">
+    <button class="btn btn-success text-center">Añadir Cambio Ruedas</button>
+  </div>
+</div>
+
+<div *ngIf="ruedasList && ruedasList.length == 0">
+  <h3 class="text-center">No hay datos de cambios de ruedas</h3>
+</div>
