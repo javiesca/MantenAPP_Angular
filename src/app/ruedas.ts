@@ -1,3 +1,5 @@
+import { Vehiculo } from "./vehiculo";
+
 export class Ruedas {
   idRuedas: number;
   numeroRuedas: number;
@@ -5,4 +7,5 @@ export class Ruedas {
   fechaCambio: Date;
   kilometros: number;
   precio: number;
+  vehiculo : Vehiculo;
 }

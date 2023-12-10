@@ -9,6 +9,9 @@ import { GuardarVehiculoComponent } from './guardar-vehiculo/guardar-vehiculo.co
 import { FormsModule } from '@angular/forms';
 import { UpdateVehiculoComponent } from './update-vehiculo/update-vehiculo.component';
 import { VehiculoDetallesComponent } from './vehiculo-detalles/vehiculo-detalles.component';
+import { GuardarMantenimientoComponent } from './guardar-mantenimiento/guardar-mantenimiento.component';
+import { GuardarRuedasComponent } from './guardar-ruedas/guardar-ruedas.component';
+import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { VehiculoDetallesComponent } from './vehiculo-detalles/vehiculo-detalles
     ListaVehiculosComponent,
     GuardarVehiculoComponent,
     UpdateVehiculoComponent,
-    VehiculoDetallesComponent
+    VehiculoDetallesComponent,
+    GuardarMantenimientoComponent,
+    GuardarRuedasComponent,
+    GuardarPiezasComponent
   ],
   imports: [
     BrowserModule,

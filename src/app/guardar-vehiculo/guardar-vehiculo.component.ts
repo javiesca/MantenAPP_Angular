@@ -17,7 +17,6 @@ export class GuardarVehiculoComponent implements OnInit {
   constructor(private vehiculoService: VehiculoService, private router: Router){}
 
   ngOnInit(){
-
   }
 
   saveVehiculo(){

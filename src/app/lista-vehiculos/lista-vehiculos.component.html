@@ -5,7 +5,6 @@
         {{vehiculo.marca}} - {{vehiculo.modelo}}
       </div>
       <div class="card-body">
-        <p>Fecha de compra: {{vehiculo.fechaCompra | date:'dd/MM/yyyy'}}</p>
         <div class="imagen-vehiculo">
           <img [src]="'data:image/png;base64,' + vehiculo.imagen" class="imagen-vehiculo" alt="Imagen del vehículo">
         </div>

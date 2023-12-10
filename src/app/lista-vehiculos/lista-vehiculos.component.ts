@@ -28,7 +28,6 @@ export class ListaVehiculosComponent implements OnInit {
 
   deleteVehiculo(id: number){
     this.vs.deleteVehiculo(id).subscribe(datos =>{
-      console.log(datos)
       this.getVehiculos();
     })
 

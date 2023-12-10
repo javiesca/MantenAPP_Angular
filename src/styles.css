@@ -10,7 +10,8 @@
   .tabla{
     margin-bottom: 40px;
     background-color: rgba(128, 128, 128, 0.233);
-    padding: 20px;
+    margin: 20px;
+    padding: 10px;
     text-align: center;
   }
 
