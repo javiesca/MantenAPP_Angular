@@ -28,11 +28,11 @@ export class GuardarRuedasComponent implements OnInit {
   }
 
   onSubmit() {
-    this.saveMantenimiento();
+    this.saveRuedas();
   }
 
 
-  saveMantenimiento(){
+  saveRuedas(){
     this.rs.saveCambioRuedas(this.ruedas).subscribe(dato => {
       console.log(dato);
       this.irDetalleVehiculo();

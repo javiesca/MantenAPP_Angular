@@ -10,7 +10,7 @@ export class RuedasService {
 
 
   //URL de la API Spring
-  private baseURL = "http://localhost:8080/api/mantenimientos/ruedas";
+  private baseURL = "https://manten-app-52e4cb231749.herokuapp.com/api/mantenimientos/ruedas";
 
   constructor(private httpClient: HttpClient) { }
 

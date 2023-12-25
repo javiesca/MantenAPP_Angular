@@ -1,3 +1,5 @@
+import { Vehiculo } from "./vehiculo";
+
 export class Filtros {
   idFiltros: number;
   aceite: boolean;
@@ -8,4 +10,5 @@ export class Filtros {
   fechaCambio: Date;
   kilometros: number;
   precio: number;
+  vehiculo: Vehiculo;
 }

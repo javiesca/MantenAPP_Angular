@@ -4,7 +4,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListaVehiculosComponent } from './lista-vehiculos/lista-vehiculos.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { GuardarVehiculoComponent } from './guardar-vehiculo/guardar-vehiculo.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateVehiculoComponent } from './update-vehiculo/update-vehiculo.component';
@@ -31,8 +31,10 @@ import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.componen
     FormsModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

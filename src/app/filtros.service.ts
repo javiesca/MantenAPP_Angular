@@ -9,13 +9,23 @@ import { Observable } from 'rxjs';
 export class FiltrosService {
 
   //URL de la API Spring
-  private baseURL = "http://localhost:8080/api/mantenimientos/filtros";
+  private baseURL = "https://manten-app-52e4cb231749.herokuapp.com/api/mantenimientos/filtros";
 
   constructor(private httpClient: HttpClient) { }
 
   //Metodo que nos retorna toda la lista de mantenimientos de motor
   getListaMantenimentos(idVehiculo : number):Observable<Filtros[]>  {
     return this.httpClient.get<Filtros[]>(`${this.baseURL}/${idVehiculo}`);
+  }
+
+  //Metodo para guardar un cambio de filtros
+  saveFiltros(filtros :Filtros) : Observable<Object>{
+    return this.httpClient.post<Filtros>(`${this.baseURL}`, filtros);
+  }
+
+  //Metodo que elimina un cambio de filtros
+  deleteFiltros(idFiltros : number) : Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL}/${idFiltros}`);
   }
 
 }

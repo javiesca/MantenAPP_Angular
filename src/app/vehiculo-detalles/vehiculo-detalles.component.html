@@ -1,8 +1,9 @@
-<h2 class="text-center">{{vehiculo?.marca}} {{vehiculo?.modelo}}</h2>
+<div class="container-fluid">
+  <h2 class="text-center">{{vehiculo?.marca}} {{vehiculo?.modelo}}</h2>
 
-<div class="tabla" *ngIf="filtrosList && filtrosList.length > 0">
+<div class="table-responsive" *ngIf="filtrosList && filtrosList.length > 0">
   <h3 class="text-center">Mantenimientos</h3>
-  <table class="table table-striped">
+  <table class="table table-striped table-sm">
     <thead class="table-dark">
       <tr>
         <th>Aceite</th>
@@ -28,8 +29,7 @@
         <td>{{filtro.precio}}€</td>
         <td class="botones">
           <button class="btn btn-info">Modificar</button>
-          <button class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
-          <button class="btn btn-primary" style="margin-left: 10px;">Detalles</button>
+          <button (click)="deleteFiltros(filtro.idFiltros)" class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
         </td>
       </tr>
     </tbody>
@@ -44,7 +44,7 @@
 
 <div class="tabla" *ngIf="piezasList && piezasList.length > 0">
   <h3 class="text-center">Piezas</h3>
-  <table class="table table-striped">
+  <table class="table table-striped table-sm">
     <thead class="table-dark">
       <tr>
         <th>Descripción</th>
@@ -62,7 +62,7 @@
         <td>{{pieza.precio}}€</td>
         <td class="botones">
           <button class="btn btn-info">Modificar</button>
-          <button class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
+          <button (click)="deletePiezas(pieza.idPieza)" class="btn btn-danger" style="margin-left: 10px;">Eliminar</button>
         </td>
       </tr>
     </tbody>
@@ -79,7 +79,7 @@
 
 <div class="tabla" *ngIf="ruedasList && ruedasList.length > 0">
   <h3 class="text-center">Ruedas</h3>
-  <table class="table table-striped">
+  <table class="table table-striped table-sm">
     <thead class="table-dark">
       <tr>
         <th>Cantidad</th>
@@ -112,4 +112,6 @@
 
 <div class="text-center">
   <button (click)="saveRuedas(vehiculo.idVehiculo)" class="btn btn-success text-center">Añadir Cambio Ruedas</button>
+</div>
+
 </div>

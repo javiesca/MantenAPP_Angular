@@ -1,8 +1,11 @@
+import { Vehiculo } from "./vehiculo";
+
 export class Piezas {
 
-  idPiezas:number;
+  idPieza:number;
   descripcion:String;
   fechaCambio:Date;
   kilometros:number;
   precio:number;
+  vehiculo:Vehiculo
 }

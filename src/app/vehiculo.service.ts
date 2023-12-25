@@ -9,7 +9,7 @@ import { Vehiculo } from './vehiculo';
 export class VehiculoService {
 
   //URL de la API Spring
-  private baseURL = "http://localhost:8080/api/vehiculos";
+  private baseURL = "https://manten-app-52e4cb231749.herokuapp.com/api/vehiculos";
 
 
   constructor(private httpClient: HttpClient) { }

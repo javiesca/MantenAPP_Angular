@@ -79,6 +79,18 @@ export class VehiculoDetallesComponent implements OnInit{
       })
     }
 
+    deletePiezas(idPiezas : number){
+      this.ps.deletePieza(idPiezas).subscribe(data => {
+        this.ngOnInit();
+      })
+    }
+
+    deleteFiltros(idFiltros : number){
+      this.sf.deleteFiltros(idFiltros).subscribe(data => {
+        this.ngOnInit();
+      })
+    }
+
     getMantenimeintos(idVehiculo : number){
       this.router.navigate(['vehiculo-detalles', idVehiculo]);
     }

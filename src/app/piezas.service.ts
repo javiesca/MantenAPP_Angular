@@ -10,7 +10,7 @@ export class PiezasService {
 
 
   //URL de la API Spring
-  private baseURL = "http://localhost:8080/api/mantenimientos/piezas";
+  private baseURL = "https://manten-app-52e4cb231749.herokuapp.com/api/mantenimientos/piezas";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -18,5 +18,16 @@ export class PiezasService {
   getListaPiezas(idVehiculo : number):Observable<Piezas[]>  {
     return this.httpClient.get<Piezas[]>(`${this.baseURL}/${idVehiculo}`);
   }
+
+  //Metodo que guarda un cambio de pieza
+  savePieza(piezas :Piezas) : Observable<Object>{
+    return this.httpClient.post<Piezas>(`${this.baseURL}`, piezas);
+  }
+
+  //Metodo que elimina una pieza
+  deletePieza(idPieza : number) : Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL}/${idPieza}`);
+  }
+
 
 }
