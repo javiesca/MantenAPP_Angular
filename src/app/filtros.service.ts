@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Filtros } from './filtros';
 import { Observable } from 'rxjs';
+import {environment } from './variables';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class FiltrosService {
 
   //URL de la API Spring
-  private baseURL = "https://manten-app-52e4cb231749.herokuapp.com/api/mantenimientos/filtros";
+  private baseURL = environment.apiBaseURL + "mantenimientos/filtros";
 
   constructor(private httpClient: HttpClient) { }
 
