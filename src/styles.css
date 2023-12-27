@@ -11,7 +11,6 @@
     margin-bottom: 40px;
     background-color: rgba(233, 227, 227, 0.384);
     margin: 20px;
-    padding: 10px;
     text-align: center;
   }
 
@@ -43,6 +42,20 @@
 
   .imagen-vehiculo{
     max-height:200px;
+  }
+
+  @media (max-width: 1024px) {
+    body, app-root{
+      font-size: 0.7rem !important;
+    }
+
+    button{
+      font-size: 0.5rem !important;
+    }
+
+    h1,h2,h3{
+      font-size: 1.2rem !important;
+    }
   }
 
 
