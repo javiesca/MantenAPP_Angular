@@ -13,7 +13,6 @@
 
   .tabla{
     margin-bottom: 40px;
-    background-color: rgba(233, 227, 227, 0.384);
     margin: 20px;
     text-align: center;
   }
@@ -85,7 +84,6 @@
       flex-direction: column;
       border: 1px solid grey;
       margin-bottom: 20px;
-      background-color: rgba(173, 173, 173, 0.384);
     }
 
     table td[data-titulo]{
