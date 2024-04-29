@@ -73,6 +73,7 @@
 
     h3{
       font-size: 1.1em !important;
+      margin-bottom: 30px;
     }
 
     body{
@@ -83,7 +84,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
     }
 
     table tr{
@@ -102,13 +102,18 @@
     table td[data-titulo]::before{
       content: attr(data-titulo);
       font-weight: bold;
-      width: 200px;
+      width: 220px;
     }
 
     table thead{
       display: none;
     }
 
+    .contenedor-tabla{
+      background-color: rgba(192, 192, 192, 0.247);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
 
   }
 
