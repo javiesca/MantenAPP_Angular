@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common'; // Añade esta línea
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,11 +31,7 @@ import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.componen
     HttpClientModule,
     FormsModule
   ],
-  providers: [
-    provideClientHydration(),
-    provideHttpClient(withFetch())
-  ],
-  bootstrap: [AppComponent],
-
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}], // Añade esta línea
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

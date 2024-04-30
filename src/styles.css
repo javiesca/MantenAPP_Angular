@@ -96,7 +96,6 @@
     table td[data-titulo]{
       display: flex;
       margin-right: 10px;
-
     }
 
     table td[data-titulo]::before{
