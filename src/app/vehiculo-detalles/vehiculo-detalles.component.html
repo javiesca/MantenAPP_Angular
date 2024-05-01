@@ -36,7 +36,7 @@
                   [ngClass]="{'fa-check check':filtro.filtroHabitaculo, 'fa-times aspa':!filtro.filtroHabitaculo}"></i>
               </td>
               <td data-titulo="Fecha">{{filtro.fechaCambio | date:'dd/MM/yyyy'}}</td>
-              <td data-titulo="Kilometros">{{filtro.kilometros}}Km</td>
+              <td data-titulo="Kilometros">{{filtro.kilometros}}</td>
               <td data-titulo="Precio">{{filtro.precio}}€</td>
               <td class="botones">
                 <button class="btn btn-info"><i class="fas fa-edit"></i>
@@ -82,7 +82,7 @@
             <tr *ngFor="let pieza of piezasList">
               <td data-titulo="Pieza">{{pieza.descripcion}}</td>
               <td data-titulo="Fecha">{{pieza.fechaCambio | date:'dd/MM/yyyy'}}</td>
-              <td data-titulo="Kilometros">{{pieza.kilometros}}Km</td>
+              <td data-titulo="Kilometros">{{pieza.kilometros}}</td>
               <td data-titulo="Precio">{{pieza.precio}}€</td>
               <td class="botones">
                 <button class="btn btn-info"><i class="fas fa-edit"></i>
@@ -127,7 +127,7 @@
               <td data-titulo="Num. Ruedas">{{ruedas.numeroRuedas}}</td>
               <td data-titulo="Marca">{{ruedas.marca}}</td>
               <td data-titulo="Fecha">{{ruedas.fechaCambio | date:'dd/MM/yyyy'}}</td>
-              <td data-titulo="Kilometros">{{ruedas.kilometros}}Km</td>
+              <td data-titulo="Kilometros">{{ruedas.kilometros}}</td>
               <td data-titulo="Precio">{{ruedas.precio}}€</td>
               <td class="botones">
                 <button class="btn btn-info"><i class="fas fa-edit"></i>

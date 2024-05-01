@@ -93,15 +93,20 @@
       margin-bottom: 20px;
     }
 
+    table td{
+      text-align: center;
+    }
+
     table td[data-titulo]{
       display: flex;
       margin-right: 10px;
     }
 
     table td[data-titulo]::before{
+      text-align: left;
       content: attr(data-titulo);
       font-weight: bold;
-      width: 220px;
+      min-width: 120px;
     }
 
     table thead{
@@ -112,6 +117,11 @@
       background-color: rgba(192, 192, 192, 0.247);
       margin-bottom: 20px;
       padding-bottom: 10px;
+    }
+
+    .botones{
+      text-align: center;
+      margin-top: 20px;
     }
 
   }
