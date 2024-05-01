@@ -14,7 +14,6 @@ export class UpdateVehiculoComponent implements OnInit {
   idVehiculo : number;
   vehiculo : Vehiculo = new Vehiculo();
 
-
   constructor(private vs : VehiculoService, private route : ActivatedRoute, private router : Router) {};
 
   ngOnInit(): void {
