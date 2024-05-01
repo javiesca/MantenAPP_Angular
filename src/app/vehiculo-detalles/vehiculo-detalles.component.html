@@ -39,7 +39,7 @@
               <td data-titulo="Kilometros">{{filtro.kilometros}}</td>
               <td data-titulo="Precio">{{filtro.precio}}€</td>
               <td class="botones">
-                <button class="btn btn-info"><i class="fas fa-edit"></i>
+                <button (click)="updateMantenimiento(filtro.idFiltros)" class="btn btn-info"><i class="fas fa-edit"></i>
                 </button>
                 <button (click)="deleteFiltros(filtro.idFiltros)" class="btn btn-danger"
                   style="margin-left: 10px;"><i class="fas fa-trash-alt"></i>
@@ -57,9 +57,6 @@
       <button (click)="saveMantenimiento(vehiculo.idVehiculo)" class="btn btn-success">Añadir</button>
     </div>
   </div>
-
-
-
 
   <!-- Piezas -->
   <div class="contenedor-tabla">
@@ -85,7 +82,7 @@
               <td data-titulo="Kilometros">{{pieza.kilometros}}</td>
               <td data-titulo="Precio">{{pieza.precio}}€</td>
               <td class="botones">
-                <button class="btn btn-info"><i class="fas fa-edit"></i>
+                <button (click)="updatePiezas(pieza.idPieza)" class="btn btn-info"><i class="fas fa-edit"></i>
                 </button>
                 <button (click)="deletePiezas(pieza.idPieza)" class="btn btn-danger"
                   style="margin-left: 10px;"><i class="fas fa-trash-alt"></i>

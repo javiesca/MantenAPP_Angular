@@ -1,6 +1,6 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">Nuevo Vehículo</h3>
-  <form (ngSubmit) = "onSubmit()">
+  <h3 class="text-center">Modificar Vehiculo</h3>
+  <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Marca</label>
       <input type="text" class="form-control"
@@ -11,7 +11,14 @@
       <label>Fecha Compra</label>
       <input type="date" class="form-control"
         id="fechaCompra" [(ngModel)] = "vehiculo.fechaCompra" name="fechaCompra">
+      <label>Imagen</label>
+      <input type="file" class="form-control-file" id="imagen" (change)="onFileSelected($event)" accept="image/*">
+      <!-- Muestra la imagen actual -->
+      <div class="imagen-form">
+        <img [src]="imagePreview" class="imagen-preview" alt="Imagen previa">
       </div>
-      <button class="btn-success">Guardar</button>
+    </div>
+
+    <button class="btn-success">Guardar</button>
   </form>
 </div>

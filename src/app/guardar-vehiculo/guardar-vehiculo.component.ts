@@ -25,14 +25,16 @@ export class GuardarVehiculoComponent implements OnInit {
       return;
     }
 
-    const base64String = this.imagePreview instanceof ArrayBuffer
-  ? new TextDecoder('utf-8').decode(new Uint8Array(this.imagePreview))
-  : this.imagePreview;
+    let base64String;
+    if (this.imagePreview instanceof ArrayBuffer) {
+      base64String = new TextDecoder('utf-8').decode(new Uint8Array(this.imagePreview));
+    } else {
+      base64String = this.imagePreview;
+    }
 
-  const base64Data = base64String?.split(',')[1];
+    const base64Data = base64String?.split(',')[1];
 
-
-       // Asignar la imagen al vehículo si hay una imagen seleccionada
+    // Asignar la imagen al vehículo si hay una imagen seleccionada
     if (base64Data) {
       this.vehiculo.imagen = base64Data;
     }
@@ -48,7 +50,6 @@ export class GuardarVehiculoComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {

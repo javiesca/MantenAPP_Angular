@@ -33,7 +33,6 @@ export class VehiculoDetallesComponent implements OnInit{
         this.getMantenimientoMotor(this.idVehiculo);
         this.getRuedas(this.idVehiculo);
         this.getPiezas(this.idVehiculo);
-
     }
 
 
@@ -95,6 +94,11 @@ export class VehiculoDetallesComponent implements OnInit{
       this.router.navigate(['vehiculo-detalles', idVehiculo]);
     }
 
+    updateMantenimiento(idFiltros : number){
+      this.router.navigate(['update-mantenimiento', idFiltros]);
+    }
 
-
+    updatePiezas(idPiezas : number){
+      this.router.navigate(['update-piezas', idPiezas]);
+    }
 }

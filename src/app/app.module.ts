@@ -13,6 +13,8 @@ import { VehiculoDetallesComponent } from './vehiculo-detalles/vehiculo-detalles
 import { GuardarMantenimientoComponent } from './guardar-mantenimiento/guardar-mantenimiento.component';
 import { GuardarRuedasComponent } from './guardar-ruedas/guardar-ruedas.component';
 import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.component';
+import { UpdateMantenimientoComponent } from './update-mantenimiento/update-mantenimiento.component';
+import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.componen
     VehiculoDetallesComponent,
     GuardarMantenimientoComponent,
     GuardarRuedasComponent,
-    GuardarPiezasComponent
+    GuardarPiezasComponent,
+    UpdateMantenimientoComponent,
+    UpdatePiezasComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,7 @@ import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.componen
     HttpClientModule,
     FormsModule
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}], // Añade esta línea
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

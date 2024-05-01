@@ -7,6 +7,8 @@ import { VehiculoDetallesComponent } from './vehiculo-detalles/vehiculo-detalles
 import { GuardarMantenimientoComponent } from './guardar-mantenimiento/guardar-mantenimiento.component';
 import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.component';
 import { GuardarRuedasComponent } from './guardar-ruedas/guardar-ruedas.component';
+import { UpdateMantenimientoComponent } from './update-mantenimiento/update-mantenimiento.component';
+import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
 
 const routes: Routes = [
 
@@ -17,9 +19,9 @@ const routes: Routes = [
   {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent},
   {path: 'guardar-mantenimiento/:idVehiculo', component: GuardarMantenimientoComponent},
   {path: 'guardar-piezas/:idVehiculo', component: GuardarPiezasComponent},
-  {path: 'guardar-ruedas/:idVehiculo', component: GuardarRuedasComponent}
-
-
+  {path: 'guardar-ruedas/:idVehiculo', component: GuardarRuedasComponent},
+  {path: 'update-mantenimiento/:idFiltros', component: UpdateMantenimientoComponent},
+  {path: 'update-piezas/:idPiezas', component: UpdatePiezasComponent}
 
 ];
 

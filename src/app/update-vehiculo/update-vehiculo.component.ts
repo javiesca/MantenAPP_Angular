@@ -13,6 +13,7 @@ export class UpdateVehiculoComponent implements OnInit {
 
   idVehiculo : number;
   vehiculo : Vehiculo = new Vehiculo();
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(private vs : VehiculoService, private route : ActivatedRoute, private router : Router) {};
 
@@ -24,6 +25,7 @@ export class UpdateVehiculoComponent implements OnInit {
   obtenerVehiculo(idVehiculo:number){
     this.vs.getVehiculoById(idVehiculo).subscribe(datos =>{
       this.vehiculo = datos;
+      this.imagePreview = 'data:image/jpeg;base64,' + this.vehiculo.imagen;
       console.log(datos);
     })
   }
@@ -33,6 +35,19 @@ export class UpdateVehiculoComponent implements OnInit {
       console.log(datos);
       this.router.navigate(['vehiculos']);
     }, error => console.log(error));
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = e => {
+      this.imagePreview = reader.result;
+      if (typeof this.imagePreview === 'string') {
+        const base64Data = this.imagePreview.split(',')[1];
+        this.vehiculo.imagen = base64Data;
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
 }

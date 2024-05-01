@@ -16,7 +16,12 @@ export class FiltrosService {
 
   //Metodo que nos retorna toda la lista de mantenimientos de motor
   getListaMantenimentos(idVehiculo : number):Observable<Filtros[]>  {
-    return this.httpClient.get<Filtros[]>(`${this.baseURL}/${idVehiculo}`);
+    return this.httpClient.get<Filtros[]>(`${this.baseURL}/vehiculo/${idVehiculo}`);
+  }
+
+  //Metodo que nos retorna un mantenimiento en concreto
+  getMantenimiento(idFiltros : number) : Observable<Filtros>{
+    return this.httpClient.get<Filtros>(`${this.baseURL}/${idFiltros}`);
   }
 
   //Metodo para guardar un cambio de filtros
@@ -29,4 +34,8 @@ export class FiltrosService {
     return this.httpClient.delete(`${this.baseURL}/${idFiltros}`);
   }
 
+  //Metodo para actualizar un mantenimiento
+  updateMantenimiento(idFiltros: number, filtros: Filtros): Observable<Object>{
+    return this.httpClient.put(`${this.baseURL}/${idFiltros}`, filtros);
+  }
 }

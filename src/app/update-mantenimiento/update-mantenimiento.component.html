@@ -1,0 +1,42 @@
+<div class="col-md-6 offset-md-3">
+  <h3 class="text-center">Modificar Mantenimiento</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="elemento-form">
+      <label>Aceite</label>
+      <input type="checkbox" class="form-control" id="aceite" [(ngModel)]="filtro.aceite" name="aceite">
+    </div>
+    <div class="elemento-form">
+      <label>Filtro Aceite</label>
+      <input type="checkbox" class="form-control" id="filtroAceite" [(ngModel)]="filtro.filtroAceite" name="filtroAceite">
+    </div>
+    <div class="elemento-form">
+      <label>Filtro Aire</label>
+      <input type="checkbox" class="form-control" id="filtroAire" [(ngModel)]="filtro.filtroAire" name="filtroAire">
+    </div>
+    <div class="elemento-form">
+      <label>Filtro Combustible</label>
+      <input type="checkbox" class="form-control" id="filtroCombustible" [(ngModel)]="filtro.filtroCombustible" name="filtroCombustible">
+    </div>
+    <div class="elemento-form">
+      <label>Filtro Habitáculo</label>
+      <input type="checkbox" class="form-control" id="filtroHabitaculo" [(ngModel)]="filtro.filtroHabitaculo" name="filtroHabitaculo">
+    </div>
+    <div class="elemento-form">
+      <label>Fecha</label>
+      <input type="date" class="form-control" id="fechaCambio" [(ngModel)]="filtro.fechaCambio" name="fechaCambio">
+    </div>
+    <div class="elemento-form">
+      <label>Kilometros</label>
+      <input type="number" class="form-control" id="kilometros" [(ngModel)]="filtro.kilometros" name="kilometros">
+    </div>
+    <div class="elemento-form">
+      <label>Precio</label>
+      <input type="number" class="form-control" id="precio" [(ngModel)]="filtro.precio" name="precio">
+    </div>
+
+    <div class="boton-form">
+      <button class="btn-success">Guardar</button>
+    </div>
+  </form>
+</div>
+
