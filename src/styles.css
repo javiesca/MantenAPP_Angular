@@ -54,6 +54,11 @@
     max-height:200px;
   }
 
+  thead {
+    background-color: black ;
+    color: white;;
+  }
+
   @media (max-width: 1000px) {
     .navbar-nav{
       display: flex;
