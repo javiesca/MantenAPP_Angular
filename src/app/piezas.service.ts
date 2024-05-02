@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Piezas } from './piezas';
 import {environment } from './variables';
+import { Ruedas } from './ruedas';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,12 @@ export class PiezasService {
 
   //Metodo que nos retorna toda la lista de mantenimientos de motor
   getListaPiezas(idVehiculo : number):Observable<Piezas[]>  {
-    return this.httpClient.get<Piezas[]>(`${this.baseURL}/${idVehiculo}`);
+    return this.httpClient.get<Piezas[]>(`${this.baseURL}/vehiculo/${idVehiculo}`);
+  }
+
+  //Metodo que nos retorna una pieza en concreto
+  getPieza(idPiezas : number): Observable<Piezas>{
+    return this.httpClient.get<Piezas>(`${this.baseURL}/${idPiezas}`);
   }
 
   //Metodo que guarda un cambio de pieza
@@ -30,5 +36,9 @@ export class PiezasService {
     return this.httpClient.delete(`${this.baseURL}/${idPieza}`);
   }
 
+  //Metodo para actualizar un mantenimiento
+  updatePiezas(idPieza: number, pieza: Piezas): Observable<Object>{
+    return this.httpClient.put(`${this.baseURL}/${idPieza}`, pieza);
+  }
 
 }

@@ -15,6 +15,7 @@ import { GuardarRuedasComponent } from './guardar-ruedas/guardar-ruedas.componen
 import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.component';
 import { UpdateMantenimientoComponent } from './update-mantenimiento/update-mantenimiento.component';
 import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
+import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
     GuardarRuedasComponent,
     GuardarPiezasComponent,
     UpdateMantenimientoComponent,
-    UpdatePiezasComponent
+    UpdatePiezasComponent,
+    UpdateRuedasComponent
   ],
   imports: [
     BrowserModule,

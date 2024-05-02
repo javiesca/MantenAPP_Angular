@@ -101,4 +101,8 @@ export class VehiculoDetallesComponent implements OnInit{
     updatePiezas(idPiezas : number){
       this.router.navigate(['update-piezas', idPiezas]);
     }
+
+    updateRuedas(idRuedas : number){
+      this.router.navigate(['update-ruedas', idRuedas]);
+    }
 }
