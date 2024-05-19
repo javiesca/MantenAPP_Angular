@@ -10,11 +10,12 @@ import { GuardarRuedasComponent } from './guardar-ruedas/guardar-ruedas.componen
 import { UpdateMantenimientoComponent } from './update-mantenimiento/update-mantenimiento.component';
 import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
 import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
 
   {path : 'vehiculos', component: ListaVehiculosComponent},
-  {path : '', redirectTo:'vehiculos', pathMatch:'full'},
+  {path : '', redirectTo:'login', pathMatch:'full'},
   {path: 'guardar-vehiculo', component: GuardarVehiculoComponent},
   {path: 'update-vehiculo/:idVehiculo', component: UpdateVehiculoComponent},
   {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'guardar-ruedas/:idVehiculo', component: GuardarRuedasComponent},
   {path: 'update-mantenimiento/:idFiltros', component: UpdateMantenimientoComponent},
   {path: 'update-piezas/:idPiezas', component: UpdatePiezasComponent},
-  {path: 'update-ruedas/:idRuedas', component: UpdateRuedasComponent}
+  {path: 'update-ruedas/:idRuedas', component: UpdateRuedasComponent},
+  {path: 'login', component: LoginComponent},
 
 ];
 

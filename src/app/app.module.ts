@@ -5,7 +5,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common'; // Añ
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListaVehiculosComponent } from './lista-vehiculos/lista-vehiculos.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { GuardarVehiculoComponent } from './guardar-vehiculo/guardar-vehiculo.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateVehiculoComponent } from './update-vehiculo/update-vehiculo.component';
@@ -16,6 +16,8 @@ import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.componen
 import { UpdateMantenimientoComponent } from './update-mantenimiento/update-mantenimiento.component';
 import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
 import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
+import { LoginComponent } from './login/login.component';
+import { JwtInterceptor } from './JwtInterceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
     GuardarPiezasComponent,
     UpdateMantenimientoComponent,
     UpdatePiezasComponent,
-    UpdateRuedasComponent
+    UpdateRuedasComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,12 @@ import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
