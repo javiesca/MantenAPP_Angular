@@ -1,6 +1,7 @@
 {
   "routes": [
     "/guardar-vehiculo",
+    "/login",
     "/vehiculos"
   ]
 }
