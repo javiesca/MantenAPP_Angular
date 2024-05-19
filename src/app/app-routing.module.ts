@@ -11,22 +11,21 @@ import { UpdateMantenimientoComponent } from './update-mantenimiento/update-mant
 import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
 import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-
-  {path : 'vehiculos', component: ListaVehiculosComponent},
   {path : '', redirectTo:'login', pathMatch:'full'},
-  {path: 'guardar-vehiculo', component: GuardarVehiculoComponent},
-  {path: 'update-vehiculo/:idVehiculo', component: UpdateVehiculoComponent},
-  {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent},
-  {path: 'guardar-mantenimiento/:idVehiculo', component: GuardarMantenimientoComponent},
-  {path: 'guardar-piezas/:idVehiculo', component: GuardarPiezasComponent},
-  {path: 'guardar-ruedas/:idVehiculo', component: GuardarRuedasComponent},
-  {path: 'update-mantenimiento/:idFiltros', component: UpdateMantenimientoComponent},
-  {path: 'update-piezas/:idPiezas', component: UpdatePiezasComponent},
-  {path: 'update-ruedas/:idRuedas', component: UpdateRuedasComponent},
   {path: 'login', component: LoginComponent},
-
+  {path : 'vehiculos', component: ListaVehiculosComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-vehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard]},
+  {path: 'update-vehiculo/:idVehiculo', component: UpdateVehiculoComponent, canActivate: [AuthGuard]},
+  {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-mantenimiento/:idVehiculo', component: GuardarMantenimientoComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-piezas/:idVehiculo', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-ruedas/:idVehiculo', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
+  {path: 'update-mantenimiento/:idFiltros', component: UpdateMantenimientoComponent, canActivate: [AuthGuard]},
+  {path: 'update-piezas/:idPiezas', component: UpdatePiezasComponent, canActivate: [AuthGuard]},
+  {path: 'update-ruedas/:idRuedas', component: UpdateRuedasComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
