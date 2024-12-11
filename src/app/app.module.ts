@@ -7,8 +7,7 @@ import { AppComponent } from './app.component';
 import { ListaVehiculosComponent } from './lista-vehiculos/lista-vehiculos.component';
 import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { GuardarVehiculoComponent } from './guardar-vehiculo/guardar-vehiculo.component';
-import { FormsModule } from '@angular/forms';
-import { UpdateVehiculoComponent } from './update-vehiculo/update-vehiculo.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VehiculoDetallesComponent } from './vehiculo-detalles/vehiculo-detalles.component';
 import { GuardarMantenimientoComponent } from './guardar-mantenimiento/guardar-mantenimiento.component';
 import { GuardarRuedasComponent } from './guardar-ruedas/guardar-ruedas.component';
@@ -18,13 +17,11 @@ import { UpdatePiezasComponent } from './update-piezas/update-piezas.component';
 import { UpdateRuedasComponent } from './update-ruedas/update-ruedas.component';
 import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from './JwtInterceptor';
-
 @NgModule({
   declarations: [
     AppComponent,
     ListaVehiculosComponent,
     GuardarVehiculoComponent,
-    UpdateVehiculoComponent,
     VehiculoDetallesComponent,
     GuardarMantenimientoComponent,
     GuardarRuedasComponent,
@@ -38,7 +35,8 @@ import { JwtInterceptor } from './JwtInterceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

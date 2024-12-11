@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Vehiculo } from '../vehiculo';
 import { VehiculoService } from '../vehiculo.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-guardar-vehiculo',
@@ -9,37 +10,45 @@ import { Router } from '@angular/router';
   styleUrl: './guardar-vehiculo.component.css'
 })
 export class GuardarVehiculoComponent implements OnInit {
-
+  formVehiculo : FormGroup;
   vehiculo : Vehiculo = new Vehiculo();
-  imagePreview: string | ArrayBuffer | null = null;
+  selectedFile: File | null = null; // Para almacenar el archivo
+  previewUrl: string | ArrayBuffer | null = null; // Para la vista previa
+  edit : boolean = false;
 
 
-  constructor(private vehiculoService: VehiculoService, private router: Router){}
+constructor(
+    private formBuilder: FormBuilder,
+    private vehiculoService: VehiculoService, 
+    private router: Router,
+    private activateRoute: ActivatedRoute){
+      this.formVehiculo = new FormGroup({
+        idVehiculo: this.formBuilder.control(null),
+        marca: this.formBuilder.control(''),
+        modelo: this.formBuilder.control(''),
+        fechaCompra: this.formBuilder.control(null),
+        image: this.formBuilder.control(null)
+      });
+  }
 
   ngOnInit(){
+    let id = this.activateRoute.snapshot.params['idVehiculo'];
+    if (id && id !== 'new'){
+      this.edit = true;
+      this.getVehiculoId(+id!);
+    }
+  }
+
+  updateVehiculo(){
+    this.vehiculoService.updateVehiculo(this.formVehiculo.value).subscribe(dato => {
+      this.irListaVehiculos();
+    }, error => console.log(error));
   }
 
   saveVehiculo(){
-    if(this.vehiculo.marca == "" || this.vehiculo.modelo == "" || this.vehiculo.fechaCompra == null){
-      alert("Rellene todos los campos");
-      return;
-    }
-
-    let base64String;
-    if (this.imagePreview instanceof ArrayBuffer) {
-      base64String = new TextDecoder('utf-8').decode(new Uint8Array(this.imagePreview));
-    } else {
-      base64String = this.imagePreview;
-    }
-
-    const base64Data = base64String?.split(',')[1];
-
-    // Asignar la imagen al vehículo si hay una imagen seleccionada
-    if (base64Data) {
-      this.vehiculo.imagen = base64Data;
-    }
-
-    this.vehiculoService.saveVehiculo(this.vehiculo).subscribe(dato => {
+    this.vehiculoService
+    .saveVehiculo(this.formVehiculo.value, this.selectedFile)
+    .subscribe(dato => {
       this.irListaVehiculos();
     }, error => console.log(error));
   }
@@ -49,17 +58,65 @@ export class GuardarVehiculoComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+
+      // Generar la URL de vista previa
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = reader.result;
+        this.previewUrl = reader.result;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
-  onSubmit(){
-    this.saveVehiculo();
+
+  getVehiculoId(id: number){
+    this.vehiculoService.getVehiculoById(id).subscribe(data => {
+      this.vehiculo = data;
+
+      this.formVehiculo.patchValue({
+        idVehiculo: this.vehiculo.idVehiculo,
+        marca: this.vehiculo.marca,
+        modelo: this.vehiculo.modelo,
+        fechaCompra: this.vehiculo.fechaCompra,
+        image: this.vehiculo.image
+      });
+
+      // Si ya tienes una imagen, puedes asignarla a la vista previa
+      if (this.vehiculo.image) {
+        this.previewUrl = this.vehiculo.image.imageUrl;
+      }
+    });
   }
+
+  onSubmit(){
+    if (this.edit) {
+      this.updateVehiculo();
+    } else {
+      this.saveVehiculo();
+    }
+  }
+
+  changeImage(event: any){
+
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+
+      // Generar la URL de vista previa
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+
+    this.vehiculoService.updateVehiculoImage(this.formVehiculo.value.idVehiculo, this.selectedFile).subscribe(data => {
+      this.irListaVehiculos();
+    }
+    , error => console.log(error));
+  }
+
 }

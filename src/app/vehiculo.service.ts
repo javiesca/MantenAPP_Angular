@@ -21,8 +21,8 @@ export class VehiculoService {
   }
 
   //Metodo para actualizar un vehiculo
-  updateVehiculo(id: number, vehiculo: Vehiculo): Observable<Object>{
-    return this.httpClient.put(`${this.baseURL}/${id}`, vehiculo);
+  updateVehiculo(vehiculo : Vehiculo): Observable<Object>{
+    return this.httpClient.put(`${this.baseURL}`, vehiculo);
   }
 
   //Metodo para eliminar un vehiculo
@@ -35,9 +35,22 @@ export class VehiculoService {
     return this.httpClient.get<Vehiculo>(`${this.baseURL}/${id}`);
   }
 
-  //Metodo para guardar un vehiculo
-  saveVehiculo(vehiculo : Vehiculo) : Observable<Object>{
-    return this.httpClient.post(`${this.baseURL}`, vehiculo);
+//Metodo para guardar un vehiculo
+  saveVehiculo(vehiculo: Vehiculo, imagen: File | null): Observable<Object> {
+    const formData = new FormData();
+    formData.append('vehiculo',  new Blob([JSON.stringify(vehiculo)], {type: 'application/json'}));
+    if (imagen) {
+      formData.append('imagen', imagen);  
+    }
+    return this.httpClient.post(`${this.baseURL}`, formData);
+  }
+
+  updateVehiculoImage(idVehiculo: number, imagen: File | null): Observable<Object> {
+    const formData = new FormData();
+    if (imagen) {
+      formData.append('imagen', imagen);  
+    }
+    return this.httpClient.put(`${this.baseURL}/${idVehiculo}/image`, formData);
   }
 
 }

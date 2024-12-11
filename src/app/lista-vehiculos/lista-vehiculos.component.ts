@@ -23,6 +23,7 @@ export class ListaVehiculosComponent implements OnInit {
   private getVehiculos(){
     this.vs.getListaVehiculos().subscribe(datos =>{
       this.vehiculos = datos;
+      console.log(datos);
     })
   }
 
@@ -33,8 +34,8 @@ export class ListaVehiculosComponent implements OnInit {
 
   }
 
-  updateVehiculo(idVehiculo: number){
-   this.router.navigate(['update-vehiculo', idVehiculo]);
+  guardarVehiculo(idVehiculo: number){
+   this.router.navigate(['guardar-vehiculo', idVehiculo]);
   }
 
   detallesVehiculo(idVehiculo: number){

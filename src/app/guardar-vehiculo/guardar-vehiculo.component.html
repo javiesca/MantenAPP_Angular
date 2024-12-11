@@ -1,31 +1,29 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">Nuevo Vehículo</h3>
-  <form (ngSubmit)="onSubmit()">
+  <h3 class="text-center">{{ edit ? 'Modificar Vehiculo' : 'Nuevo Vehiculo' }}</h3>
+  <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
     <div class="form-group">
+      <label>Marca</label>
+      <input type="text" class="form-control"
+        id="marca" formControlName="marca">
+        
+      <label>Modelo</label>
+      <input type="text" class="form-control"
+        id="modelo" formControlName="modelo">
+        
+      <label>Fecha Compra</label>
+      <input type="date" class="form-control"
+        id="fechaCompra" formControlName="fechaCompra">
+        
+      <label>Imagen</label>
+      <input type="file" class="form-control-file" id="imagen" (change)="edit ? changeImage($event):onFileSelected($event)" accept="image/*">
 
-      <div class="elemento-form">
-        <label>Marca</label>
-        <input type="text" class="form-control" id="marca" [(ngModel)]="vehiculo.marca" name="marca">
-      </div>
-      <div class="elemento-form">
-        <label>Modelo</label>
-        <input type="text" class="form-control" id="modelo" [(ngModel)]="vehiculo.modelo" name="modelo">
-      </div>
-      <div class="elemento-form">
-        <label>Fecha Compra</label>
-        <input type="date" class="form-control" id="fechaCompra" [(ngModel)]="vehiculo.fechaCompra" name="fechaCompra">
-      </div>
-      <div class="elemento-form">
-        <label for="imagen">Imagen</label>
-        <input type="file" class="form-control-file" id="imagen" (change)="onFileSelected($event)" accept="image/*">
-        <div class="imagen-form">
-          <img *ngIf="imagePreview" [src]="imagePreview" class="imagen-preview" alt="Imagen previa">
-        </div>
-      </div>
-
-      <div class="boton-form">
-        <button class="btn-success">Guardar</button>
+      <!-- Muestra la imagen actual -->
+      <div class="imagen-form" *ngIf="previewUrl">
+        <img [src]="previewUrl" class="imagen-preview" alt="Imagen previa">
       </div>
     </div>
+
+    <button class="btn-success">Guardar</button>
   </form>
 </div>
+

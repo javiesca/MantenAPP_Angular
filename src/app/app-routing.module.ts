@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListaVehiculosComponent } from './lista-vehiculos/lista-vehiculos.component';
 import { GuardarVehiculoComponent } from './guardar-vehiculo/guardar-vehiculo.component';
-import { UpdateVehiculoComponent } from './update-vehiculo/update-vehiculo.component';
 import { VehiculoDetallesComponent } from './vehiculo-detalles/vehiculo-detalles.component';
 import { GuardarMantenimientoComponent } from './guardar-mantenimiento/guardar-mantenimiento.component';
 import { GuardarPiezasComponent } from './guardar-piezas/guardar-piezas.component';
@@ -17,8 +16,8 @@ const routes: Routes = [
   {path : '', redirectTo:'login', pathMatch:'full'},
   {path: 'login', component: LoginComponent},
   {path : 'vehiculos', component: ListaVehiculosComponent, canActivate: [AuthGuard]},
-  {path: 'guardar-vehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard]},
-  {path: 'update-vehiculo/:idVehiculo', component: UpdateVehiculoComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-vehiculo/:idVehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-vehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
   {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent, canActivate: [AuthGuard]},
   {path: 'guardar-mantenimiento/:idVehiculo', component: GuardarMantenimientoComponent, canActivate: [AuthGuard]},
   {path: 'guardar-piezas/:idVehiculo', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
