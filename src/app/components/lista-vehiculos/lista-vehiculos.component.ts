@@ -13,21 +13,20 @@ import Swal from 'sweetalert2';
 
 export class ListaVehiculosComponent implements OnInit {
 
-  vehiculos:Vehiculo[];
+  vehiculos: Vehiculo[];
   loading: boolean = false;
 
   constructor(
-    private vs:VehiculoService, 
-    private router: Router) {};
+    private vs: VehiculoService,
+    private router: Router) { };
 
   ngOnInit(): void {
     this.getVehiculos();
   }
 
-  private getVehiculos(){
-    this.vs.getListaVehiculos().subscribe(datos =>{
+  private getVehiculos() {
+    this.vs.getListaVehiculos().subscribe(datos => {
       this.vehiculos = datos;
-      console.log(datos);
     })
   }
 
@@ -81,11 +80,11 @@ export class ListaVehiculosComponent implements OnInit {
   }
 
 
-  guardarVehiculo(idVehiculo: number){
-   this.router.navigate(['guardar-vehiculo', idVehiculo]);
+  guardarVehiculo(idVehiculo: number) {
+    this.router.navigate(['guardar-vehiculo', idVehiculo]);
   }
 
-  detallesVehiculo(idVehiculo: number){
+  detallesVehiculo(idVehiculo: number) {
     this.router.navigate(['vehiculo-detalles', idVehiculo]);
   }
 }

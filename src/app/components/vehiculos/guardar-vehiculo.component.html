@@ -1,20 +1,16 @@
-
 <div class="col-md-6 offset-md-3">
   <h3 class="text-center">{{ edit ? 'Modificar Vehiculo' : 'Nuevo Vehiculo' }}</h3>
   <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Marca</label>
-      <input type="text" class="form-control"
-        id="marca" formControlName="marca">
-        
+      <input type="text" class="form-control" id="marca" formControlName="marca">
+
       <label>Modelo</label>
-      <input type="text" class="form-control"
-        id="modelo" formControlName="modelo">
-        
+      <input type="text" class="form-control" id="modelo" formControlName="modelo">
+
       <label>Fecha Compra</label>
-      <input type="date" class="form-control"
-        id="fechaCompra" formControlName="fechaCompra">
-        
+      <input type="date" class="form-control" id="fechaCompra" formControlName="fechaCompra">
+
       <label>Imagen</label>
       <input type="file" class="form-control-file" id="imagen" (change)="changeImage($event)" accept="image/*">
 
@@ -27,4 +23,3 @@
     <button class="btn-success">{{ edit ? 'Actualizar' : 'Guardar' }}</button>
   </form>
 </div>
-

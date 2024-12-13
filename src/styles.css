@@ -1,170 +1,144 @@
+body {
+  margin-bottom: 60px !important;
+}
 
-  body{
-    margin-bottom:60px !important;
+.check {
+  color: green;
+}
+
+.aspa {
+  color: red;
+}
+
+.tabla {
+  margin-bottom: 40px;
+  margin: 20px;
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+h3 {
+  padding: 20px;
+  background-color: rgb(227, 233, 222);
+  border: 1px solid black;
+}
+
+.elemento-form {
+  margin-top: 20px;
+}
+
+.boton-form {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-preview {
+  width: 60%;
+  margin-top: 20px;
+}
+
+.imagen-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagen-vehiculo {
+  max-height: 200px;
+}
+
+thead {
+  background-color: black;
+  color: white;
+  ;
+}
+
+@media (max-width: 700px) {
+  .navbar-nav {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
   }
 
-  .check {
-    color: green;
+  h1 {
+    font-size: 1.5em !important;
   }
 
-  .aspa {
-    color: red;
+  h2 {
+    font-size: 1.3em !important;
   }
 
-  .tabla{
-    margin-bottom: 40px;
-    margin: 20px;
+  h3 {
+    font-size: 1.1em !important;
+    margin-bottom: 30px;
+  }
+
+  body {
+    font-size: 0.9em !important;
+  }
+
+  table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    margin-bottom: 20px;
+  }
+
+  table td {
     text-align: center;
   }
 
-  h1,h2,h3{
-    margin-bottom: 10px;
-    margin-top: 20px;
-  }
-
-  h3{
-    padding: 20px;
-    background-color:rgb(227, 233, 222);
-    border: 1px solid black;
-  }
-
-  .elemento-form{
-    margin-top: 20px;
-  }
-
-  .boton-form{
-    margin-top: 40px;
+  table td[data-titulo] {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: 10px;
   }
 
-  .imagen-preview{
-    width: 60%;
+  table td[data-titulo]::before {
+    text-align: left;
+    content: attr(data-titulo);
+    font-weight: bold;
+    min-width: 120px;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  .contenedor-tabla {
+    background-color: rgba(192, 192, 192, 0.247);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+
+  .botones {
+    text-align: center;
     margin-top: 20px;
   }
-
-  .imagen-form{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .imagen-vehiculo{
-    max-height:200px;
-  }
-
-  thead {
-    background-color: black ;
-    color: white;;
-  }
-
-  @media (max-width: 1000px) {
-    .navbar-nav{
-      display: flex;
-      width: 100%;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: 30px;
-    }
-
-    h1{
-      font-size: 1.5em !important;
-    }
-
-    h2{
-      font-size: 1.3em !important;}
-
-    h3{
-      font-size: 1.1em !important;
-      margin-bottom: 30px;
-    }
-
-    body{
-      font-size: 0.9em !important;
-    }
-
-    table{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    table tr{
-      display: flex;
-      flex-direction: column;
-      border: 1px solid grey;
-      margin-bottom: 20px;
-    }
-
-    table td{
-      text-align: center;
-    }
-
-    table td[data-titulo]{
-      display: flex;
-      margin-right: 10px;
-    }
-
-    table td[data-titulo]::before{
-      text-align: left;
-      content: attr(data-titulo);
-      font-weight: bold;
-      min-width: 120px;
-    }
-
-    table thead{
-      display: none;
-    }
-
-    .contenedor-tabla{
-      background-color: rgba(192, 192, 192, 0.247);
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-    }
-
-    .botones{
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    /* lista-vehiculos.component.css */
-  .p-confirm-dialog .p-dialog {
-    background-color: #333; /* Fondo oscuro */
-    color: #fff; /* Texto blanco */
-    border: 2px solid #555; /* Borde de la ventana principal */
-    border-radius: 8px; /* Bordes redondeados */
-  }
-
-  .p-confirm-dialog .p-dialog-header {
-    background-color: #444; /* Fondo del encabezado */
-    color: #fff; /* Texto del encabezado */
-    border-bottom: 2px solid #555; /* Borde inferior del encabezado */
-  }
-
-  .p-confirm-dialog .p-dialog-content {
-    background-color: #333; /* Fondo del contenido */
-    color: #fff; /* Texto del contenido */
-  }
-
-  .p-confirm-dialog .p-dialog-footer {
-    background-color: #444; /* Fondo del pie de página */
-    color: #fff; /* Texto del pie de página */
-    border-top: 2px solid #555; /* Borde superior del pie de página */
-  }
-
-  .p-confirm-dialog .p-button {
-    background-color: #555; /* Fondo de los botones */
-    color: #fff; /* Texto de los botones */
-    border: none; /* Sin borde */
-  }
-
-  .p-confirm-dialog .p-button:hover {
-    background-color: #666; /* Fondo de los botones al pasar el ratón */
-  }
-
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
