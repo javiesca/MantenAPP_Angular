@@ -129,6 +129,42 @@
       margin-top: 20px;
     }
 
+    /* lista-vehiculos.component.css */
+  .p-confirm-dialog .p-dialog {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    border: 2px solid #555; /* Borde de la ventana principal */
+    border-radius: 8px; /* Bordes redondeados */
   }
 
+  .p-confirm-dialog .p-dialog-header {
+    background-color: #444; /* Fondo del encabezado */
+    color: #fff; /* Texto del encabezado */
+    border-bottom: 2px solid #555; /* Borde inferior del encabezado */
+  }
 
+  .p-confirm-dialog .p-dialog-content {
+    background-color: #333; /* Fondo del contenido */
+    color: #fff; /* Texto del contenido */
+  }
+
+  .p-confirm-dialog .p-dialog-footer {
+    background-color: #444; /* Fondo del pie de página */
+    color: #fff; /* Texto del pie de página */
+    border-top: 2px solid #555; /* Borde superior del pie de página */
+  }
+
+  .p-confirm-dialog .p-button {
+    background-color: #555; /* Fondo de los botones */
+    color: #fff; /* Texto de los botones */
+    border: none; /* Sin borde */
+  }
+
+  .p-confirm-dialog .p-button:hover {
+    background-color: #666; /* Fondo de los botones al pasar el ratón */
+  }
+
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
