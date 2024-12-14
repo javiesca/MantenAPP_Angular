@@ -1,5 +1,8 @@
 {
   "routes": [
+    "/guardar-mantenimiento",
+    "/guardar-piezas",
+    "/guardar-ruedas",
     "/guardar-vehiculo",
     "/login",
     "/vehiculos"
