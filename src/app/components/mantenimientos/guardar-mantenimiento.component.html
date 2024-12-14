@@ -1,26 +1,26 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">Nuevo Mantenimiento</h3>
+  <h3 class="text-center">{{ edit ? 'Modificar Mantenmiento' : 'Nuevo Mantenimiento ' }}</h3>
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <div class="elemento-form">
         <label>Aceite</label>
-        <input type="checkbox" class="form-control" id="aceite" [(ngModel)]="filtros.aceite" name="aceite">
+        <input type="checkbox" class="form-check-input" id="aceite" [(ngModel)]="filtros.aceite" name="aceite">
       </div>
       <div class="elemento-form">
         <label>Filtro Aceite</label>
-        <input type="checkbox" class="form-control" id="filtroAceite" [(ngModel)]="filtros.filtroAceite" name="filtroAceite">
+        <input type="checkbox" class="form-check-input" id="filtroAceite" [(ngModel)]="filtros.filtroAceite" name="filtroAceite">
       </div>
       <div class="elemento-form">
         <label>Filtro Aire</label>
-        <input type="checkbox" class="form-control" id="filtroAire" [(ngModel)]="filtros.filtroAire" name="filtroAire">
+        <input type="checkbox" class="form-check-input" id="filtroAire" [(ngModel)]="filtros.filtroAire" name="filtroAire">
       </div>
       <div class="elemento-form">
         <label>Filtro Combustible</label>
-        <input type="checkbox" class="form-control" id="filtroCombustible" [(ngModel)]="filtros.filtroCombustible" name="filtroCombustible">
+        <input type="checkbox" class="form-check-input" id="filtroCombustible" [(ngModel)]="filtros.filtroCombustible" name="filtroCombustible">
       </div>
       <div class="elemento-form">
         <label>Filtro Habitáculo</label>
-        <input type="checkbox" class="form-control" id="filtroHabitaculo" [(ngModel)]="filtros.filtroHabitaculo" name="filtroHabitaculo">
+        <input type="checkbox" class="form-check-input" id="filtroHabitaculo" [(ngModel)]="filtros.filtroHabitaculo" name="filtroHabitaculo">
       </div>
       <div class="elemento-form">
         <label>Fecha</label>

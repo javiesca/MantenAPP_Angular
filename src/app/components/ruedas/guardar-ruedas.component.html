@@ -1,5 +1,5 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">Mofificar cambio de ruedas</h3>
+  <h3 class="text-center">{{ edit ? 'Modificar cambio de ruedas' : 'Nuevo cambio de ruedas'}}</h3>
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
 
@@ -30,6 +30,5 @@
     </div>
   </form>
 </div>
-
 
 

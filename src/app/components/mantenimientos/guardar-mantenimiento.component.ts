@@ -10,19 +10,39 @@ import { FiltrosService } from '../../services/filtros.service';
   templateUrl: './guardar-mantenimiento.component.html',
   styleUrl: './guardar-mantenimiento.component.css'
 })
+
 export class GuardarMantenimientoComponent implements OnInit {
-
-  idVehiculo: number
-
+  idVehiculo: number;
+  idFiltros: number;
   filtros : Filtros = new Filtros();
   vehiculo : Vehiculo = new Vehiculo();
+  edit : boolean = false;
 
-  constructor(private route:ActivatedRoute, private router:Router, private fs : FiltrosService,
-      private vs : VehiculoService) { }
+  constructor(
+    private route : ActivatedRoute, 
+    private router : Router, 
+    private fs : FiltrosService,
+    private vs : VehiculoService) { }
 
   ngOnInit(): void {
-    this.idVehiculo = this.route.snapshot.params['idVehiculo'];
-    this.getVehiculo();
+    this.route.params.subscribe(params => {
+      if (params['idFiltros']) {
+        this.edit = true;
+        this.idFiltros = params['idFiltros'];
+        this.getFiltroId(this.idFiltros);
+  
+      } else if (params['idVehiculo']) {
+        this.idVehiculo = params['idVehiculo'];
+        this.getVehiculo();
+      }
+    });
+  }
+
+  getFiltroId(id: number){
+    this.fs.getMantenimiento(id).subscribe(datos =>{
+      console.log(datos);
+      this.filtros = datos;
+    })
   }
 
   getVehiculo(){
@@ -30,6 +50,12 @@ export class GuardarMantenimientoComponent implements OnInit {
       this.vehiculo = data;
       this.filtros.vehiculo = this.vehiculo;
     })
+  }
+
+  updateFiltros(){
+    this.fs.updateMantenimiento(this.filtros.idFiltros, this.filtros).subscribe(datos =>{
+      this.router.navigate(['vehiculo-detalles', this.filtros.vehiculo.idVehiculo]);
+    }, error => console.log(error));
   }
 
   saveFiltros(){
@@ -44,6 +70,9 @@ export class GuardarMantenimientoComponent implements OnInit {
   }
 
   onSubmit(){
+    if(this.edit)
+      this.updateFiltros();
+    else
     this.saveFiltros();
   }
 

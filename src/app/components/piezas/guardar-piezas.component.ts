@@ -13,19 +13,33 @@ import { PiezasService } from '../../services/piezas.service';
 export class GuardarPiezasComponent implements OnInit {
 
   idVehiculo: number;
+  idPiezas: number;
   piezas : Piezas = new Piezas();
   vehiculo : Vehiculo = new Vehiculo();
+  edit : boolean = false;
 
   constructor(private route : ActivatedRoute, private router: Router, private vs : VehiculoService,
       private ps : PiezasService) { }
 
   ngOnInit() {
-    this.idVehiculo = this.route.snapshot.params['idVehiculo'];
-    this.getVehiculo();
+    this.route.params.subscribe(params => {
+      if (params['idPiezas']) {
+        this.edit = true;
+        this.idPiezas = params['idPiezas'];
+        this.getPieza();
+  
+      } else if (params['idVehiculo']) {
+        this.idVehiculo = params['idVehiculo'];
+        this.getVehiculo();
+      }
+    });
   }
 
   onSubmit() {
-    this.savePiezas(this.piezas);
+    if(this.edit)
+      this.uptadaPiezas();
+    else
+      this.savePiezas();
   }
 
   getVehiculo(){
@@ -35,10 +49,23 @@ export class GuardarPiezasComponent implements OnInit {
     })
   }
 
-  savePiezas(piezas : Piezas){
-    this.ps.savePieza(piezas).subscribe(dato => {
+  getPieza(){
+    this.ps.getPieza(this.idPiezas).subscribe(datos =>{
+      this.piezas = datos;
+    })
+  }
+
+  savePiezas(){
+    this.ps.savePieza(this.piezas).subscribe(dato => {
       console.log(dato);
       this.irDetalleVehiculo();
+    }, error => console.log(error));
+  }
+
+  uptadaPiezas(){
+    this.ps.updatePiezas(this.idPiezas, this.piezas).subscribe(datos =>{
+      console.log(datos);
+      this.router.navigate(['vehiculo-detalles', this.piezas.vehiculo.idVehiculo]);
     }, error => console.log(error));
   }
 

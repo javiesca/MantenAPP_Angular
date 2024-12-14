@@ -61,17 +61,38 @@ export class VehiculoDetallesComponent implements OnInit{
         });
     }
 
-    saveMantenimiento(idVehiculo : number){
-      this.router.navigate(['guardar-mantenimiento', idVehiculo]);
+    saveMantenimiento(data: number | Filtros) {
+      if (typeof data === 'number') {
+        // Es una creación
+        this.router.navigate(['guardar-mantenimiento', { idVehiculo: data }]);
+      } else {
+        // Es una actualización
+        this.router.navigate(['guardar-mantenimiento', { idFiltros: data.idFiltros }]);
+      }
     }
 
-    savePiezas(idVehiculo : number){
-      this.router.navigate(['guardar-piezas', idVehiculo]);
+
+    saveRuedas(data : number | Ruedas){
+      if (typeof data === 'number') {
+        // Es una creación
+        this.router.navigate(['guardar-ruedas', { idVehiculo: data }]);
+      } else {
+        // Es una actualización
+        this.router.navigate(['guardar-ruedas', { idRuedas: data.idRuedas }]);
+      }
+    }
+    
+
+    savePiezas(data : number | Piezas){
+      if (typeof data === 'number') {
+        // Es una creación
+        this.router.navigate(['guardar-piezas', { idVehiculo: data }]);
+      } else {
+        // Es una actualización
+        this.router.navigate(['guardar-piezas', { idPiezas: data.idPieza }]);
+      }
     }
 
-    saveRuedas(idVehiculo : number){
-      this.router.navigate(['guardar-ruedas', idVehiculo]);
-    }
 
     deleteRuedas(idRuedas : number){
       this.rs.deleteRuedas(idRuedas).subscribe(data => {
@@ -95,15 +116,5 @@ export class VehiculoDetallesComponent implements OnInit{
       this.router.navigate(['vehiculo-detalles', idVehiculo]);
     }
 
-    updateMantenimiento(idFiltros : number){
-      this.router.navigate(['update-mantenimiento', idFiltros]);
-    }
 
-    updatePiezas(idPiezas : number){
-      this.router.navigate(['update-piezas', idPiezas]);
-    }
-
-    updateRuedas(idRuedas : number){
-      this.router.navigate(['update-ruedas', idRuedas]);
-    }
 }

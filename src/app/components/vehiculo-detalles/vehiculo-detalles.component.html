@@ -1,12 +1,11 @@
-<div ngSkipHydration class="container-fluid">
+<div>
   <h2 class="text-center">{{vehiculo?.marca}} {{vehiculo?.modelo}}</h2>
-
   <!-- Mantenimientos -->
   <div class="contenedor-tabla">
     <div *ngIf="filtrosList && filtrosList.length > 0">
       <h3 class="text-center">Mantenimientos</h3>
       <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table table-lg">
           <!-- Cabecera de la Tabla -->
           <thead>
             <tr>
@@ -39,7 +38,7 @@
               <td data-titulo="Kilometros">{{filtro.kilometros}}</td>
               <td data-titulo="Precio">{{filtro.precio}}€</td>
               <td class="botones">
-                <button (click)="updateMantenimiento(filtro.idFiltros)" class="btn btn-info"><i class="fas fa-edit"></i>
+                <button (click)="saveMantenimiento(filtro)" class="btn btn-info"><i class="fas fa-edit"></i>
                 </button>
                 <button (click)="deleteFiltros(filtro.idFiltros)" class="btn btn-danger"
                   style="margin-left: 10px;"><i class="fas fa-trash-alt"></i>
@@ -63,7 +62,7 @@
     <div *ngIf="piezasList && piezasList.length > 0">
       <h3 class="text-center">Piezas</h3>
       <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table table-lg">
           <!-- Cabecera de la Tabla -->
           <thead>
             <tr>
@@ -82,7 +81,7 @@
               <td data-titulo="Kilometros">{{pieza.kilometros}}</td>
               <td data-titulo="Precio">{{pieza.precio}}€</td>
               <td class="botones">
-                <button (click)="updatePiezas(pieza.idPieza)" class="btn btn-info"><i class="fas fa-edit"></i>
+                <button (click)="savePiezas(pieza)" class="btn btn-info"><i class="fas fa-edit"></i>
                 </button>
                 <button (click)="deletePiezas(pieza.idPieza)" class="btn btn-danger"
                   style="margin-left: 10px;"><i class="fas fa-trash-alt"></i>
@@ -108,7 +107,7 @@
     <div *ngIf="ruedasList && ruedasList.length > 0">
       <h3 class="text-center">Ruedas</h3>
       <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table table-lg">
           <!-- Cabecera de la Tabla -->
           <thead>
             <th>Cantidad</th>
@@ -127,7 +126,7 @@
               <td data-titulo="Kilometros">{{ruedas.kilometros}}</td>
               <td data-titulo="Precio">{{ruedas.precio}}€</td>
               <td class="botones">
-                <button (click)="updateRuedas(ruedas.idRuedas)" class="btn btn-info"><i class="fas fa-edit"></i>
+                <button (click)="saveRuedas(ruedas)" class="btn btn-info"><i class="fas fa-edit"></i>
                 </button>
                 <button (click)="deleteRuedas(ruedas.idRuedas)" class="btn btn-danger"
                   style="margin-left: 10px;"><i class="fas fa-trash-alt"></i>
