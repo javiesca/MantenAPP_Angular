@@ -107,14 +107,13 @@ thead {
 
   table td[data-titulo] {
     display: flex;
-    margin-right: 10px;
   }
 
   table td[data-titulo]::before {
     text-align: left;
     content: attr(data-titulo);
     font-weight: bold;
-    min-width: 120px;
+    min-width: 180px;
   }
 
   table thead {
@@ -129,7 +128,6 @@ thead {
 
   .botones {
     text-align: center;
-    margin-top: 20px;
   }
 }
 
