@@ -1,0 +1,10 @@
+.form-check-input{
+  margin-left: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.elementos-check label{
+  width: 200px;
+  margin-bottom: 10px;
+}

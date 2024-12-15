@@ -4,6 +4,7 @@ import { Filtros } from '../../interfaces/filtros';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { FiltrosService } from '../../services/filtros.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-guardar-mantenimiento',
@@ -19,8 +20,8 @@ export class GuardarMantenimientoComponent implements OnInit {
   edit : boolean = false;
 
   constructor(
-    private route : ActivatedRoute, 
-    private router : Router, 
+    private route : ActivatedRoute,
+    private router : Router,
     private fs : FiltrosService,
     private vs : VehiculoService) { }
 
@@ -30,7 +31,7 @@ export class GuardarMantenimientoComponent implements OnInit {
         this.edit = true;
         this.idFiltros = params['idFiltros'];
         this.getFiltroId(this.idFiltros);
-  
+
       } else if (params['idVehiculo']) {
         this.idVehiculo = params['idVehiculo'];
         this.getVehiculo();
@@ -59,10 +60,34 @@ export class GuardarMantenimientoComponent implements OnInit {
   }
 
   saveFiltros(){
-    this.fs.saveFiltros(this.filtros).subscribe(dato => {
-      console.log(dato);
-      this.irDetalleVehiculo();
-    }, error => console.log(error));
+    Swal.fire({
+      title: 'Guardando...',
+      text: 'Por favor, espera mientras se guarda el mantenimiento.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.fs.saveFiltros(this.filtros).subscribe(
+      dato => {
+        Swal.close();
+        Swal.fire({
+          title: 'Guardado',
+          text: 'Mantenimiento guardado con éxito',
+          icon: 'success'
+        })
+        this.irDetalleVehiculo();
+      },
+      error => {
+        Swal.close();
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un error al guardar el mantenimiento',
+          icon: 'error'
+        })
+      }
+    );
   }
 
   irDetalleVehiculo(){

@@ -13,11 +13,10 @@ const routes: Routes = [
   {path : '', redirectTo:'login', pathMatch:'full'},
   {path: 'login', component: LoginComponent},
   {path : 'vehiculos', component: ListaVehiculosComponent, canActivate: [AuthGuard]},
- 
   {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent, canActivate: [AuthGuard]},
-
   {path: 'guardar-vehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
-  { path: 'guardar-mantenimiento', component: GuardarMantenimientoComponent, canActivate: [AuthGuard] },
+  {path: 'guardar-vehiculo/:idVehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
+  {path: 'guardar-mantenimiento', component: GuardarMantenimientoComponent, canActivate: [AuthGuard] },
   {path: 'guardar-ruedas', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-piezas', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
 ];

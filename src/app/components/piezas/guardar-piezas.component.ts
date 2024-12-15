@@ -18,8 +18,11 @@ export class GuardarPiezasComponent implements OnInit {
   vehiculo : Vehiculo = new Vehiculo();
   edit : boolean = false;
 
-  constructor(private route : ActivatedRoute, private router: Router, private vs : VehiculoService,
-      private ps : PiezasService) { }
+  constructor(
+    private route : ActivatedRoute,
+    private router: Router,
+    private vs : VehiculoService,
+    private ps : PiezasService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -27,7 +30,6 @@ export class GuardarPiezasComponent implements OnInit {
         this.edit = true;
         this.idPiezas = params['idPiezas'];
         this.getPieza();
-  
       } else if (params['idVehiculo']) {
         this.idVehiculo = params['idVehiculo'];
         this.getVehiculo();

@@ -79,7 +79,6 @@ export class ListaVehiculosComponent implements OnInit {
     );
   }
 
-
   guardarVehiculo(idVehiculo: number) {
     this.router.navigate(['guardar-vehiculo', idVehiculo]);
   }

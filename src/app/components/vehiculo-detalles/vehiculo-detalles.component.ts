@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
-
 import { Filtros } from '../../interfaces/filtros';
 import { RuedasService } from '../../services/ruedas.service';
 import { Ruedas } from '../../interfaces/ruedas';
 import { Piezas } from '../../interfaces/piezas';
 import { PiezasService } from '../../services/piezas.service';
 import { FiltrosService } from '../../services/filtros.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vehiculo-detalles',
@@ -81,7 +81,7 @@ export class VehiculoDetallesComponent implements OnInit{
         this.router.navigate(['guardar-ruedas', { idRuedas: data.idRuedas }]);
       }
     }
-    
+
 
     savePiezas(data : number | Piezas){
       if (typeof data === 'number') {
@@ -93,28 +93,62 @@ export class VehiculoDetallesComponent implements OnInit{
       }
     }
 
-
-    deleteRuedas(idRuedas : number){
-      this.rs.deleteRuedas(idRuedas).subscribe(data => {
-        this.ngOnInit();
-      })
+    deleteRuedas(idRuedas: number) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.rs.deleteRuedas(idRuedas).subscribe(data => {
+            this.ngOnInit();
+          })
+        }
+      });
     }
 
+
     deletePiezas(idPiezas : number){
-      this.ps.deletePieza(idPiezas).subscribe(data => {
-        this.ngOnInit();
-      })
+      Swal.fire({
+        title: '¿Estás seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.ps.deletePieza(idPiezas).subscribe(data => {
+            this.ngOnInit();
+          })
+        }
+      });
     }
 
     deleteFiltros(idFiltros : number){
-      this.sf.deleteFiltros(idFiltros).subscribe(data => {
-        this.ngOnInit();
-      })
+      Swal.fire({
+        title: '¿Estás seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.sf.deleteFiltros(idFiltros).subscribe(data => {
+            this.ngOnInit();
+          })
+        }
+      });
     }
 
     getMantenimeintos(idVehiculo : number){
       this.router.navigate(['vehiculo-detalles', idVehiculo]);
     }
-
-
 }
