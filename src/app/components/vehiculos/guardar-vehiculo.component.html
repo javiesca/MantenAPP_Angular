@@ -21,8 +21,8 @@
         <input type="file" class="form-control-file" id="imagen" (change)="changeImage($event)" accept="image/*">
       </div>
 
+      <!-- Muestra la imagen actual -->
       <div class="label-save">
-        <!-- Muestra la imagen actual -->
         <div class="imagen-form" *ngIf="previewUrl">
           <img [src]="previewUrl" class="imagen-preview" alt="Imagen previa">
         </div>

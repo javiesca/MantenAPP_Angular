@@ -25,3 +25,7 @@
 .form-control-file::-webkit-file-upload-button:hover {
   background-color: #acd4ff;
 }
+
+.imagen-preview {
+  width: 60%;
+}

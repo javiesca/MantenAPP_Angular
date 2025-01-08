@@ -11,7 +11,8 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <button (click)="logout()" class="btn btn-danger">
-          <i class="fa fa-sign-out-alt"></i> <!-- Este es el icono de logout de Font Awesome -->
+          <!-- Este es el icono de logout de Font Awesome -->
+          <i class="fa fa-sign-out-alt"></i> 
         </button>
       </li>
     </ul>
@@ -21,7 +22,4 @@
 
 <div class="container text-center">
   <router-outlet></router-outlet>
-</div>
-
-<div *ngIf="authService.isLoggedIn()" class="footer">
 </div>

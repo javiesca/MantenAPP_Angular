@@ -2,3 +2,59 @@
   color:green;
   font-weight: bold;
 }
+
+.check {
+  color: green;
+}
+
+.aspa {
+  color: red;
+}
+
+
+
+@media (max-width: 700px) {
+
+  table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    margin-bottom: 20px;
+  }
+
+  table td {
+    text-align: center;
+  }
+
+  table td[data-titulo] {
+    display: flex;
+  }
+
+  table td[data-titulo]::before {
+    text-align: left;
+    content: attr(data-titulo);
+    font-weight: bold;
+    min-width: 250px;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  .contenedor-tabla {
+    background-color: rgba(192, 192, 192, 0.247);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+
+  .botones {
+    text-align: center;
+  }
+
+}

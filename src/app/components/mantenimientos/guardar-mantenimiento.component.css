@@ -8,3 +8,14 @@
   width: 200px;
   margin-bottom: 10px;
 }
+
+.elemento-form {
+  margin-top: 20px;
+}
+
+.boton-form {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
