@@ -9,6 +9,8 @@ import { Ruedas } from '../../interfaces/ruedas';
 import { Piezas } from '../../interfaces/piezas';
 import { PiezasService } from '../../services/piezas.service';
 import { FiltrosService } from '../../services/filtros.service';
+import { Notas } from '../../interfaces/notas';
+import { NotasService } from '../../services/notas.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,10 +25,11 @@ export class VehiculoDetallesComponent implements OnInit{
     filtrosList: Filtros[];
     ruedasList : Ruedas[];
     piezasList : Piezas[];
+    notasList : Notas[];
     vehiculo : Vehiculo;
 
     constructor(private route : ActivatedRoute, private router : Router, private vs : VehiculoService,
-      private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService) {};
+      private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService, private ns : NotasService) {};
 
     ngOnInit(): void {
         this.idVehiculo = this.route.snapshot.params['idVehiculo'];
@@ -34,6 +37,7 @@ export class VehiculoDetallesComponent implements OnInit{
         this.getMantenimientoMotor(this.idVehiculo);
         this.getRuedas(this.idVehiculo);
         this.getPiezas(this.idVehiculo);
+        this.getNotas(this.idVehiculo);
     }
 
 
@@ -61,6 +65,12 @@ export class VehiculoDetallesComponent implements OnInit{
         });
     }
 
+    getNotas(idVehiculo : number) {
+      this.ns.getNotas(idVehiculo).subscribe(data => {
+          this.notasList = data;
+      });
+    }
+
     saveMantenimiento(data: number | Filtros) {
       if (typeof data === 'number') {
         // Es una creación
@@ -70,7 +80,6 @@ export class VehiculoDetallesComponent implements OnInit{
         this.router.navigate(['guardar-mantenimiento', { idFiltros: data.idFiltros }]);
       }
     }
-
 
     saveRuedas(data : number | Ruedas){
       if (typeof data === 'number') {
@@ -92,6 +101,19 @@ export class VehiculoDetallesComponent implements OnInit{
         this.router.navigate(['guardar-piezas', { idPiezas: data.idPieza }]);
       }
     }
+
+
+    saveNotas(data : number | Notas){
+      if (typeof data === 'number') {
+        // Es una creación
+        this.router.navigate(['guardar-notas', { idVehiculo: data }]);
+      } else {
+        // Es una actualización
+        this.router.navigate(['guardar-notas', { idNota: data.idNota }]);
+      }
+    }
+
+
 
     deleteRuedas(idRuedas: number) {
       Swal.fire({
@@ -147,8 +169,23 @@ export class VehiculoDetallesComponent implements OnInit{
         }
       });
     }
-
-    getMantenimeintos(idVehiculo : number){
-      this.router.navigate(['vehiculo-detalles', idVehiculo]);
+    
+    deleteNotas(idNota : number){
+      Swal.fire({
+        title: '¿Estás seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.ns.deleteNota(idNota).subscribe(data => {
+            this.ngOnInit();
+          })
+        }
+      });
     }
+
 }

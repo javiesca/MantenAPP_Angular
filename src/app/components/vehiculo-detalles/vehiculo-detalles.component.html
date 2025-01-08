@@ -18,6 +18,11 @@
         Ruedas
       </button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="notas-tab" data-bs-toggle="tab" data-bs-target="#notas" type="button" role="tab" aria-controls="notas" aria-selected="false">
+        Notas
+      </button>
+    </li>
   </ul>
 
   <!-- Contenido de las Pestañas -->
@@ -143,6 +148,40 @@
       </div>
       <div class="text-center mt-3">
         <button (click)="saveRuedas(vehiculo.idVehiculo)" class="btn btn-success">Añadir</button>
+      </div>
+    </div>
+
+    <!-- Pestaña Notas -->
+    <div class="tab-pane fade" id="notas" role="tabpanel" aria-labelledby="notas-tab">
+      <div *ngIf="notasList && notasList.length > 0" class="contenedor-tabla">
+        <h3 class="text-center">Notas</h3>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Texto</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let nota of notasList">
+                <td data-titulo="Nota">{{nota.texto}}</td>
+                <td data-titulo="Fecha">{{nota.fechaNota | date:'dd/MM/yyyy'}}</td>
+                <td>
+                  <button (click)="saveNotas(nota)" class="btn btn-info"><i class="fas fa-edit"></i></button>
+                  <button (click)="deleteNotas(nota.idNota)" class="btn btn-danger ms-2"><i class="fas fa-trash-alt"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="!notasList || notasList.length === 0">
+        <h3 class="text-center">No hay notas</h3>
+      </div>
+      <div class="text-center mt-3">
+        <button (click)="saveNotas(vehiculo.idVehiculo)" class="btn btn-success">Añadir</button>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import { GuardarMantenimientoComponent } from './components/mantenimientos/guard
 import { GuardarPiezasComponent } from './components/piezas/guardar-piezas.component';
 import { GuardarRuedasComponent } from './components/ruedas/guardar-ruedas.component';
 import { LoginComponent } from './components/login/login.component';
+import { NotasComponent } from './components/notas/notas.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'guardar-mantenimiento', component: GuardarMantenimientoComponent, canActivate: [AuthGuard] },
   {path: 'guardar-ruedas', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-piezas', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-notas', component: NotasComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

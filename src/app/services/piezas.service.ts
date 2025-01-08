@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Piezas } from '../interfaces/piezas';
-import {environment } from '../utils/variables';
-import { Ruedas } from '../interfaces/ruedas';
+import { environment } from '../utils/variables';
 
 @Injectable({
   providedIn: 'root'

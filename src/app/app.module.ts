@@ -17,6 +17,7 @@ import { GuardarMantenimientoComponent } from './components/mantenimientos/guard
 import { GuardarRuedasComponent } from './components/ruedas/guardar-ruedas.component';
 import { GuardarPiezasComponent } from './components/piezas/guardar-piezas.component';
 import { LoginComponent } from './components/login/login.component';
+import { NotasComponent } from './components/notas/notas.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { LoginComponent } from './components/login/login.component';
     GuardarMantenimientoComponent,
     GuardarRuedasComponent,
     GuardarPiezasComponent,
-    LoginComponent
+    LoginComponent,
+    NotasComponent
   ],
   imports: [
     BrowserModule,
