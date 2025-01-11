@@ -1,8 +1,16 @@
 <div class="container">
   <h2 class="text-center">{{vehiculo?.marca}} {{vehiculo?.modelo}}</h2>
 
+  <!-- Añade este select justo antes de los tabs -->
+  <select class="form-select mobile-tabs" (change)="cambiarTab($event)">
+    <option value="mantenimientos">Mantenimientos</option>
+    <option value="piezas">Piezas</option>
+    <option value="ruedas">Ruedas</option>
+    <option value="notas">Notas</option>
+  </select>
+
   <!-- Navegación de Pestañas -->
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <ul class="nav nav-tabs desktop-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="mantenimientos-tab" data-bs-toggle="tab" data-bs-target="#mantenimientos" type="button" role="tab" aria-controls="mantenimientos" aria-selected="true">
         Mantenimientos
@@ -29,8 +37,8 @@
   <div class="tab-content" id="myTabContent">
     <!-- Pestaña Mantenimientos -->
     <div class="tab-pane fade show active" id="mantenimientos" role="tabpanel" aria-labelledby="mantenimientos-tab">
+      <h3 class="text-center">Mantenimientos</h3>
       <div *ngIf="filtrosList && filtrosList.length > 0" class="contenedor-tabla">
-        <h3 class="text-center">Mantenimientos</h3>
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -48,15 +56,15 @@
             </thead>
             <tbody>
               <tr *ngFor="let filtro of filtrosList">
-                <td data-titulo="Aceite"><i class="fas" [ngClass]="{'fa-check check':filtro.aceite, 'fa-times aspa':!filtro.aceite}"></i></td>
-                <td data-titulo="F. Aceite"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroAceite, 'fa-times aspa':!filtro.filtroAceite}"></i></td>
-                <td data-titulo="F. Aire"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroAire, 'fa-times aspa':!filtro.filtroAire}"></i></td>
-                <td data-titulo="F. Combustible"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroCombustible, 'fa-times aspa':!filtro.filtroCombustible}"></i></td>
-                <td data-titulo="F. Habitáculo"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroHabitaculo, 'fa-times aspa':!filtro.filtroHabitaculo}"></i></td>
-                <td data-titulo="Fecha">{{filtro.fechaCambio | date:'dd/MM/yyyy'}}</td>
-                <td data-titulo="Kilometros">{{filtro.kilometros}}</td>
-                <td data-titulo="Precio">{{filtro.precio}}€</td>
-                <td>
+                <td data-titulo="Aceite"><span class="span-center"><i class="fas" [ngClass]="{'fa-check check':filtro.aceite, 'fa-times aspa':!filtro.aceite}"></i></span> </td>
+                <td data-titulo="F. Aceite"><span class="span-center"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroAceite, 'fa-times aspa':!filtro.filtroAceite}"></i></span></td>
+                <td data-titulo="F. Aire"><span class="span-center"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroAire, 'fa-times aspa':!filtro.filtroAire}"></i></span></td>
+                <td data-titulo="F. Combustible"><span class="span-center"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroCombustible, 'fa-times aspa':!filtro.filtroCombustible}"></i></span></td>
+                <td data-titulo="F. Habitáculo"><span class="span-center"><i class="fas" [ngClass]="{'fa-check check':filtro.filtroHabitaculo, 'fa-times aspa':!filtro.filtroHabitaculo}"></i></span></td>
+                <td data-titulo="Fecha"><span class="span-center">{{filtro.fechaCambio | date:'dd/MM/yyyy'}}</span></td>
+                <td data-titulo="Kilometros"><span class="span-center">{{filtro.kilometros}}</span></td>
+                <td data-titulo="Precio"><span class="span-center">{{filtro.precio}}€</span></td>
+                <td class="botones-td">
                   <button (click)="saveMantenimiento(filtro)" class="btn btn-info"><i class="fas fa-edit"></i></button>
                   <button (click)="deleteFiltros(filtro.idFiltros)" class="btn btn-danger ms-2"><i class="fas fa-trash-alt"></i></button>
                 </td>
@@ -75,8 +83,8 @@
 
     <!-- Pestaña Piezas -->
     <div class="tab-pane fade" id="piezas" role="tabpanel" aria-labelledby="piezas-tab">
+      <h3 class="text-center">Piezas</h3>
       <div *ngIf="piezasList && piezasList.length > 0" class="contenedor-tabla">
-        <h3 class="text-center">Piezas</h3>
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -90,11 +98,11 @@
             </thead>
             <tbody>
               <tr *ngFor="let pieza of piezasList">
-                <td data-titulo="Pieza">{{pieza.descripcion}}</td>
-                <td data-titulo="Fecha">{{pieza.fechaCambio | date:'dd/MM/yyyy'}}</td>
-                <td data-titulo="Kilometros">{{pieza.kilometros}}</td>
-                <td data-titulo="Precio">{{pieza.precio}}€</td>
-                <td>
+                <td data-titulo="Pieza"><span class="span-center">{{pieza.descripcion}}</span></td>
+                <td data-titulo="Fecha"><span class="span-center">{{pieza.fechaCambio | date:'dd/MM/yyyy'}}</span> </td>
+                <td data-titulo="Kilometros"><span class="span-center">{{pieza.kilometros}}</span> </td>
+                <td data-titulo="Precio"><span class="span-center">{{pieza.precio}}€</span></td>
+                <td class="botones-td">
                   <button (click)="savePiezas(pieza)" class="btn btn-info"><i class="fas fa-edit"></i></button>
                   <button (click)="deletePiezas(pieza.idPieza)" class="btn btn-danger ms-2"><i class="fas fa-trash-alt"></i></button>
                 </td>
@@ -113,8 +121,8 @@
 
     <!-- Pestaña Ruedas -->
     <div class="tab-pane fade" id="ruedas" role="tabpanel" aria-labelledby="ruedas-tab">
+      <h3 class="text-center">Ruedas</h3>
       <div *ngIf="ruedasList && ruedasList.length > 0" class="contenedor-tabla">
-        <h3 class="text-center">Ruedas</h3>
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -129,12 +137,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let ruedas of ruedasList">
-                <td data-titulo="Num. Ruedas">{{ruedas.numeroRuedas}}</td>
-                <td data-titulo="Marca">{{ruedas.marca}}</td>
-                <td data-titulo="Fecha">{{ruedas.fechaCambio | date:'dd/MM/yyyy'}}</td>
-                <td data-titulo="Kilometros">{{ruedas.kilometros}}</td>
-                <td data-titulo="Precio">{{ruedas.precio}}€</td>
-                <td>
+                <td data-titulo="Num. Ruedas"><span class="span-center">{{ruedas.numeroRuedas}}</span></td>
+                <td data-titulo="Marca"><span class="span-center">{{ruedas.marca}}</span></td>
+                <td data-titulo="Fecha"><span class="span-center">{{ruedas.fechaCambio | date:'dd/MM/yyyy'}}</span></td>
+                <td data-titulo="Kilometros"><span class="span-center">{{ruedas.kilometros}}</span></td>
+                <td data-titulo="Precio"><span class="span-center">{{ruedas.precio}}€</span></td>
+                <td class="botones-td">
                   <button (click)="saveRuedas(ruedas)" class="btn btn-info"><i class="fas fa-edit"></i></button>
                   <button (click)="deletePiezas(ruedas.idRuedas)" class="btn btn-danger ms-2"><i class="fas fa-trash-alt"></i></button>
                 </td>
@@ -153,8 +161,8 @@
 
     <!-- Pestaña Notas -->
     <div class="tab-pane fade" id="notas" role="tabpanel" aria-labelledby="notas-tab">
+      <h3 class="text-center">Notas</h3>
       <div *ngIf="notasList && notasList.length > 0" class="contenedor-tabla">
-        <h3 class="text-center">Notas</h3>
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -166,9 +174,16 @@
             </thead>
             <tbody>
               <tr *ngFor="let nota of notasList">
-                <td data-titulo="Nota">{{nota.texto}}</td>
-                <td data-titulo="Fecha">{{nota.fechaNota | date:'dd/MM/yyyy'}}</td>
-                <td>
+                <td data-titulo="Nota">
+                  <textarea
+                    class="form-control-plaintext nota-textarea"
+                    [value]="nota.texto"
+                    readonly
+                    rows="3">
+                  </textarea>
+                </td>
+                <td data-titulo="Fecha"><span class="span-center">{{nota.fechaNota | date:'dd/MM/yyyy'}}</span> </td>
+                <td class="botones-td botones-accion">
                   <button (click)="saveNotas(nota)" class="btn btn-info"><i class="fas fa-edit"></i></button>
                   <button (click)="deleteNotas(nota.idNota)" class="btn btn-danger ms-2"><i class="fas fa-trash-alt"></i></button>
                 </td>

@@ -4,6 +4,7 @@ import { Vehiculo } from '../../interfaces/vehiculo';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { NotasService } from '../../services/notas.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-notas',
@@ -17,13 +18,13 @@ export class NotasComponent {
     nota : Notas = new Notas();
     vehiculo : Vehiculo = new Vehiculo();
     edit : boolean = false;
-  
+
     constructor(
       private route : ActivatedRoute,
       private router: Router,
       private vs : VehiculoService,
       private ns : NotasService) { }
-  
+
     ngOnInit() {
       this.route.params.subscribe(params => {
         if (params['idNota']) {
@@ -36,43 +37,43 @@ export class NotasComponent {
         }
       });
     }
-  
+
     onSubmit() {
       if(this.edit)
         this.uptadaNota();
       else
         this.saveNota();
     }
-  
+
     getVehiculo(){
       this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
         this.vehiculo = data;
         this.nota.vehiculo = this.vehiculo;
       })
     }
-  
+
     getNota(){
       this.ns.getNota(this.idNota).subscribe(datos =>{
         this.nota = datos;
       })
     }
-  
+
     saveNota(){
       this.ns.saveNota(this.nota).subscribe(dato => {
         console.log(dato);
         this.irDetalleVehiculo();
       }, error => console.log(error));
-      
+
     }
-  
+
     uptadaNota(){
       this.ns.updateNota(this.idNota, this.nota).subscribe(datos =>{
         console.log(datos);
         this.router.navigate(['vehiculo-detalles', this.nota.vehiculo.idVehiculo]);
       }, error => console.log(error));
-      
+
     }
-  
+
     irDetalleVehiculo(){
       this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
     }

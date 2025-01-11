@@ -1,0 +1,14 @@
+.nota-link {
+  color: #007bff;
+  text-decoration: none;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.nota-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  text-decoration: underline;
+  color: #0056b3;
+}

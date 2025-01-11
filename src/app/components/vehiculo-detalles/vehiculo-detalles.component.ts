@@ -169,7 +169,7 @@ export class VehiculoDetallesComponent implements OnInit{
         }
       });
     }
-    
+
     deleteNotas(idNota : number){
       Swal.fire({
         title: '¿Estás seguro?',
@@ -186,6 +186,20 @@ export class VehiculoDetallesComponent implements OnInit{
           })
         }
       });
+    }
+
+    cambiarTab(event: any) {
+      const tabId = event.target.value;
+      // Ocultar todos los tabs
+      document.querySelectorAll('.tab-pane').forEach(tab => {
+        tab.classList.remove('show', 'active');
+      });
+
+      // Mostrar el tab seleccionado
+      const selectedTab = document.getElementById(tabId);
+      if (selectedTab) {
+        selectedTab.classList.add('show', 'active');
+      }
     }
 
 }

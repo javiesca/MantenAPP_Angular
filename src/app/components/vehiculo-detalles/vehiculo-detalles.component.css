@@ -11,34 +11,76 @@
   color: red;
 }
 
-@media (max-width: 700px) {
+.mobile-tabs {
+  display: none;
+  margin: 20px auto;
+  max-width: 300px;
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: white;
+}
 
-  table {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+table td{
+  height: 60px;
+}
+
+.botones-accion{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100% !important;
+  height: calc(1.5em* 3 + 30px) !important;
+}
+
+.span-center{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (max-width: 1000px) {
+
+  .desktop-tabs {
+    display: none;
   }
+
+  /* Mostrar el select en móvil */
+  .mobile-tabs {
+    display: block;
+  }
+
 
   table tr {
     display: flex;
     flex-direction: column;
     border: 1px solid grey;
-    margin-bottom: 20px;
-  }
-
-  table td {
-    text-align: center;
   }
 
   table td[data-titulo] {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
   }
 
   table td[data-titulo]::before {
-    text-align: left;
     content: attr(data-titulo);
     font-weight: bold;
-    min-width: 250px;
+    min-width: 100px;
+  }
+
+  table td[data-titulo].td-center {
+    height: calc(1.5em * 3 + 100px);
+    line-height: calc(1.5em *  + 100px);
+  }
+
+  table td[data-titulo="Nota"] {
+    height: 90px;
   }
 
   table thead {
@@ -46,13 +88,22 @@
   }
 
   .contenedor-tabla {
-    background-color: rgba(192, 192, 192, 0.247);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    background-color: rgb(227, 233, 222);
+    padding: 0 10px 0 10px;
+  }
+
+  tr{
+    margin-top: 10px;
   }
 
   .botones {
     text-align: center;
   }
 
+
+  @media (max-width: 800px) {
+    tbody{
+      width: 100%;
+    }
+  }
 }

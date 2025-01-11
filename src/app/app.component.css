@@ -1,12 +1,15 @@
+.navbar-nav {
+  display: flex;
+  width: 100%;
+  gap: 25px;
+}
+
+
 @media (max-width: 700px) {
- 
     .navbar-nav {
-      display: flex;
-      width: 100%;
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      gap: 30px;
+      gap: 15px;
     }
-
 }

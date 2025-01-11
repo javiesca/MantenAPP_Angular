@@ -4,17 +4,24 @@
       <div class="form-group">
         <div class="elemento-form">
           <label>Nota</label>
-          <input type="text" class="form-control" id="descripcion" [(ngModel)]="nota.texto" name="descripcion">
+          <textarea
+            class="form-control"
+            id="texto"
+            name="texto"
+            [(ngModel)]="nota.texto"
+            rows="3"
+            placeholder="Escribe tu nota aquí...">
+          </textarea>
         </div>
         <div class="elemento-form">
           <label>Fecha</label>
           <input type="date" class="form-control" id="fechaCambio" [(ngModel)]="nota.fechaNota" name="fechaCambio">
         </div>
-  
+
         <div class="boton-form">
           <button class="btn btn-success">{{ edit ? 'Actualizar' : 'Guardar' }}</button>
         </div>
       </div>
     </form>
   </div>
-  
+
