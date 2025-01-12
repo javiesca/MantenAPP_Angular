@@ -11,7 +11,10 @@ import { PiezasService } from '../../services/piezas.service';
 import { FiltrosService } from '../../services/filtros.service';
 import { Notas } from '../../interfaces/notas';
 import { NotasService } from '../../services/notas.service';
+import { Seguro } from '../../interfaces/seguros';
+import { SegurosService } from '../../services/seguros.service';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-vehiculo-detalles',
@@ -26,10 +29,12 @@ export class VehiculoDetallesComponent implements OnInit{
     ruedasList : Ruedas[];
     piezasList : Piezas[];
     notasList : Notas[];
+    segurosList : Seguro[];
     vehiculo : Vehiculo;
 
     constructor(private route : ActivatedRoute, private router : Router, private vs : VehiculoService,
-      private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService, private ns : NotasService) {};
+      private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService, private ns : NotasService,
+      private ss : SegurosService) {};
 
     ngOnInit(): void {
         this.idVehiculo = this.route.snapshot.params['idVehiculo'];
@@ -38,6 +43,7 @@ export class VehiculoDetallesComponent implements OnInit{
         this.getRuedas(this.idVehiculo);
         this.getPiezas(this.idVehiculo);
         this.getNotas(this.idVehiculo);
+        this.getSeguros(this.idVehiculo);
     }
 
 
@@ -68,6 +74,12 @@ export class VehiculoDetallesComponent implements OnInit{
     getNotas(idVehiculo : number) {
       this.ns.getNotas(idVehiculo).subscribe(data => {
           this.notasList = data;
+      });
+    }
+
+    getSeguros(idVehiculo : number) {
+      this.ss.getListaSeguros(idVehiculo).subscribe(data => {
+          this.segurosList = data;
       });
     }
 
@@ -102,7 +114,6 @@ export class VehiculoDetallesComponent implements OnInit{
       }
     }
 
-
     saveNotas(data : number | Notas){
       if (typeof data === 'number') {
         // Es una creación
@@ -110,6 +121,16 @@ export class VehiculoDetallesComponent implements OnInit{
       } else {
         // Es una actualización
         this.router.navigate(['guardar-notas', { idNota: data.idNota }]);
+      }
+    }
+
+    saveSeguro(data : number | Seguro){
+      if (typeof data === 'number') {
+        // Es una creación
+        this.router.navigate(['guardar-seguro', { idVehiculo: data }]);
+      } else {
+        // Es una actualización
+        this.router.navigate(['guardar-seguro', { idSeguro: data.idSeguro }]);
       }
     }
 
@@ -182,6 +203,24 @@ export class VehiculoDetallesComponent implements OnInit{
       }).then((result) => {
         if (result.isConfirmed) {
           this.ns.deleteNota(idNota).subscribe(data => {
+            this.ngOnInit();
+          })
+        }
+      });
+    }
+
+    deleteSeguro(idSeguro : number){
+      Swal.fire({
+        title: '¿Estás seguro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo',
+        cancelButtonText: 'No, cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.ss.deleteSeguro(idSeguro).subscribe(data => {
             this.ngOnInit();
           })
         }

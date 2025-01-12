@@ -6,6 +6,7 @@
     <option value="mantenimientos">Mantenimientos</option>
     <option value="piezas">Piezas</option>
     <option value="ruedas">Ruedas</option>
+    <option value="seguros">Seguro</option>
     <option value="notas">Notas</option>
   </select>
 
@@ -24,6 +25,11 @@
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="ruedas-tab" data-bs-toggle="tab" data-bs-target="#ruedas" type="button" role="tab" aria-controls="ruedas" aria-selected="false">
         Ruedas
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="seguros-tab" data-bs-toggle="tab" data-bs-target="#seguros" type="button" role="tab" aria-controls="seguros" aria-selected="false">
+        Seguro
       </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -156,6 +162,46 @@
       </div>
       <div class="text-center mt-3">
         <button (click)="saveRuedas(vehiculo.idVehiculo)" class="btn btn-success">Añadir</button>
+      </div>
+    </div>
+
+     <!-- Pestaña Seguro -->
+     <div class="tab-pane fade" id="seguros" role="tabpanel" aria-labelledby="seguros-tab">
+      <h3 class="text-center">Seguros</h3>
+      <div *ngIf="segurosList && segurosList.length > 0" class="contenedor-tabla">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Modelidad</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Precio</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let seguro of segurosList">
+                <td data-titulo="Nombre"><span class="span-center">{{seguro.nombreSeguro}}</span></td>
+                <td data-titulo="Modalidad"><span class="span-center">{{seguro.modoSeguro}}</span></td>
+                <td data-titulo="Fecha Inicio"><span class="span-center">{{seguro.fechaInicio | date:'dd/MM/yyyy'}}</span></td>
+                <td data-titulo="Fecha Fin"><span class="span-center">{{seguro.fechaFin | date:'dd/MM/yyyy'}}</span></td>
+                <td data-titulo="Precio"><span class="span-center">{{seguro.precio}}€</span></td>
+                <td class="botones-td">
+                  <button (click)="saveSeguro(seguro)" class="btn btn-info"><i class="fas fa-edit"></i></button>
+                  <button (click)="deleteSeguro(seguro.idSeguro)" class="btn btn-danger ms-2"><i class="fas fa-trash-alt"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="!segurosList || segurosList.length === 0">
+        <h3 class="text-center">No hay datos seguros</h3>
+      </div>
+      <div class="text-center mt-3">
+        <button (click)="saveSeguro(vehiculo.idVehiculo)" class="btn btn-success">Añadir</button>
       </div>
     </div>
 
