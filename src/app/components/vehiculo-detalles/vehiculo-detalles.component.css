@@ -45,6 +45,7 @@ table td{
 
 @media (max-width: 1000px) {
 
+  /* Ocultar las tabs */
   .desktop-tabs {
     display: none;
   }
@@ -53,7 +54,6 @@ table td{
   .mobile-tabs {
     display: block;
   }
-
 
   table tr {
     display: flex;
