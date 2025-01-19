@@ -8,8 +8,9 @@ import { GuardarPiezasComponent } from './components/piezas/guardar-piezas.compo
 import { GuardarRuedasComponent } from './components/ruedas/guardar-ruedas.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotasComponent } from './components/notas/notas.component';
-import { AuthGuard } from './services/auth.guard';
 import { SegurosComponent } from './components/seguros/seguros.component';
+import { ItvsComponent } from './components/itvs/itvs.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {path : '', redirectTo:'login', pathMatch:'full'},
@@ -22,11 +23,13 @@ const routes: Routes = [
   {path: 'guardar-ruedas', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-piezas', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-notas', component: NotasComponent, canActivate: [AuthGuard]},
-  {path: 'guardar-seguro', component: SegurosComponent, canActivate: [AuthGuard]}
+  {path: 'guardar-seguro', component: SegurosComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-itv', component: ItvsComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

@@ -8,7 +8,6 @@ import { Notas } from '../interfaces/notas';
   providedIn: 'root'
 })
 
-
 export class NotasService {
 
   //URL de la API Spring

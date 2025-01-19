@@ -9,7 +9,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './utils/JwtInterceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
 import { ListaVehiculosComponent } from './components/lista-vehiculos/lista-vehiculos.component';
 import { VehiculoDetallesComponent } from './components/vehiculo-detalles/vehiculo-detalles.component';
 import { GuardarVehiculoComponent } from './components/vehiculos/guardar-vehiculo.component';
@@ -19,6 +18,7 @@ import { GuardarPiezasComponent } from './components/piezas/guardar-piezas.compo
 import { LoginComponent } from './components/login/login.component';
 import { NotasComponent } from './components/notas/notas.component';
 import { SegurosComponent } from './components/seguros/seguros.component';
+import { ItvsComponent } from './components/itvs/itvs.component';
 
 
 @NgModule({
@@ -32,7 +32,8 @@ import { SegurosComponent } from './components/seguros/seguros.component';
     GuardarPiezasComponent,
     LoginComponent,
     NotasComponent,
-    SegurosComponent
+    SegurosComponent,
+    ItvsComponent
   ],
   imports: [
     BrowserModule,
