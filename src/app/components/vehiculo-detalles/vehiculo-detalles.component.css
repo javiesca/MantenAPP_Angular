@@ -79,8 +79,16 @@ table td{
     line-height: calc(1.5em *  + 100px);
   }
 
+  table td[data-titulo="Nombre"] {
+    height: 100px;
+  }
+
+  textarea {
+    height: 100%;
+  }
+
   table td[data-titulo="Nota"] {
-    height: 90px;
+    height: 200px;
   }
 
   table thead {

@@ -42,6 +42,7 @@ export class VehiculoDetallesComponent implements OnInit{
     ngOnInit(): void {
         this.idVehiculo = this.route.snapshot.params['idVehiculo'];
         this.getVehiculo(this.idVehiculo);
+        this.getMantenimientoMotor(this.idVehiculo);
         this.getRuedas(this.idVehiculo);
         this.getPiezas(this.idVehiculo);
         this.getNotas(this.idVehiculo);
@@ -49,13 +50,17 @@ export class VehiculoDetallesComponent implements OnInit{
         this.getItvs(this.idVehiculo)
     }
 
-
     getVehiculo(idVehiculo : number) {
       this.vs.getVehiculoById(idVehiculo).subscribe(data => {
           this.vehiculo = data;
       });
   }
 
+    getMantenimientoMotor(idVehiculo : number) {
+        this.sf.getListaMantenimentos(idVehiculo).subscribe(data => {
+            this.filtrosList = data;
+        });
+    }
 
     getRuedas(idVehiculo : number) {
         this.rs.getListaCambiosRuedas(idVehiculo).subscribe(data => {
