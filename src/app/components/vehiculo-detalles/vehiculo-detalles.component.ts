@@ -14,6 +14,8 @@ import { NotasService } from '../../services/notas.service';
 import { Seguro } from '../../interfaces/seguros';
 import { SegurosService } from '../../services/seguros.service';
 import Swal from 'sweetalert2';
+import { ITV } from '../../interfaces/itv';
+import { ItvsService } from '../../services/itvs.service';
 
 
 @Component({
@@ -30,20 +32,21 @@ export class VehiculoDetallesComponent implements OnInit{
     piezasList : Piezas[];
     notasList : Notas[];
     segurosList : Seguro[];
+    itvList : ITV[];
     vehiculo : Vehiculo;
 
     constructor(private route : ActivatedRoute, private router : Router, private vs : VehiculoService,
       private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService, private ns : NotasService,
-      private ss : SegurosService) {};
+      private ss : SegurosService, private is : ItvsService) {};
 
     ngOnInit(): void {
         this.idVehiculo = this.route.snapshot.params['idVehiculo'];
         this.getVehiculo(this.idVehiculo);
-        this.getMantenimientoMotor(this.idVehiculo);
         this.getRuedas(this.idVehiculo);
         this.getPiezas(this.idVehiculo);
         this.getNotas(this.idVehiculo);
         this.getSeguros(this.idVehiculo);
+        this.getItvs(this.idVehiculo)
     }
 
 
@@ -53,11 +56,6 @@ export class VehiculoDetallesComponent implements OnInit{
       });
   }
 
-    getMantenimientoMotor(idVehiculo : number) {
-        this.sf.getListaMantenimentos(idVehiculo).subscribe(data => {
-            this.filtrosList = data;
-        });
-    }
 
     getRuedas(idVehiculo : number) {
         this.rs.getListaCambiosRuedas(idVehiculo).subscribe(data => {
@@ -83,7 +81,14 @@ export class VehiculoDetallesComponent implements OnInit{
       });
     }
 
-    saveMantenimiento(data: number | Filtros) {
+
+    getItvs(idVehiculo : number) {
+      this.is.getItvs(idVehiculo).subscribe(data => {
+          this.itvList = data
+      });
+    }
+
+    saveFiltros(data: number | Filtros) {
       if (typeof data === 'number') {
         // Es una creación
         this.router.navigate(['guardar-mantenimiento', { idVehiculo: data }]);
@@ -135,27 +140,17 @@ export class VehiculoDetallesComponent implements OnInit{
     }
 
 
-
-    deleteRuedas(idRuedas: number) {
-      Swal.fire({
-        title: '¿Estás seguro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'No, cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.rs.deleteRuedas(idRuedas).subscribe(data => {
-            this.ngOnInit();
-          })
-        }
-      });
+    saveITV(data : number | ITV){
+      if (typeof data === 'number') {
+        // Es una creación
+        this.router.navigate(['guardar-itv', { idVehiculo: data }]);
+      } else {
+        // Es una actualización
+        this.router.navigate(['guardar-itv', { idITV: data.idITV }]);
+      }
     }
 
-
-    deletePiezas(idPiezas : number){
+    deleteDato(id : number, tipo : string){
       Swal.fire({
         title: '¿Estás seguro?',
         icon: 'warning',
@@ -166,63 +161,42 @@ export class VehiculoDetallesComponent implements OnInit{
         cancelButtonText: 'No, cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.ps.deletePieza(idPiezas).subscribe(data => {
-            this.ngOnInit();
+          //Ruedas 
+          if(tipo == 'rueda'){
+            this.rs.deleteRuedas(id).subscribe(data => {
+              this.ngOnInit();
           })
-        }
-      });
-    }
-
-    deleteFiltros(idFiltros : number){
-      Swal.fire({
-        title: '¿Estás seguro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'No, cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.sf.deleteFiltros(idFiltros).subscribe(data => {
-            this.ngOnInit();
+          }
+          //Piezas 
+          if(tipo == 'pieza'){
+            this.ps.deletePieza(id).subscribe(data => {
+              this.ngOnInit();
           })
-        }
-      });
-    }
-
-    deleteNotas(idNota : number){
-      Swal.fire({
-        title: '¿Estás seguro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'No, cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.ns.deleteNota(idNota).subscribe(data => {
-            this.ngOnInit();
+          }
+          //Filtros
+          if(tipo == 'filtro'){
+            this.sf.deleteFiltros(id).subscribe(data => {
+              this.ngOnInit();
           })
-        }
-      });
-    }
-
-    deleteSeguro(idSeguro : number){
-      Swal.fire({
-        title: '¿Estás seguro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'No, cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.ss.deleteSeguro(idSeguro).subscribe(data => {
-            this.ngOnInit();
+          }
+          //Notas
+          if(tipo == 'nota'){
+            this.ns.deleteNota(id).subscribe(data => {
+              this.ngOnInit();
           })
+          }
+          //Seguros
+          if(tipo == 'seguro'){
+            this.ss.deleteSeguro(id).subscribe(data => {
+              this.ngOnInit();
+          })
+          }
+          //ITV
+          if(tipo == 'itv'){
+            this.is.deleteItv(id).subscribe(data => {
+              this.ngOnInit();
+          })
+          }
         }
       });
     }

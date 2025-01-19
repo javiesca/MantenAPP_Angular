@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../utils/variables';
 import { Observable } from 'rxjs';
+import { ITV } from '../interfaces/itv';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class ItvsService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getItvs(idVehiculo: number): Observable<Object> {
-    return this.httpClient.get(`${this.baseURL}/vehiculo/${idVehiculo}`);
+  getItvs(idVehiculo: number): Observable<ITV[]> {
+    return this.httpClient.get<ITV[]>(`${this.baseURL}/vehiculo/${idVehiculo}`);
   }
 
   deleteItv(idItv: number): Observable<Object> {
