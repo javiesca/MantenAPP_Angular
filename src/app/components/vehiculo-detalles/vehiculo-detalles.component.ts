@@ -15,7 +15,7 @@ import { Seguro } from '../../interfaces/seguros';
 import { SegurosService } from '../../services/seguros.service';
 import Swal from 'sweetalert2';
 import { ITV } from '../../interfaces/itv';
-import { ItvsService } from '../../services/itvs.service';
+import { ITVService } from '../../services/itvs.service';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class VehiculoDetallesComponent implements OnInit{
 
     constructor(private route : ActivatedRoute, private router : Router, private vs : VehiculoService,
       private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService, private ns : NotasService,
-      private ss : SegurosService, private is : ItvsService) {};
+      private ss : SegurosService, private itvs : ITVService) {};
 
     ngOnInit(): void {
         this.idVehiculo = this.route.snapshot.params['idVehiculo'];
@@ -88,7 +88,7 @@ export class VehiculoDetallesComponent implements OnInit{
 
 
     getItvs(idVehiculo : number) {
-      this.is.getItvs(idVehiculo).subscribe(data => {
+      this.itvs.getITVs(idVehiculo).subscribe(data => {
           this.itvList = data
       });
     }
@@ -166,13 +166,13 @@ export class VehiculoDetallesComponent implements OnInit{
         cancelButtonText: 'No, cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          //Ruedas 
+          //Ruedas
           if(tipo == 'rueda'){
             this.rs.deleteRuedas(id).subscribe(data => {
               this.ngOnInit();
           })
           }
-          //Piezas 
+          //Piezas
           if(tipo == 'pieza'){
             this.ps.deletePieza(id).subscribe(data => {
               this.ngOnInit();
@@ -198,7 +198,7 @@ export class VehiculoDetallesComponent implements OnInit{
           }
           //ITV
           if(tipo == 'itv'){
-            this.is.deleteItv(id).subscribe(data => {
+            this.itvs.deleteITV(id).subscribe(data => {
               this.ngOnInit();
           })
           }

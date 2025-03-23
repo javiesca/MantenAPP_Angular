@@ -8,31 +8,31 @@ import { ITV } from '../interfaces/itv';
   providedIn: 'root'
 })
 
-export class ItvsService {
+export class ITVService {
 
   //URL de la API Spring
   private baseURL = environment.apiBaseURL + "mantenimientos/itvs";
 
   constructor(private httpClient: HttpClient) {}
 
-  getItvs(idVehiculo: number): Observable<ITV[]> {
+  getITVs(idVehiculo: number): Observable<ITV[]> {
     return this.httpClient.get<ITV[]>(`${this.baseURL}/vehiculo/${idVehiculo}`);
   }
 
-  deleteItv(idItv: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL}/${idItv}`);
+  deleteITV(idITV: number): Observable<Object> {
+    return this.httpClient.delete(`${this.baseURL}/${idITV}`);
   }
 
-  getItv(idItv: number): Observable<Object> {
-    return this.httpClient.get(`${this.baseURL}/${idItv}`);
+  getITV(idITV: number): Observable<ITV> {
+    return this.httpClient.get<ITV>(`${this.baseURL}/${idITV}`);
   }
 
 
-  saveItv(itv: Object): Observable<Object> {
+  saveITV(itv: ITV): Observable<Object> {
     return this.httpClient.post(`${this.baseURL}`, itv);
   }
 
-  updateItv(idItv: number, itv: Object): Observable<Object> {
-    return this.httpClient.put(`${this.baseURL}/${idItv}`, itv);
+  updateITV(idITV: number, itv: ITV): Observable<Object> {
+    return this.httpClient.put(`${this.baseURL}/${idITV}`, itv);
   }
 }
