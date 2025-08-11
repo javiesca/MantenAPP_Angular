@@ -7,5 +7,6 @@ export class Seguro {
     modoSeguro: string;
     fechaInicio: Date;
     fechaFin: Date;
+    notas: string;
     vehiculo: Vehiculo;
 }
