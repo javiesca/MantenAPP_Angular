@@ -11,8 +11,23 @@
           <label for="password" class="form-label">Contraseña</label>
           <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
+        <button
+          type="submit"
+          class="btn btn-primary w-100 d-flex justify-content-center align-items-center"
+          [disabled]="isLoading">
+
+          <span *ngIf="!isLoading">Login</span>
+
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="isLoading" class="ms-2">Conectando...</span>
+        </button>
       </form>
+      <div class="text-center mt-3">
+        <a routerLink="/register">¿No tienes cuenta? Regístrate</a>
+      </div>
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
     </div>
     <div *ngIf="incorrectCredentials" class="alert alert-danger">
       Las credenciales proporcionadas son incorrectas. Por favor, inténtalo de nuevo.

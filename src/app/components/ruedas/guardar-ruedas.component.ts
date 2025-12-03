@@ -11,6 +11,7 @@ import { Vehiculo } from '../../interfaces/vehiculo';
   templateUrl: './guardar-ruedas.component.html',
   styleUrl: './guardar-ruedas.component.css'
 })
+
 export class GuardarRuedasComponent implements OnInit {
 
   idVehiculo: number;

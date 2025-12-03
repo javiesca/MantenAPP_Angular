@@ -11,11 +11,12 @@ import { NotasComponent } from './components/notas/notas.component';
 import { SegurosComponent } from './components/seguros/seguros.component';
 import { ItvsComponent } from './components/itvs/itvs.component';
 import { AuthGuard } from './services/auth.guard';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {path : '', redirectTo:'login', pathMatch:'full'},
   {path: 'login', component: LoginComponent},
-  {path : 'vehiculos', component: ListaVehiculosComponent, canActivate: [AuthGuard]},
+  {path: 'vehiculos', component: ListaVehiculosComponent, canActivate: [AuthGuard]},
   {path: 'vehiculo-detalles/:idVehiculo', component:VehiculoDetallesComponent, canActivate: [AuthGuard]},
   {path: 'guardar-vehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
   {path: 'guardar-vehiculo/:idVehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'guardar-notas', component: NotasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-seguro', component: SegurosComponent, canActivate: [AuthGuard]},
   {path: 'guardar-itv', component: ItvsComponent, canActivate: [AuthGuard]},
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({

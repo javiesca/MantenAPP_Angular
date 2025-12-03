@@ -22,15 +22,22 @@ export class JwtInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          // Redirigir a la página de login
-          this.router.navigate(['/login']);
-        }
-        return throwError(error);
-      })
-    );
+  return next.handle(request).pipe(
+  catchError((error: HttpErrorResponse) => {
+    if (error.status === 401) {
+      const msg = error.error?.message || '';
+      const isAuthError =
+        msg.includes('expired') ||
+        msg.includes('invalid_token') ||
+        msg.includes('Bad credentials');
+      
+      if (isAuthError) {
+        this.router.navigate(['/login']);
+      }
+    }
+    return throwError(() => error);
+  })
+);
   }
 }
   

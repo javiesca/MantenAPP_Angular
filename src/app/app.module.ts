@@ -19,6 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NotasComponent } from './components/notas/notas.component';
 import { SegurosComponent } from './components/seguros/seguros.component';
 import { ItvsComponent } from './components/itvs/itvs.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ItvsComponent } from './components/itvs/itvs.component';
     LoginComponent,
     NotasComponent,
     SegurosComponent,
-    ItvsComponent
+    ItvsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

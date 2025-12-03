@@ -12,4 +12,9 @@
       align-items: center;
       gap: 15px;
     }
+
+    .navbar-text {
+      text-align: center;
+      font-size: 0.6rem;
+    }
 }
