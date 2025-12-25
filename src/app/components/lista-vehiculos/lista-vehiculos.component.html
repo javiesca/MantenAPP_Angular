@@ -2,8 +2,9 @@
   <div class="col-lg-5" *ngFor="let vehiculo of vehiculos">
     <div class="card mb-3">
       <div class="card-header">
-        {{vehiculo.marca}} - {{vehiculo.modelo}}
-        <p>Fecha de compra: {{vehiculo.fechaCompra | date:'dd/MM/yyyy'}}</p>
+        <span><b>{{vehiculo.marca}} - {{vehiculo.modelo}}</b></span><br>
+        <span><b>Fecha de fabricación: </b>{{vehiculo.fechaCompra | date:'dd/MM/yyyy'}}</span><br>
+        <span><b>Matrícula: </b>{{vehiculo.matricula?.toUpperCase()}}</span>
       </div>
       <div class="card-body text-center">
         <div class="imagen-vehiculo">

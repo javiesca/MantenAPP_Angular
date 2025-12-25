@@ -19,7 +19,7 @@ export class GuardarVehiculoComponent implements OnInit {
 
 constructor(
     private formBuilder: FormBuilder,
-    private vehiculoService: VehiculoService, 
+    private vehiculoService: VehiculoService,
     private router: Router,
     private activateRoute: ActivatedRoute){
 
@@ -27,6 +27,7 @@ constructor(
         idVehiculo: this.formBuilder.control(null),
         marca: this.formBuilder.control(''),
         modelo: this.formBuilder.control(''),
+        matricula: this.formBuilder.control(''),
         fechaCompra: this.formBuilder.control(null),
         image: this.formBuilder.control(null)
       });
@@ -49,7 +50,7 @@ constructor(
         Swal.showLoading();
       }
     });
-  
+
     this.vehiculoService.updateVehiculo(this.formVehiculo.value).subscribe(
       response => {
         if (this.selectedFile) {
@@ -108,7 +109,7 @@ constructor(
         Swal.showLoading();
       }
     });
-  
+
     this.vehiculoService.saveVehiculo(this.formVehiculo.value, this.selectedFile).subscribe(
       response => {
         Swal.close();
@@ -160,6 +161,7 @@ constructor(
         idVehiculo: this.vehiculo.idVehiculo,
         marca: this.vehiculo.marca,
         modelo: this.vehiculo.modelo,
+        matricula: this.vehiculo.matricula,
         fechaCompra: this.vehiculo.fechaCompra,
         image: this.vehiculo.image
       });

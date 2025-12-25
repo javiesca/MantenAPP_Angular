@@ -6,4 +6,5 @@ export class Vehiculo {
   modelo:String;
   fechaCompra:Date;
   image?:Image;
+  matricula:String;
 }
