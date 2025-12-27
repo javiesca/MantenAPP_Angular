@@ -9,18 +9,13 @@ body {
   box-sizing: border-box;
 }
 
-app-root > * {  /* Esto selecciona todos los componentes directos dentro de app-root */
+/* Esto selecciona todos los componentes directos dentro de app-root */
+app-root > * {
   margin-bottom: 20px;
 }
 
-h1,h2,h3 {
+h1,h2 {
   margin-top: 20px;
-}
-
-h3 {
-  padding: 20px;
-  background-color: rgb(227, 233, 222);
-  border: 1px solid black;
 }
 
 .elemento-form{
