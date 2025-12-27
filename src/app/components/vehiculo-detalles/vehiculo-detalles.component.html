@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
   <h2 class="text-center">{{ vehiculo?.marca }} {{ vehiculo?.modelo }}</h2>
 
   <!-- Añade este select justo antes de los tabs -->
@@ -153,22 +153,26 @@
 
                 <!-- RESTO DE FILTROS EN UNA SOLA CELDA -->
                 <td data-titulo="Filtros">
-                  <div class="span-center d-flex justify-content-center gap-3 nowrap">
+                  <div class="span-center d-flex justify-content-center gap-3 wrap">
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroAceite ? 'ok' : 'off'">
-                      Aceite
+                    <div class="filter-badge" [ngClass]="filtro.filtroAceite ? 'ok' : 'off'"
+                         data-bs-toggle="tooltip" title="Filtro de aceite" (click)="info('Filtro de aceite')">
+                      <i class="fas fa-oil-can"></i>
                     </div>
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroAire ? 'ok' : 'off'">
-                      Aire
+                    <div class="filter-badge" [ngClass]="filtro.filtroAire ? 'ok' : 'off'"
+                         data-bs-toggle="tooltip" title="Filtro de aire" (click)="info('Filtro de aire')" >
+                      <i class="fas fa-wind"></i>
                     </div>
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroCombustible ? 'ok' : 'off'">
-                      Combustible
+                    <div class="filter-badge" [ngClass]="filtro.filtroCombustible ? 'ok' : 'off'"
+                         data-bs-toggle="tooltip" title="Filtro de combustible" (click)="info('Filtro de combustible')">
+                      <i class="fas fa-gas-pump"></i>
                     </div>
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroHabitaculo ? 'ok' : 'off'">
-                      Habitáculo
+                    <div class="filter-badge" [ngClass]="filtro.filtroHabitaculo ? 'ok' : 'off'"
+                         data-bs-toggle="tooltip" title="Filtro del habitáculo" (click)="info('Filtro de habitáculo')">
+                      <i class="fas fa-fan"></i>
                     </div>
 
                   </div>
@@ -280,8 +284,7 @@
       <div class="text-center mt-3 mb-3">
         <button
           (click)="saveRuedas(vehiculo.idVehiculo)"
-          class="btn btn-success"
-        >
+          class="btn btn-success">
           Nuevo
         </button>
       </div>

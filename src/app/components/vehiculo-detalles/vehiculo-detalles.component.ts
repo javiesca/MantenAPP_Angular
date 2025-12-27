@@ -220,4 +220,11 @@ export class VehiculoDetallesComponent implements OnInit{
       }
     }
 
+    info(texto: string) {
+      Swal.fire({
+        text: texto,
+        width: '65%'
+      });
+    }
+
 }

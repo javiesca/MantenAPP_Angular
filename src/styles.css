@@ -5,9 +5,6 @@ body {
   background-color: #f5f7fa;
 }
 
-* {
-  box-sizing: border-box;
-}
 
 /* Esto selecciona todos los componentes directos dentro de app-root */
 app-root > * {

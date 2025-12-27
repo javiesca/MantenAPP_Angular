@@ -130,5 +130,10 @@ table td{
     tbody{
       width: 100%;
     }
+
+    .filter-badge {
+      border-radius: 999px;
+      font-size: 12px;
+    }
   }
 }
