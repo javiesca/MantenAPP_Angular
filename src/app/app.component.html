@@ -1,25 +1,17 @@
-<div *ngIf="authService.isLoggedIn()">
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="vehiculos" routerLinkActive="active" class="nav-link">Lista de Vehículos</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="guardar-vehiculo" routerLinkActive="active" class="nav-link">Nuevo vehículo</a>
-      </li>
-      <li class="nav-item">
-        <button (click)="logout()" class="btn btn-danger">
-          <!-- Este es el icono de logout de Font Awesome -->
-          <i class="fa fa-sign-out-alt"></i>
-        </button>
-      </li>
-    </ul>
-    <span class="navbar-text w-100 text-light me-2 fs-4">
-       {{ authService.getUsername() }}
-    </span>
-  </nav>
-  <h1 class="text-center">{{title}}</h1>
-</div>
+<nav *ngIf="authService.isLoggedIn()" class="navbar navbar-dark bg-dark px-3">
+  <a class="navbar-brand d-flex align-items-center" routerLink="/vehiculos" aria-label="Ir a vehículos">
+    <i class="fa fa-home fs-4"></i>
+  </a>
+
+  <span class="navbar-text text-light fw-semibold text-truncate">
+    {{ authService.getUsername() }}
+  </span>
+
+  <button (click)="logout()" class="btn btn-danger">
+    <!-- Este es el icono de logout de Font Awesome -->
+    <i class="fa fa-sign-out-alt"></i>
+  </button>
+</nav>
 
 <div class="container text-center">
   <router-outlet></router-outlet>

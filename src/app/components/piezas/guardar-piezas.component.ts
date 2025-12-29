@@ -4,6 +4,8 @@ import { Piezas } from '../../interfaces/piezas';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { PiezasService } from '../../services/piezas.service';
+import { SwalFlowService } from '../../services/swal-flow.service';
+
 
 @Component({
   selector: 'app-guardar-piezas',
@@ -22,7 +24,9 @@ export class GuardarPiezasComponent implements OnInit {
     private route : ActivatedRoute,
     private router: Router,
     private vs : VehiculoService,
-    private ps : PiezasService) { }
+    private ps : PiezasService,
+    private swalFlow: SwalFlowService
+  ){ }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -58,21 +62,21 @@ export class GuardarPiezasComponent implements OnInit {
   }
 
   savePiezas(){
-    this.ps.savePieza(this.piezas).subscribe(dato => {
-      console.log(dato);
-      this.irDetalleVehiculo();
-    }, error => console.log(error));
+    this.swalFlow
+      .save(this.ps.savePieza(this.piezas), () => this.irDetalleVehiculo())
+      .subscribe();
   }
 
+  
   uptadaPiezas(){
-    this.ps.updatePiezas(this.idPiezas, this.piezas).subscribe(datos =>{
-      console.log(datos);
-      this.router.navigate(['vehiculo-detalles', this.piezas.vehiculo.idVehiculo]);
-    }, error => console.log(error));
-  }
+    this.swalFlow
+      .update(this.ps.updatePiezas(this.idPiezas, this.piezas), () => this.irDetalleVehiculo())
+      .subscribe();
+  }  
 
   irDetalleVehiculo(){
-    this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
+    const id = this.piezas?.vehiculo?.idVehiculo ?? this.vehiculo?.idVehiculo ?? this.idVehiculo;
+    this.router.navigate(['vehiculo-detalles', id], { fragment: 'piezas' });
   }
 
 }

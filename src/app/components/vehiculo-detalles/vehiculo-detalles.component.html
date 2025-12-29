@@ -14,86 +14,38 @@
   <!-- Navegación de Pestañas -->
   <ul class="nav nav-tabs desktop-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button
-        class="nav-link active"
-        id="mantenimientos-tab"
-        data-bs-toggle="tab"
-        data-bs-target="#mantenimientos"
-        type="button"
-        role="tab"
-        aria-controls="mantenimientos"
-        aria-selected="true"
-      >
+      <button class="nav-link active" id="mantenimientos-tab" data-bs-toggle="tab" data-bs-target="#mantenimientos"
+        type="button" role="tab" aria-controls="mantenimientos" aria-selected="true">
         Mantenimientos
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button
-        class="nav-link"
-        id="piezas-tab"
-        data-bs-toggle="tab"
-        data-bs-target="#piezas"
-        type="button"
-        role="tab"
-        aria-controls="piezas"
-        aria-selected="false"
-      >
+      <button class="nav-link" id="piezas-tab" data-bs-toggle="tab" data-bs-target="#piezas" type="button" role="tab"
+        aria-controls="piezas" aria-selected="false">
         Piezas
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button
-        class="nav-link"
-        id="ruedas-tab"
-        data-bs-toggle="tab"
-        data-bs-target="#ruedas"
-        type="button"
-        role="tab"
-        aria-controls="ruedas"
-        aria-selected="false"
-      >
+      <button class="nav-link" id="ruedas-tab" data-bs-toggle="tab" data-bs-target="#ruedas" type="button" role="tab"
+        aria-controls="ruedas" aria-selected="false">
         Ruedas
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button
-        class="nav-link"
-        id="seguros-tab"
-        data-bs-toggle="tab"
-        data-bs-target="#seguros"
-        type="button"
-        role="tab"
-        aria-controls="seguros"
-        aria-selected="false"
-      >
+      <button class="nav-link" id="seguros-tab" data-bs-toggle="tab" data-bs-target="#seguros" type="button" role="tab"
+        aria-controls="seguros" aria-selected="false">
         Seguro
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button
-        class="nav-link"
-        id="itv-tab"
-        data-bs-toggle="tab"
-        data-bs-target="#itv"
-        type="button"
-        role="tab"
-        aria-controls="itv"
-        aria-selected="false"
-      >
+      <button class="nav-link" id="itv-tab" data-bs-toggle="tab" data-bs-target="#itv" type="button" role="tab"
+        aria-controls="itv" aria-selected="false">
         ITV
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button
-        class="nav-link"
-        id="notas-tab"
-        data-bs-toggle="tab"
-        data-bs-target="#notas"
-        type="button"
-        role="tab"
-        aria-controls="notas"
-        aria-selected="false"
-      >
+      <button class="nav-link" id="notas-tab" data-bs-toggle="tab" data-bs-target="#notas" type="button" role="tab"
+        aria-controls="notas" aria-selected="false">
         Notas
       </button>
     </li>
@@ -102,27 +54,16 @@
   <!-- Contenido de las Pestañas -->
   <div class="tab-content" id="myTabContent">
     <!-- Pestaña Mantenimientos -->
-    <div
-      class="tab-pane fade show active"
-      id="mantenimientos"
-      role="tabpanel"
-      aria-labelledby="mantenimientos-tab"
-    >
+    <div class="tab-pane fade show active" id="mantenimientos" role="tabpanel" aria-labelledby="mantenimientos-tab">
       <div *ngIf="!filtrosList || filtrosList.length === 0">
-        <h3 class="text-center">No hay datos de mantenimientos de motor</h3>
+        <h3 class="text-center no-datos">No hay datos de mantenimientos de motor</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button
-          (click)="saveFiltros(vehiculo.idVehiculo)"
-          class="btn btn-success"
-        >
+        <button (click)="saveFiltros(vehiculo.idVehiculo)" class="btn btn-success">
           Nuevo
         </button>
       </div>
-      <div
-        *ngIf="filtrosList && filtrosList.length > 0"
-        class="contenedor-tabla"
-      >
+      <div *ngIf="filtrosList && filtrosList.length > 0" class="contenedor-tabla">
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -140,13 +81,10 @@
                 <!-- ACEITE -->
                 <td data-titulo="Aceite">
                   <span class="span-center">
-                    <i
-                      class="fas"
-                      [ngClass]="{
+                    <i class="fas" [ngClass]="{
                         'fa-check check': filtro.aceite,
                         'fa-times aspa': !filtro.aceite
-                      }"
-                    >
+                      }">
                     </i>
                   </span>
                 </td>
@@ -155,23 +93,23 @@
                 <td data-titulo="Filtros">
                   <div class="span-center d-flex justify-content-center gap-3 wrap">
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroAceite ? 'ok' : 'off'"
-                         data-bs-toggle="tooltip" title="Filtro de aceite" (click)="info('Filtro de aceite')">
+                    <div class="filter-badge" [ngClass]="filtro.filtroAceite ? 'ok' : 'off'" data-bs-toggle="tooltip"
+                      title="Filtro de aceite" (click)="info('Filtro de aceite')">
                       <i class="fas fa-oil-can"></i>
                     </div>
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroAire ? 'ok' : 'off'"
-                         data-bs-toggle="tooltip" title="Filtro de aire" (click)="info('Filtro de aire')" >
+                    <div class="filter-badge" [ngClass]="filtro.filtroAire ? 'ok' : 'off'" data-bs-toggle="tooltip"
+                      title="Filtro de aire" (click)="info('Filtro de aire')">
                       <i class="fas fa-wind"></i>
                     </div>
 
                     <div class="filter-badge" [ngClass]="filtro.filtroCombustible ? 'ok' : 'off'"
-                         data-bs-toggle="tooltip" title="Filtro de combustible" (click)="info('Filtro de combustible')">
+                      data-bs-toggle="tooltip" title="Filtro de combustible" (click)="info('Filtro de combustible')">
                       <i class="fas fa-gas-pump"></i>
                     </div>
 
                     <div class="filter-badge" [ngClass]="filtro.filtroHabitaculo ? 'ok' : 'off'"
-                         data-bs-toggle="tooltip" title="Filtro del habitáculo" (click)="info('Filtro de habitáculo')">
+                      data-bs-toggle="tooltip" title="Filtro del habitáculo" (click)="info('Filtro de habitáculo')">
                       <i class="fas fa-fan"></i>
                     </div>
 
@@ -181,10 +119,10 @@
                 <td data-titulo="Fecha">
                   <span class="span-center">{{
                     filtro.fechaCambio | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Kilometros">
-                  <span class="span-center">{{ filtro.kilometros }}</span>
+                  <span class="span-center">{{ filtro.kilometros }} Km</span>
                 </td>
                 <td data-titulo="Precio">
                   <span class="span-center">{{ filtro.precio }}€</span>
@@ -193,10 +131,7 @@
                   <button (click)="saveFiltros(filtro)" class="btn btn-info">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDato(filtro.idFiltros, 'filtro')"
-                    class="btn btn-danger ms-2"
-                  >
+                  <button (click)="deleteDato(filtro.idFiltros, 'filtro')" class="btn btn-danger ms-2">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
@@ -208,20 +143,12 @@
     </div>
 
     <!-- Pestaña Piezas -->
-    <div
-      class="tab-pane fade"
-      id="piezas"
-      role="tabpanel"
-      aria-labelledby="piezas-tab"
-    >
+    <div class="tab-pane fade" id="piezas" role="tabpanel" aria-labelledby="piezas-tab">
       <div *ngIf="!piezasList || piezasList.length === 0">
-        <h3 class="text-center">No hay datos de cambios de piezas</h3>
+        <h3 class="text-center no-datos">No hay datos de cambios de piezas</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button
-          (click)="savePiezas(vehiculo.idVehiculo)"
-          class="btn btn-success"
-        >
+        <button (click)="savePiezas(vehiculo.idVehiculo)" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -245,10 +172,10 @@
                 <td data-titulo="Fecha">
                   <span class="span-center">{{
                     pieza.fechaCambio | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Kilometros">
-                  <span class="span-center">{{ pieza.kilometros }}</span>
+                  <span class="span-center">{{ pieza.kilometros }} Km</span>
                 </td>
                 <td data-titulo="Precio">
                   <span class="span-center">{{ pieza.precio }}€</span>
@@ -257,10 +184,7 @@
                   <button (click)="savePiezas(pieza)" class="btn btn-info">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDato(pieza.idPieza, 'pieza')"
-                    class="btn btn-danger ms-2"
-                  >
+                  <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn btn-danger ms-2">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
@@ -272,19 +196,12 @@
     </div>
 
     <!-- Pestaña Ruedas -->
-    <div
-      class="tab-pane fade"
-      id="ruedas"
-      role="tabpanel"
-      aria-labelledby="ruedas-tab"
-    >
+    <div class="tab-pane fade" id="ruedas" role="tabpanel" aria-labelledby="ruedas-tab">
       <div *ngIf="!ruedasList || ruedasList.length === 0">
-        <h3 class="text-center">No hay datos de cambios de ruedas</h3>
+        <h3 class="text-center no-datos">No hay datos de cambios de ruedas</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button
-          (click)="saveRuedas(vehiculo.idVehiculo)"
-          class="btn btn-success">
+        <button (click)="saveRuedas(vehiculo.idVehiculo)" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -312,10 +229,10 @@
                 <td data-titulo="Fecha">
                   <span class="span-center">{{
                     ruedas.fechaCambio | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Kilometros">
-                  <span class="span-center">{{ ruedas.kilometros }}</span>
+                  <span class="span-center">{{ ruedas.kilometros }} Km</span>
                 </td>
                 <td data-titulo="Precio">
                   <span class="span-center">{{ ruedas.precio }}€</span>
@@ -324,10 +241,7 @@
                   <button (click)="saveRuedas(ruedas)" class="btn btn-info">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDato(ruedas.idRuedas, 'rueda')"
-                    class="btn btn-danger ms-2"
-                  >
+                  <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn btn-danger ms-2">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
@@ -339,27 +253,16 @@
     </div>
 
     <!-- Pestaña Seguro -->
-    <div
-      class="tab-pane fade"
-      id="seguros"
-      role="tabpanel"
-      aria-labelledby="seguros-tab"
-    >
+    <div class="tab-pane fade" id="seguros" role="tabpanel" aria-labelledby="seguros-tab">
       <div *ngIf="!segurosList || segurosList.length === 0">
-        <h3 class="text-center">No hay datos seguros</h3>
+        <h3 class="text-center no-datos">No hay datos seguros</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button
-          (click)="saveSeguro(vehiculo.idVehiculo)"
-          class="btn btn-success"
-        >
+        <button (click)="saveSeguro(vehiculo.idVehiculo)" class="btn btn-success">
           Nuevo
         </button>
       </div>
-      <div
-        *ngIf="segurosList && segurosList.length > 0"
-        class="contenedor-tabla"
-      >
+      <div *ngIf="segurosList && segurosList.length > 0" class="contenedor-tabla">
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -384,12 +287,12 @@
                 <td data-titulo="Fecha Inicio">
                   <span class="span-center">{{
                     seguro.fechaInicio | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Fecha Fin">
                   <span class="span-center">{{
                     seguro.fechaFin | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Precio">
                   <span class="span-center">{{ seguro.precio }}€</span>
@@ -401,10 +304,7 @@
                   <button (click)="saveSeguro(seguro)" class="btn btn-info">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDato(seguro.idSeguro, 'seguro')"
-                    class="btn btn-danger ms-2"
-                  >
+                  <button (click)="deleteDato(seguro.idSeguro, 'seguro')" class="btn btn-danger ms-2">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
@@ -416,14 +316,9 @@
     </div>
 
     <!-- Pestaña ITV -->
-    <div
-      class="tab-pane fade"
-      id="itv"
-      role="tabpanel"
-      aria-labelledby="itv-tab"
-    >
+    <div class="tab-pane fade" id="itv" role="tabpanel" aria-labelledby="itv-tab">
       <div *ngIf="!itvList || itvList.length === 0">
-        <h3 class="text-center">No hay ITV</h3>
+        <h3 class="text-center no-datos">No hay ITV</h3>
       </div>
       <div class="text-center mt-3 mb-3">
         <button (click)="saveITV(vehiculo.idVehiculo)" class="btn btn-success">
@@ -447,12 +342,12 @@
                 <td data-titulo="Fecha ITV">
                   <span class="span-center">{{
                     itv.fechaITV | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Fecha Proxima ITV">
                   <span class="span-center">{{
                     itv.fechaProximaITV | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td data-titulo="Sitio">
                   <span class="span-center">{{ itv.sitioITV }}</span>
@@ -464,10 +359,7 @@
                   <button (click)="saveITV(itv)" class="btn btn-info">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDato(itv.idITV, 'itv')"
-                    class="btn btn-danger ms-2"
-                  >
+                  <button (click)="deleteDato(itv.idITV, 'itv')" class="btn btn-danger ms-2">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>
@@ -479,20 +371,12 @@
     </div>
 
     <!-- Pestaña Notas -->
-    <div
-      class="tab-pane fade"
-      id="notas"
-      role="tabpanel"
-      aria-labelledby="notas-tab"
-    >
+    <div class="tab-pane fade" id="notas" role="tabpanel" aria-labelledby="notas-tab">
       <div *ngIf="!notasList || notasList.length === 0">
-        <h3 class="text-center">No hay notas</h3>
+        <h3 class="text-center no-datos">No hay notas</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button
-          (click)="saveNotas(vehiculo.idVehiculo)"
-          class="btn btn-success"
-        >
+        <button (click)="saveNotas(vehiculo.idVehiculo)" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -509,27 +393,19 @@
             <tbody>
               <tr *ngFor="let nota of notasList">
                 <td data-titulo="Nota">
-                  <textarea
-                    class="form-control-plaintext nota-textarea"
-                    [value]="nota.texto"
-                    readonly
-                    rows="3"
-                  >
+                  <textarea class="form-control-plaintext nota-textarea" [value]="nota.texto" readonly rows="3">
                   </textarea>
                 </td>
                 <td data-titulo="Fecha">
                   <span class="span-center">{{
                     nota.fechaNota | date : "dd/MM/yyyy"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td class="botones-td botones-notas">
                   <button (click)="saveNotas(nota)" class="btn btn-info">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    (click)="deleteDato(nota.idNota, 'nota')"
-                    class="btn btn-danger ms-2"
-                  >
+                  <button (click)="deleteDato(nota.idNota, 'nota')" class="btn btn-danger ms-2">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </td>

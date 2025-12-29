@@ -4,12 +4,15 @@ import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SegurosService } from '../../services/seguros.service';
+import { SwalFlowService } from '../../services/swal-flow.service';
 
 @Component({
   selector: 'app-seguros',
   templateUrl: './seguros.component.html',
   styleUrl: './seguros.component.css'
 })
+
+
 export class SegurosComponent implements OnInit {
 
   idVehiculo : number;
@@ -22,7 +25,8 @@ export class SegurosComponent implements OnInit {
     private route : ActivatedRoute,
     private router: Router,
     private vs : VehiculoService,
-    private ss : SegurosService
+    private ss : SegurosService,
+    private swalFlow: SwalFlowService
   ) { }
 
   ngOnInit(): void {
@@ -60,20 +64,20 @@ export class SegurosComponent implements OnInit {
   }
 
   saveSeguro(){
-    this.ss.saveSeguro(this.seguro).subscribe(dato => {
-      this.irDetalleVehiculo();
-    }, error => console.log(error));
+    this.swalFlow
+      .save(this.ss.saveSeguro(this.seguro), () => this.irDetalleVehiculo())
+      .subscribe();
   }
 
-
   updateSeguro(){
-    this.ss.updateSeguro(this.idSeguro, this.seguro).subscribe(datos =>{
-      this.router.navigate(['vehiculo-detalles', this.seguro.vehiculo.idVehiculo]);
-    }, error => console.log(error));
+    this.swalFlow
+      .update(this.ss.updateSeguro(this.idSeguro, this.seguro), () => this.irDetalleVehiculo())
+      .subscribe();
   }
 
   irDetalleVehiculo(){
-    this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
+    const id = this.seguro?.vehiculo?.idVehiculo ?? this.vehiculo?.idVehiculo ?? this.idVehiculo;
+    this.router.navigate(['vehiculo-detalles', id], { fragment: 'seguros' });
   }
 
 }

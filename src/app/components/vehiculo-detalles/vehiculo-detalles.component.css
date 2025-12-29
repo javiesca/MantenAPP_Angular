@@ -60,6 +60,10 @@ table td{
   color: #9e9e9e;
 }
 
+.no-datos {
+  margin-top: 20px;
+}
+
 
 @media (max-width: 1000px) {
 

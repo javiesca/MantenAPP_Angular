@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { SwalFlowService } from '../../services/swal-flow.service';
+
 
 @Component({
   selector: 'app-lista-vehiculos',
@@ -15,10 +16,13 @@ export class ListaVehiculosComponent implements OnInit {
 
   vehiculos: Vehiculo[];
   loading: boolean = false;
+  imgError: Record<number, boolean> = {};
 
   constructor(
     private vs: VehiculoService,
-    private router: Router) { };
+    private router: Router,
+    private swalFlow: SwalFlowService
+  ) { };
 
   ngOnInit(): void {
     this.getVehiculos();
@@ -30,55 +34,11 @@ export class ListaVehiculosComponent implements OnInit {
     })
   }
 
-  confirmDeleteVehiculo(id: number) {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'No podrás revertir esto',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminarlo',
-      cancelButtonText: 'No, cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deleteVehiculo(id);
-      }
-    });
-  }
-
-
   deleteVehiculo(id: number) {
-    Swal.fire({
-      title: 'Eliminando...',
-      text: 'Por favor, espera mientras se elimina el vehículo.',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
-
-    this.vs.deleteVehiculo(id).subscribe(
-      response => {
-        Swal.close();
-        this.getVehiculos();
-        Swal.fire(
-          'Eliminado',
-          'El vehículo ha sido eliminado.',
-          'success'
-        );
-      },
-      error => {
-        Swal.close();
-        Swal.fire(
-          'Error',
-          'Hubo un error al eliminar el vehículo.',
-          'error'
-        );
-      }
-    );
+    this.swalFlow
+      .deleteConfirm(() => this.vs.deleteVehiculo(id), () => this.getVehiculos())
+      .subscribe();
   }
-
 
   guardarVehiculo(idVehiculo: number) {
     this.router.navigate(['guardar-vehiculo', idVehiculo]);

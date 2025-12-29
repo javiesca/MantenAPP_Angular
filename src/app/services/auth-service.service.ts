@@ -58,10 +58,6 @@ export class AuthService {
       const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
       const jsonPayload = atob(base64);
       const payload = JSON.parse(jsonPayload);
-
-      console.log(JSON.parse(atob(sessionStorage.getItem('token')!.split('.')[1])));
-
-      // adapta esto al claim real de tu JWT
       return payload.userName || payload.sub || null;
     } catch (e) {
       return null;

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Ruedas } from '../../interfaces/ruedas';
 import { RuedasService } from '../../services/ruedas.service';
 import { Vehiculo } from '../../interfaces/vehiculo';
+import { SwalFlowService } from '../../services/swal-flow.service';
 
 
 @Component({
@@ -16,15 +17,20 @@ export class GuardarRuedasComponent implements OnInit {
 
   idVehiculo: number;
   idRuedas: number;
-  ruedas : Ruedas = new Ruedas();
-  vehiculo : Vehiculo = new Vehiculo();
-  edit : boolean = false;
+  ruedas: Ruedas = new Ruedas();
+  vehiculo: Vehiculo = new Vehiculo();
+  edit: boolean = false;
 
 
-  constructor(private route : ActivatedRoute, private router: Router, private vs : VehiculoService,
-    private rs : RuedasService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private vs: VehiculoService,
+    private rs: RuedasService,
+    private swalFlow: SwalFlowService
+  ) { }
 
- 
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -32,37 +38,23 @@ export class GuardarRuedasComponent implements OnInit {
         this.edit = true;
         this.idRuedas = params['idRuedas'];
         this.getCambioRuedas();
-  
+
       } else if (params['idVehiculo']) {
         this.idVehiculo = params['idVehiculo'];
         this.getVehiculo();
       }
     });
   }
-  
-  
 
   onSubmit() {
-    if(this.edit)
+    if (this.edit) {
       this.updateCambioRuedas();
-    else
-    this.saveCambioRuedas();
+    }else {
+      this.saveCambioRuedas();
+    }
   }
 
-
-  saveCambioRuedas(){
-    this.rs.saveCambioRuedas(this.ruedas).subscribe(dato => {
-      this.irDetalleVehiculo();
-    }, error => console.log(error));
-  }
-
-  updateCambioRuedas(){
-    this.rs.updateRuedas(this.idRuedas, this.ruedas).subscribe(datos =>{
-      this.router.navigate(['vehiculo-detalles', this.ruedas.vehiculo.idVehiculo]);
-    }, error => console.log(error));
-  }
-
-  getVehiculo(){
+  getVehiculo() {
     this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
       this.vehiculo = data;
       this.ruedas.vehiculo = this.vehiculo;
@@ -71,13 +63,26 @@ export class GuardarRuedasComponent implements OnInit {
 
   getCambioRuedas(): void {
     this.idRuedas = this.route.snapshot.params['idRuedas'];
-    this.rs.getRuedas(this.idRuedas).subscribe(datos =>{
-        this.ruedas = datos;
+    this.rs.getRuedas(this.idRuedas).subscribe(datos => {
+      this.ruedas = datos;
     })
-}
+  }
 
-  irDetalleVehiculo(){
-    this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
+  saveCambioRuedas() {
+    this.swalFlow
+      .save(this.rs.saveCambioRuedas(this.ruedas), () => this.irDetalleVehiculo())
+      .subscribe();
+  }
+
+  updateCambioRuedas() {
+    this.swalFlow
+      .update(this.rs.updateRuedas(this.idRuedas, this.ruedas), () => this.irDetalleVehiculo())
+      .subscribe();
+  }
+
+  irDetalleVehiculo() {
+    const id = this.ruedas?.vehiculo?.idVehiculo ?? this.vehiculo?.idVehiculo ?? this.idVehiculo;
+    this.router.navigate(['vehiculo-detalles', id], { fragment: 'ruedas' });
   }
 
 }

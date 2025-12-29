@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
@@ -16,7 +16,11 @@ import { SegurosService } from '../../services/seguros.service';
 import Swal from 'sweetalert2';
 import { ITV } from '../../interfaces/itv';
 import { ITVService } from '../../services/itvs.service';
+import { SwalFlowService } from '../../services/swal-flow.service';
+import { EMPTY } from 'rxjs';
 
+
+declare const bootstrap: any;
 
 @Component({
   selector: 'app-vehiculo-detalles',
@@ -24,207 +28,201 @@ import { ITVService } from '../../services/itvs.service';
   styleUrl: './vehiculo-detalles.component.css'
 })
 
-export class VehiculoDetallesComponent implements OnInit{
+export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
 
-    idVehiculo:number;
-    filtrosList: Filtros[];
-    ruedasList : Ruedas[];
-    piezasList : Piezas[];
-    notasList : Notas[];
-    segurosList : Seguro[];
-    itvList : ITV[];
-    vehiculo : Vehiculo;
+  idVehiculo: number;
+  filtrosList: Filtros[];
+  ruedasList: Ruedas[];
+  piezasList: Piezas[];
+  notasList: Notas[];
+  segurosList: Seguro[];
+  itvList: ITV[];
+  vehiculo: Vehiculo;
 
-    constructor(private route : ActivatedRoute, private router : Router, private vs : VehiculoService,
-      private sf : FiltrosService, private rs : RuedasService, private ps : PiezasService, private ns : NotasService,
-      private ss : SegurosService, private itvs : ITVService) {};
+  constructor(private route: ActivatedRoute, private router: Router, private vs: VehiculoService,
+    private sf: FiltrosService,
+    private rs: RuedasService,
+    private ps: PiezasService,
+    private ns: NotasService,
+    private ss: SegurosService,
+    private itvs: ITVService,
+    private swalFlow: SwalFlowService) { };
 
-    ngOnInit(): void {
-        this.idVehiculo = this.route.snapshot.params['idVehiculo'];
-        this.getVehiculo(this.idVehiculo);
-        this.getMantenimientoMotor(this.idVehiculo);
-        this.getRuedas(this.idVehiculo);
-        this.getPiezas(this.idVehiculo);
-        this.getNotas(this.idVehiculo);
-        this.getSeguros(this.idVehiculo);
-        this.getItvs(this.idVehiculo)
-    }
 
-    getVehiculo(idVehiculo : number) {
-      this.vs.getVehiculoById(idVehiculo).subscribe(data => {
-          this.vehiculo = data;
-      });
+
+  ngAfterViewInit(): void {
+    this.route.fragment.subscribe(tabId => {
+      if (tabId) this.showTab(tabId);
+    });
   }
 
-    getMantenimientoMotor(idVehiculo : number) {
-        this.sf.getListaMantenimentos(idVehiculo).subscribe(data => {
-            this.filtrosList = data;
-        });
+  cambiarTab(event: any) {
+    const tabId = event.target.value;
+    this.showTab(tabId);
+    this.router.navigate([], { fragment: tabId, replaceUrl: true });
+  }
+
+  private showTab(tabId: string) {
+    // 1) activar tab bootstrap (botón)
+    const btn = document.getElementById(`${tabId}-tab`);
+    if (btn && typeof bootstrap !== 'undefined') {
+      bootstrap.Tab.getOrCreateInstance(btn).show();
+    } else {
+      // fallback manual si no hay bootstrap.js
+      document.querySelectorAll('.tab-pane').forEach(t => t.classList.remove('show', 'active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      document.getElementById(tabId)?.classList.add('show', 'active');
+      btn?.classList.add('active');
     }
 
-    getRuedas(idVehiculo : number) {
-        this.rs.getListaCambiosRuedas(idVehiculo).subscribe(data => {
-            this.ruedasList = data;
-        });
+    // 2) sincronizar el select (móvil)
+    const sel = document.querySelector('.mobile-tabs') as HTMLSelectElement | null;
+    if (sel) sel.value = tabId;
+  }
+
+  ngOnInit(): void {
+    this.idVehiculo = this.route.snapshot.params['idVehiculo'];
+    this.getVehiculo(this.idVehiculo);
+    this.getMantenimientoMotor(this.idVehiculo);
+    this.getRuedas(this.idVehiculo);
+    this.getPiezas(this.idVehiculo);
+    this.getNotas(this.idVehiculo);
+    this.getSeguros(this.idVehiculo);
+    this.getItvs(this.idVehiculo)
+  }
+
+  getVehiculo(idVehiculo: number) {
+    this.vs.getVehiculoById(idVehiculo).subscribe(data => {
+      this.vehiculo = data;
+    });
+  }
+
+  getMantenimientoMotor(idVehiculo: number) {
+    this.sf.getListaMantenimentos(idVehiculo).subscribe(data => {
+      this.filtrosList = data;
+    });
+  }
+
+  getRuedas(idVehiculo: number) {
+    this.rs.getListaCambiosRuedas(idVehiculo).subscribe(data => {
+      this.ruedasList = data;
+    });
+  }
+
+  getPiezas(idVehiculo: number) {
+    this.ps.getListaPiezas(idVehiculo).subscribe(data => {
+      this.piezasList = data;
+    });
+  }
+
+  getNotas(idVehiculo: number) {
+    this.ns.getNotas(idVehiculo).subscribe(data => {
+      this.notasList = data;
+    });
+  }
+
+  getSeguros(idVehiculo: number) {
+    this.ss.getListaSeguros(idVehiculo).subscribe(data => {
+      this.segurosList = data;
+    });
+  }
+
+
+  getItvs(idVehiculo: number) {
+    this.itvs.getITVs(idVehiculo).subscribe(data => {
+      this.itvList = data
+    });
+  }
+
+  saveFiltros(data: number | Filtros) {
+    if (typeof data === 'number') {
+      // Es una creación
+      this.router.navigate(['guardar-mantenimiento', { idVehiculo: data }]);
+    } else {
+      // Es una actualización
+      this.router.navigate(['guardar-mantenimiento', { idFiltros: data.idFiltros }]);
     }
+  }
 
-    getPiezas(idVehiculo : number) {
-        this.ps.getListaPiezas(idVehiculo).subscribe(data => {
-            this.piezasList = data;
-        });
+  saveRuedas(data: number | Ruedas) {
+    if (typeof data === 'number') {
+      // Es una creación
+      this.router.navigate(['guardar-ruedas', { idVehiculo: data }]);
+    } else {
+      // Es una actualización
+      this.router.navigate(['guardar-ruedas', { idRuedas: data.idRuedas }]);
     }
+  }
 
-    getNotas(idVehiculo : number) {
-      this.ns.getNotas(idVehiculo).subscribe(data => {
-          this.notasList = data;
-      });
+
+  savePiezas(data: number | Piezas) {
+    if (typeof data === 'number') {
+      // Es una creación
+      this.router.navigate(['guardar-piezas', { idVehiculo: data }]);
+    } else {
+      // Es una actualización
+      this.router.navigate(['guardar-piezas', { idPiezas: data.idPieza }]);
     }
+  }
 
-    getSeguros(idVehiculo : number) {
-      this.ss.getListaSeguros(idVehiculo).subscribe(data => {
-          this.segurosList = data;
-      });
+  saveNotas(data: number | Notas) {
+    if (typeof data === 'number') {
+      // Es una creación
+      this.router.navigate(['guardar-notas', { idVehiculo: data }]);
+    } else {
+      // Es una actualización
+      this.router.navigate(['guardar-notas', { idNota: data.idNota }]);
     }
+  }
 
-
-    getItvs(idVehiculo : number) {
-      this.itvs.getITVs(idVehiculo).subscribe(data => {
-          this.itvList = data
-      });
+  saveSeguro(data: number | Seguro) {
+    if (typeof data === 'number') {
+      // Es una creación
+      this.router.navigate(['guardar-seguro', { idVehiculo: data }]);
+    } else {
+      // Es una actualización
+      this.router.navigate(['guardar-seguro', { idSeguro: data.idSeguro }]);
     }
+  }
 
-    saveFiltros(data: number | Filtros) {
-      if (typeof data === 'number') {
-        // Es una creación
-        this.router.navigate(['guardar-mantenimiento', { idVehiculo: data }]);
-      } else {
-        // Es una actualización
-        this.router.navigate(['guardar-mantenimiento', { idFiltros: data.idFiltros }]);
+
+  saveITV(data: number | ITV) {
+    if (typeof data === 'number') {
+      // Es una creación
+      this.router.navigate(['guardar-itv', { idVehiculo: data }]);
+    } else {
+      // Es una actualización
+      this.router.navigate(['guardar-itv', { idITV: data.idITV }]);
+    }
+  }
+
+  //Función genérica para eliminar datos de cualquier tipo
+  deleteDato(id: number, tipo: string) {
+    const requestFactory = () => {
+      switch (tipo) {
+        case 'rueda': return this.rs.deleteRuedas(id);
+        case 'pieza': return this.ps.deletePieza(id);
+        case 'filtro': return this.sf.deleteFiltros(id);
+        case 'nota': return this.ns.deleteNota(id);
+        case 'seguro': return this.ss.deleteSeguro(id);
+        case 'itv': return this.itvs.deleteITV(id);
+        default: return EMPTY;
       }
-    }
+    };
 
-    saveRuedas(data : number | Ruedas){
-      if (typeof data === 'number') {
-        // Es una creación
-        this.router.navigate(['guardar-ruedas', { idVehiculo: data }]);
-      } else {
-        // Es una actualización
-        this.router.navigate(['guardar-ruedas', { idRuedas: data.idRuedas }]);
-      }
-    }
+    this.swalFlow
+      .deleteConfirm(requestFactory, () => this.ngOnInit())
+      .subscribe();
+  }
 
-
-    savePiezas(data : number | Piezas){
-      if (typeof data === 'number') {
-        // Es una creación
-        this.router.navigate(['guardar-piezas', { idVehiculo: data }]);
-      } else {
-        // Es una actualización
-        this.router.navigate(['guardar-piezas', { idPiezas: data.idPieza }]);
-      }
-    }
-
-    saveNotas(data : number | Notas){
-      if (typeof data === 'number') {
-        // Es una creación
-        this.router.navigate(['guardar-notas', { idVehiculo: data }]);
-      } else {
-        // Es una actualización
-        this.router.navigate(['guardar-notas', { idNota: data.idNota }]);
-      }
-    }
-
-    saveSeguro(data : number | Seguro){
-      if (typeof data === 'number') {
-        // Es una creación
-        this.router.navigate(['guardar-seguro', { idVehiculo: data }]);
-      } else {
-        // Es una actualización
-        this.router.navigate(['guardar-seguro', { idSeguro: data.idSeguro }]);
-      }
-    }
-
-
-    saveITV(data : number | ITV){
-      if (typeof data === 'number') {
-        // Es una creación
-        this.router.navigate(['guardar-itv', { idVehiculo: data }]);
-      } else {
-        // Es una actualización
-        this.router.navigate(['guardar-itv', { idITV: data.idITV }]);
-      }
-    }
-
-    deleteDato(id : number, tipo : string){
-      Swal.fire({
-        title: '¿Estás seguro?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo',
-        cancelButtonText: 'No, cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          //Ruedas
-          if(tipo == 'rueda'){
-            this.rs.deleteRuedas(id).subscribe(data => {
-              this.ngOnInit();
-          })
-          }
-          //Piezas
-          if(tipo == 'pieza'){
-            this.ps.deletePieza(id).subscribe(data => {
-              this.ngOnInit();
-          })
-          }
-          //Filtros
-          if(tipo == 'filtro'){
-            this.sf.deleteFiltros(id).subscribe(data => {
-              this.ngOnInit();
-          })
-          }
-          //Notas
-          if(tipo == 'nota'){
-            this.ns.deleteNota(id).subscribe(data => {
-              this.ngOnInit();
-          })
-          }
-          //Seguros
-          if(tipo == 'seguro'){
-            this.ss.deleteSeguro(id).subscribe(data => {
-              this.ngOnInit();
-          })
-          }
-          //ITV
-          if(tipo == 'itv'){
-            this.itvs.deleteITV(id).subscribe(data => {
-              this.ngOnInit();
-          })
-          }
-        }
-      });
-    }
-
-    cambiarTab(event: any) {
-      const tabId = event.target.value;
-      // Ocultar todos los tabs
-      document.querySelectorAll('.tab-pane').forEach(tab => {
-        tab.classList.remove('show', 'active');
-      });
-
-      // Mostrar el tab seleccionado
-      const selectedTab = document.getElementById(tabId);
-      if (selectedTab) {
-        selectedTab.classList.add('show', 'active');
-      }
-    }
-
-    info(texto: string) {
-      Swal.fire({
-        text: texto,
-        width: '65%'
-      });
-    }
+  // Mensaje informativo genérico para los iconos de los filtros
+  info(texto: string) {
+    Swal.fire({
+      text: texto,
+      width: '65%',
+      showConfirmButton: false
+    });
+  }
 
 }

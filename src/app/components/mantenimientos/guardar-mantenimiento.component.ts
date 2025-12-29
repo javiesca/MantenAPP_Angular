@@ -4,7 +4,8 @@ import { Filtros } from '../../interfaces/filtros';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { FiltrosService } from '../../services/filtros.service';
-import Swal from 'sweetalert2';
+import { SwalFlowService } from '../../services/swal-flow.service';
+
 
 @Component({
   selector: 'app-guardar-mantenimiento',
@@ -15,15 +16,17 @@ import Swal from 'sweetalert2';
 export class GuardarMantenimientoComponent implements OnInit {
   idVehiculo: number;
   idFiltros: number;
-  filtros : Filtros = new Filtros();
-  vehiculo : Vehiculo = new Vehiculo();
-  edit : boolean = false;
+  filtros: Filtros = new Filtros();
+  vehiculo: Vehiculo = new Vehiculo();
+  edit: boolean = false;
 
   constructor(
-    private route : ActivatedRoute,
-    private router : Router,
-    private fs : FiltrosService,
-    private vs : VehiculoService) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private fs: FiltrosService,
+    private vs: VehiculoService,
+    private swalFlow: SwalFlowService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -39,66 +42,45 @@ export class GuardarMantenimientoComponent implements OnInit {
     });
   }
 
-  getFiltroId(id: number){
-    this.fs.getMantenimiento(id).subscribe(datos =>{
+
+  onSubmit() {
+    if (this.edit)
+      this.updateFiltros();
+    else
+      this.saveFiltros();
+  }
+
+
+  getFiltroId(id: number) {
+    this.fs.getMantenimiento(id).subscribe(datos => {
       console.log(datos);
       this.filtros = datos;
     })
   }
 
-  getVehiculo(){
+  getVehiculo() {
     this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
       this.vehiculo = data;
       this.filtros.vehiculo = this.vehiculo;
     })
   }
 
-  updateFiltros(){
-    this.fs.updateMantenimiento(this.filtros.idFiltros, this.filtros).subscribe(datos =>{
-      this.router.navigate(['vehiculo-detalles', this.filtros.vehiculo.idVehiculo]);
-    }, error => console.log(error));
+  updateFiltros() {
+    this.swalFlow
+      .update(this.fs.updateMantenimiento(this.filtros.idFiltros, this.filtros),() => this.irDetalleVehiculo())
+      .subscribe();
   }
 
-  saveFiltros(){
-    Swal.fire({
-      title: 'Guardando...',
-      text: 'Por favor, espera mientras se guarda el mantenimiento.',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
-
-    this.fs.saveFiltros(this.filtros).subscribe(
-      dato => {
-        Swal.close();
-        Swal.fire({
-          title: 'Guardado',
-          text: 'Mantenimiento guardado con éxito',
-          icon: 'success'
-        })
-        this.irDetalleVehiculo();
-      },
-      error => {
-        Swal.close();
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un error al guardar el mantenimiento',
-          icon: 'error'
-        })
-      }
-    );
+  saveFiltros() {
+    this.swalFlow
+      .save(this.fs.saveFiltros(this.filtros), () => this.irDetalleVehiculo())
+      .subscribe();
   }
 
-  irDetalleVehiculo(){
-    this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
-  }
 
-  onSubmit(){
-    if(this.edit)
-      this.updateFiltros();
-    else
-    this.saveFiltros();
+  irDetalleVehiculo() {
+    const id = this.filtros?.vehiculo?.idVehiculo ?? this.vehiculo?.idVehiculo ?? this.idVehiculo;
+    this.router.navigate(['vehiculo-detalles', id], { fragment: 'mantenimientos' });
   }
 
 }

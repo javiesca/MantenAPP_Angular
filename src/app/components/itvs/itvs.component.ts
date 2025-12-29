@@ -4,6 +4,8 @@ import { Vehiculo } from '../../interfaces/vehiculo';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITVService } from '../../services/itvs.service';
 import { VehiculoService } from '../../services/vehiculo.service';
+import { SwalFlowService } from '../../services/swal-flow.service';
+
 
 @Component({
   selector: 'app-itvs',
@@ -12,25 +14,26 @@ import { VehiculoService } from '../../services/vehiculo.service';
 })
 export class ItvsComponent implements OnInit {
 
-  idVehiculo : number;
-  idITV : number;
-  itv : ITV = new ITV();
-  vehiculo : Vehiculo = new Vehiculo();
-  edit : boolean = false;
+  idVehiculo: number;
+  idITV: number;
+  itv: ITV = new ITV();
+  vehiculo: Vehiculo = new Vehiculo();
+  edit: boolean = false;
 
   constructor(
-    private route : ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
-    private itvs : ITVService,
-    private vs : VehiculoService
+    private itvs: ITVService,
+    private vs: VehiculoService,
+    private swalFlow: SwalFlowService
   ) { }
 
 
   onSubmit() {
-    if(this.edit)
+    if (this.edit)
       this.updateITV();
     else
-    this.saveITV();
+      this.saveITV();
   }
 
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class ItvsComponent implements OnInit {
         this.edit = true;
         this.idITV = params['idITV'];
         this.getITV();
-      }else if(params['idVehiculo']){
+      } else if (params['idVehiculo']) {
         this.idVehiculo = params['idVehiculo'];
         this.getVehiculo();
       }
@@ -55,29 +58,27 @@ export class ItvsComponent implements OnInit {
   }
 
 
-  getVehiculo(){
+  getVehiculo() {
     this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
       this.vehiculo = data;
       this.itv.vehiculo = this.vehiculo;
     })
   }
 
-
-  saveITV(){
-    this.itvs.saveITV(this.itv).subscribe(dato => {
-      this.irDetalleVehiculo();
-    }, error => console.log(error));
+  saveITV() {
+    this.swalFlow
+      .save(this.itvs.saveITV(this.itv), () => this.irDetalleVehiculo())
+      .subscribe();
   }
 
-
-  updateITV(){
-    this.itvs.updateITV(this.idITV, this.itv).subscribe(datos =>{
-      this.router.navigate(['vehiculo-detalles', this.itv.vehiculo.idVehiculo]);
-    }, error => console.log(error));
+  updateITV() {
+    this.swalFlow
+      .update(this.itvs.updateITV(this.idITV, this.itv), () => this.irDetalleVehiculo())
+      .subscribe();
   }
 
-  irDetalleVehiculo(){
-    this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
+  irDetalleVehiculo() {
+    const id = this.itv?.vehiculo?.idVehiculo ?? this.vehiculo?.idVehiculo ?? this.idVehiculo;
+    this.router.navigate(['vehiculo-detalles', id], { fragment: 'itv' });
   }
-
 }

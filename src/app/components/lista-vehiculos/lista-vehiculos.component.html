@@ -1,4 +1,5 @@
 <div class="row tabla-principal">
+
   <div class="col-lg-5" *ngFor="let vehiculo of vehiculos">
     <div class="card mb-3 vehicle-card" (click)="detallesVehiculo(vehiculo.idVehiculo)" style="cursor: pointer;">
       <div class="card-header vehicle-header">
@@ -8,13 +9,29 @@
       </div>
       <div class="card-body text-center vehicle-body">
         <div class="imagen-vehiculo">
-          <img [src]="vehiculo.image?.imageUrl" class="imagen-vehiculo" alt="Imagen del vehículo">
+          <ng-container *ngIf="vehiculo.image?.imageUrl && !imgError[vehiculo.idVehiculo]; else noImg">
+            <img [src]="vehiculo.image?.imageUrl" class="imagen-vehiculo" alt="Imagen del vehículo"
+              (error)="imgError[vehiculo.idVehiculo] = true">
+          </ng-container>
+
+          <ng-template #noImg>
+            <div class="no-image">
+              <i class="fa fa-car"></i>
+            </div>
+          </ng-template>
         </div>
         <div class="botones">
-          <button (click)="guardarVehiculo(vehiculo.idVehiculo); $event.stopPropagation()" class="btn btn-info">Modificar</button>
-          <button (click)="confirmDeleteVehiculo(vehiculo.idVehiculo); $event.stopPropagation()" class="btn btn-danger ml-2">Eliminar</button>
+          <button (click)="guardarVehiculo(vehiculo.idVehiculo); $event.stopPropagation()"
+            class="btn btn-info">Modificar</button>
+          <button (click)="deleteVehiculo(vehiculo.idVehiculo); $event.stopPropagation()"
+            class="btn btn-danger ml-2">Eliminar</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class="text-center mt-3 mb-3">
+    <button class="btn btn-success" [routerLink]="['/guardar-vehiculo']">
+      Nuevo Vehículo
+    </button>
   </div>
 </div>

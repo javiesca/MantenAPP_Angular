@@ -4,7 +4,7 @@ import { Vehiculo } from '../../interfaces/vehiculo';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { NotasService } from '../../services/notas.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { SwalFlowService } from '../../services/swal-flow.service';
 
 @Component({
   selector: 'app-notas',
@@ -13,69 +13,67 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class NotasComponent {
 
-    idVehiculo: number;
-    idNota: number;
-    nota : Notas = new Notas();
-    vehiculo : Vehiculo = new Vehiculo();
-    edit : boolean = false;
+  idVehiculo: number;
+  idNota: number;
+  nota: Notas = new Notas();
+  vehiculo: Vehiculo = new Vehiculo();
+  edit: boolean = false;
 
-    constructor(
-      private route : ActivatedRoute,
-      private router: Router,
-      private vs : VehiculoService,
-      private ns : NotasService) { }
 
-    ngOnInit() {
-      this.route.params.subscribe(params => {
-        if (params['idNota']) {
-          this.edit = true;
-          this.idNota = params['idNota'];
-          this.getNota();
-        } else if (params['idVehiculo']) {
-          this.idVehiculo = params['idVehiculo'];
-          this.getVehiculo();
-        }
-      });
-    }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private vs: VehiculoService,
+    private ns: NotasService,
+    private swalFlow: SwalFlowService) { }
 
-    onSubmit() {
-      if(this.edit)
-        this.uptadaNota();
-      else
-        this.saveNota();
-    }
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params['idNota']) {
+        this.edit = true;
+        this.idNota = params['idNota'];
+        this.getNota();
+      } else if (params['idVehiculo']) {
+        this.idVehiculo = params['idVehiculo'];
+        this.getVehiculo();
+      }
+    });
+  }
 
-    getVehiculo(){
-      this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
-        this.vehiculo = data;
-        this.nota.vehiculo = this.vehiculo;
-      })
-    }
+  onSubmit() {
+    if (this.edit)
+      this.uptadaNota();
+    else
+      this.saveNota();
+  }
 
-    getNota(){
-      this.ns.getNota(this.idNota).subscribe(datos =>{
-        this.nota = datos;
-      })
-    }
+  getVehiculo() {
+    this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
+      this.vehiculo = data;
+      this.nota.vehiculo = this.vehiculo;
+    })
+  }
 
-    saveNota(){
-      this.ns.saveNota(this.nota).subscribe(dato => {
-        console.log(dato);
-        this.irDetalleVehiculo();
-      }, error => console.log(error));
+  getNota() {
+    this.ns.getNota(this.idNota).subscribe(datos => {
+      this.nota = datos;
+    })
+  }
 
-    }
+  saveNota() {
+    this.swalFlow
+      .update(this.ns.saveNota(this.nota), () => this.irDetalleVehiculo())
+      .subscribe();
+  }
 
-    uptadaNota(){
-      this.ns.updateNota(this.idNota, this.nota).subscribe(datos =>{
-        console.log(datos);
-        this.router.navigate(['vehiculo-detalles', this.nota.vehiculo.idVehiculo]);
-      }, error => console.log(error));
+  uptadaNota() {
+    this.swalFlow
+      .update(this.ns.updateNota(this.idNota, this.nota), () => this.irDetalleVehiculo())
+      .subscribe();
+  }
 
-    }
-
-    irDetalleVehiculo(){
-      this.router.navigate(['vehiculo-detalles', this.idVehiculo]);
-    }
-
+  irDetalleVehiculo() {
+    const id = this.nota?.vehiculo?.idVehiculo ?? this.vehiculo?.idVehiculo ?? this.idVehiculo;
+    this.router.navigate(['vehiculo-detalles', id], { fragment: 'notas' });
+  }
 }
