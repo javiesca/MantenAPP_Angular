@@ -20,6 +20,7 @@ import { NotasComponent } from './components/notas/notas.component';
 import { SegurosComponent } from './components/seguros/seguros.component';
 import { ItvsComponent } from './components/itvs/itvs.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PressEffectDirective } from './shared/press-effect.directive';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { RegisterComponent } from './components/register/register.component';
     NotasComponent,
     SegurosComponent,
     ItvsComponent,
-    RegisterComponent
+    RegisterComponent,
+    PressEffectDirective
   ],
   imports: [
     BrowserModule,

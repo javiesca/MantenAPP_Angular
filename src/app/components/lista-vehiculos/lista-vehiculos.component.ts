@@ -17,7 +17,9 @@ export class ListaVehiculosComponent implements OnInit {
   vehiculos: Vehiculo[];
   loading: boolean = false;
   imgError: Record<number, boolean> = {};
-
+  pressedId: number | null = null;
+  pressedBtn: string | null = null;
+  
   constructor(
     private vs: VehiculoService,
     private router: Router,

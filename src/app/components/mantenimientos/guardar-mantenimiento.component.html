@@ -1,49 +1,77 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">{{ edit ? 'Modificar Mantenmiento' : 'Nuevo Mantenimiento ' }}</h3>
-  <form (ngSubmit)="onSubmit()">
+  <div class="mantenimiento-card">
 
-    <div class="form-group">
-      <div class="elementos-check">
-        <div class="elemento-form">
-          <label>Aceite</label>
-          <input type="checkbox" class="form-check-input" id="aceite" [(ngModel)]="filtros.aceite" name="aceite">
-        </div>
-        <div class="elemento-form">
-          <label>Filtro Aceite</label>
-          <input type="checkbox" class="form-check-input" id="filtroAceite" [(ngModel)]="filtros.filtroAceite" name="filtroAceite">
-        </div>
-        <div class="elemento-form">
-          <label>Filtro Aire</label>
-          <input type="checkbox" class="form-check-input" id="filtroAire" [(ngModel)]="filtros.filtroAire" name="filtroAire">
-        </div>
-        <div class="elemento-form">
-          <label>Filtro Combustible</label>
-          <input type="checkbox" class="form-check-input" id="filtroCombustible" [(ngModel)]="filtros.filtroCombustible" name="filtroCombustible">
-        </div>
-        <div class="elemento-form">
-          <label>Filtro Habitáculo</label>
-          <input type="checkbox" class="form-check-input" id="filtroHabitaculo" [(ngModel)]="filtros.filtroHabitaculo" name="filtroHabitaculo">
-        </div>
+    <h3 class="text-center mb-3">
+      {{ edit ? 'Modificar mantenimiento' : 'Nuevo mantenimiento' }}
+    </h3>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <!-- FILTROS -->
+      <div class="separador-titulo">
+        <span>Actuaciones</span>
       </div>
+
+      <div class="filters-grid form-filters">
+
+        <label class="filter-toggle botton-press">
+          <input type="checkbox" [(ngModel)]="filtros.aceite" name="aceite">
+          <i class="fas fa-oil-can"></i>
+          <span>Aceite</span>
+        </label>
+
+        <label class="filter-toggle botton-press">
+          <input type="checkbox" [(ngModel)]="filtros.filtroAceite" name="filtroAceite">
+          <i class="fas fa-oil-can"></i>
+          <span>F. Aceite</span>
+        </label>
+
+        <label class="filter-toggle botton-press">
+          <input type="checkbox" [(ngModel)]="filtros.filtroAire" name="filtroAire">
+          <i class="fas fa-wind"></i>
+          <span>Aire</span>
+        </label>
+
+        <label class="filter-toggle botton-press">
+          <input type="checkbox" [(ngModel)]="filtros.filtroCombustible" name="filtroCombustible">
+          <i class="fas fa-gas-pump"></i>
+          <span>Fuel</span>
+        </label>
+
+        <label class="filter-toggle botton-press">
+          <input type="checkbox" [(ngModel)]="filtros.filtroHabitaculo" name="filtroHabitaculo">
+          <i class="fas fa-fan"></i>
+          <span>Hab.</span>
+        </label>
+
+      </div>
+
+      <!-- DATOS -->
+      <div class="separador-titulo">
+        <span>Datos</span>
+      </div>
+
       <div class="elemento-form">
         <label>Fecha</label>
-        <input type="date" class="form-control" id="fechaCambio" [(ngModel)]="filtros.fechaCambio" name="fechaCambio">
+        <input type="date" class="form-control" [(ngModel)]="filtros.fechaCambio" name="fechaCambio">
       </div>
+
       <div class="elemento-form">
-        <label>Kilometros</label>
-        <input type="number" class="form-control" id="kilometros" [(ngModel)]="filtros.kilometros" name="kilometros">
+        <label>Kilómetros</label>
+        <input type="number" class="form-control" [(ngModel)]="filtros.kilometros" name="kilometros">
       </div>
+
       <div class="elemento-form">
-        <label>Precio</label>
-        <input type="number" class="form-control" id="precio" [(ngModel)]="filtros.precio" name="precio">
+        <label>Precio (€)</label>
+        <input type="number" class="form-control" [(ngModel)]="filtros.precio" name="precio">
       </div>
-      <div class="boton-form">
-        <button class="btn-success">{{ edit ? 'Actualizar' : 'Guardar' }}</button>
+
+      <div class="boton-form text-center mt-3">
+        <button class="btn btn-success px-4 botton-press" appPressEffect>
+          {{ edit ? 'Actualizar' : 'Guardar' }}
+        </button>
       </div>
-    </div>
-  </form>
+
+    </form>
+  </div>
 </div>
-
-
-
-

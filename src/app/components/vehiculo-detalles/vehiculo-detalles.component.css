@@ -1,40 +1,9 @@
-.nav-link{
-  color:green;
-  font-weight: bold;
-}
-
-.check {
+.nav-link {
   color: green;
-}
-
-.aspa {
-  color: red;
-}
-
-.mobile-tabs {
-  display: none;
-  margin: 20px auto;
-  max-width: 300px;
-  padding: 10px;
-  border: 2px solid #007bff;
-  border-radius: 8px;
   font-weight: bold;
-  background-color: white;
 }
 
-table td{
-  height: 60px;
-}
-
-.botones-notas{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100% !important;
-  height: calc(1.5em* 3 + 30px) !important;
-}
-
-.span-center{
+.span-center {
   display: flex;
   width: 100%;
   height: 100%;
@@ -42,28 +11,133 @@ table td{
   justify-content: center;
 }
 
-.filter-badge {
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.filter-badge.ok {
-  background-color: #e6f4ea;
-  color: #1e7e34;
-}
-
-.filter-badge.off {
-  background-color: #f0f0f0;
-  color: #9e9e9e;
-}
-
 .no-datos {
   margin-top: 20px;
 }
 
+.mobile-tabs {
+  display: none;
+}
+
+.cards-container {
+  padding: 10px;
+}
+
+.mantenimiento-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-ok {
+  background: #28a745;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-no {
+  background: #868686;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.km {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.fecha {
+  color: #666;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.filter-item {
+  background: #f0f0f0;
+  border-radius: 14px;
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
+
+.filter-item.ok {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.filter-item i {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.precio {
+  color: #1e7e34;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.fechas-seguro {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* o flex-start si lo quieres a la izquierda */
+}
+
+.fechas-seguro span {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.fechas-seguro .separador {
+  font-size: 13px;
+  color: #666;
+}
+
+.seguro-notas {
+  font-size: 13px;
+  color: #666;
+  margin: 8px 0;
+}
+
+.nota-texto {
+  white-space: pre-wrap;
+}
 
 @media (max-width: 1000px) {
 
@@ -75,69 +149,27 @@ table td{
   /* Mostrar el select en móvil */
   .mobile-tabs {
     display: block;
-  }
-
-  table tr {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid grey;
-  }
-
-  table td[data-titulo] {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-  }
-
-  table td[data-titulo]::before {
-    content: attr(data-titulo);
+    margin: 20px auto;
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
     font-weight: bold;
-    min-width: 100px;
-  }
-
-  table td[data-titulo].td-center {
-    height: calc(1.5em * 3 + 100px);
-    line-height: calc(1.5em *  + 100px);
-  }
-
-  table td[data-titulo="Nombre"] {
-    height: 100px;
+    background-color: white;
   }
 
   textarea {
     height: 100%;
   }
-
-  table td[data-titulo="Nota"] {
-    height: 200px;
-  }
-
-  table thead {
-    display: none;
-  }
-
   .contenedor-tabla {
     background-color: rgba(99, 97, 233, 0.075);
     padding: 10px;
   }
 
-  tr{
-    margin-top: 10px;
-  }
-
-  .botones {
-    text-align: center;
-  }
-
   @media (max-width: 800px) {
-    tbody{
-      width: 100%;
-    }
 
-    .filter-badge {
-      border-radius: 999px;
-      font-size: 12px;
+    tbody {
+      width: 100%;
     }
   }
 }

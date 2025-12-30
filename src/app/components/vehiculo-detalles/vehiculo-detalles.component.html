@@ -63,81 +63,64 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="filtrosList && filtrosList.length > 0" class="contenedor-tabla">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Aceite</th>
-                <th>Filtros</th>
-                <th>Fecha</th>
-                <th>Kilometros</th>
-                <th>Precio</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let filtro of filtrosList">
-                <!-- ACEITE -->
-                <td data-titulo="Aceite">
-                  <span class="span-center">
-                    <i class="fas" [ngClass]="{
-                        'fa-check check': filtro.aceite,
-                        'fa-times aspa': !filtro.aceite
-                      }">
-                    </i>
-                  </span>
-                </td>
+      <div *ngIf="filtrosList && filtrosList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let filtro of filtrosList">
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="title">
+              <i class="fas fa-oil-can"></i>
+              Cambio de Aceite
+            </div>
+            <span class="badge-ok" *ngIf="filtro.aceite; else badgeNo">
+              OK
+            </span>
 
-                <!-- RESTO DE FILTROS EN UNA SOLA CELDA -->
-                <td data-titulo="Filtros">
-                  <div class="span-center d-flex justify-content-center gap-3 wrap">
+            <ng-template #badgeNo>
+              <span class="badge-no">NO</span>
+            </ng-template>
+          </div>
+          <div class="separador-titulo">
+            <span>Filtros</span>
+          </div>
+          <!-- FILTROS -->
+          <div class="filters-grid">
+            <div class="filter-item" [class.ok]="filtro.filtroAceite">
+              <i class="fas fa-oil-can"></i>
+              <span>Aceite</span>
+            </div>
+            <div class="filter-item" [class.ok]="filtro.filtroAire">
+              <i class="fas fa-wind"></i>
+              <span>Aire</span>
+            </div>
+            <div class="filter-item" [class.ok]="filtro.filtroCombustible">
+              <i class="fas fa-gas-pump"></i>
+              <span>Fuel</span>
+            </div>
+            <div class="filter-item" [class.ok]="filtro.filtroHabitaculo">
+              <i class="fas fa-fan"></i>
+              <span>Habitáculo</span>
+            </div>
+          </div>
 
-                    <div class="filter-badge" [ngClass]="filtro.filtroAceite ? 'ok' : 'off'" data-bs-toggle="tooltip"
-                      title="Filtro de aceite" (click)="info('Filtro de aceite')">
-                      <i class="fas fa-oil-can"></i>
-                    </div>
-
-                    <div class="filter-badge" [ngClass]="filtro.filtroAire ? 'ok' : 'off'" data-bs-toggle="tooltip"
-                      title="Filtro de aire" (click)="info('Filtro de aire')">
-                      <i class="fas fa-wind"></i>
-                    </div>
-
-                    <div class="filter-badge" [ngClass]="filtro.filtroCombustible ? 'ok' : 'off'"
-                      data-bs-toggle="tooltip" title="Filtro de combustible" (click)="info('Filtro de combustible')">
-                      <i class="fas fa-gas-pump"></i>
-                    </div>
-
-                    <div class="filter-badge" [ngClass]="filtro.filtroHabitaculo ? 'ok' : 'off'"
-                      data-bs-toggle="tooltip" title="Filtro del habitáculo" (click)="info('Filtro de habitáculo')">
-                      <i class="fas fa-fan"></i>
-                    </div>
-
-                  </div>
-                </td>
-
-                <td data-titulo="Fecha">
-                  <span class="span-center">{{
-                    filtro.fechaCambio | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Kilometros">
-                  <span class="span-center">{{ filtro.kilometros }} Km</span>
-                </td>
-                <td data-titulo="Precio">
-                  <span class="span-center">{{ filtro.precio }}€</span>
-                </td>
-                <td class="botones-td">
-                  <button (click)="saveFiltros(filtro)" class="btn btn-info">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button (click)="deleteDato(filtro.idFiltros, 'filtro')" class="btn btn-danger ms-2">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="separador-linea"></div>
+          <!-- KM + FECHA -->
+          <div class="card-main">
+            <div class="km">{{ filtro.kilometros }} km</div>
+            <div class="fecha">{{ filtro.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <div class="separador-linea"></div>
+          <!-- FOOTER -->
+          <div class="card-footer">
+            <div class="precio">{{ filtro.precio }} €</div>
+            <div class="acciones">
+              <button (click)="saveFiltros(filtro)" class="btn btn-info" appPressEffect>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteDato(filtro.idFiltros, 'filtro')" class="btn btn-danger" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -152,45 +135,36 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="piezasList && piezasList.length > 0" class="contenedor-tabla">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Kilómetros</th>
-                <th>Precio</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let pieza of piezasList">
-                <td data-titulo="Pieza">
-                  <span class="span-center">{{ pieza.descripcion }}</span>
-                </td>
-                <td data-titulo="Fecha">
-                  <span class="span-center">{{
-                    pieza.fechaCambio | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Kilometros">
-                  <span class="span-center">{{ pieza.kilometros }} Km</span>
-                </td>
-                <td data-titulo="Precio">
-                  <span class="span-center">{{ pieza.precio }}€</span>
-                </td>
-                <td class="botones-td">
-                  <button (click)="savePiezas(pieza)" class="btn btn-info">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn btn-danger ms-2">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="piezasList && piezasList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let pieza of piezasList">
+          <div class="separador-titulo">
+            Descripción
+          </div>
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="text-center seguro-notas" style="width: 100%;">
+              {{ pieza.descripcion }}
+            </div>
+          </div>
+          <div class="separador-linea"></div>
+          <!-- INFO PRINCIPAL -->
+          <div class="card-main">
+            <div class="km">{{ pieza.kilometros }} km</div>
+            <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <div class="separador-linea"></div>
+          <!-- FOOTER -->
+          <div class="card-footer">
+            <div class="precio">{{ pieza.precio }} €</div>
+            <div class="acciones">
+              <button (click)="savePiezas(pieza)" class="btn btn-info" appPressEffect>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn btn-danger" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -205,49 +179,32 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="ruedasList && ruedasList.length > 0" class="contenedor-tabla">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Cantidad</th>
-                <th>Marca</th>
-                <th>Fecha</th>
-                <th>Kilómetros</th>
-                <th>Precio</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let ruedas of ruedasList">
-                <td data-titulo="Num. Ruedas">
-                  <span class="span-center">{{ ruedas.numeroRuedas }}</span>
-                </td>
-                <td data-titulo="Marca">
-                  <span class="span-center">{{ ruedas.marca }}</span>
-                </td>
-                <td data-titulo="Fecha">
-                  <span class="span-center">{{
-                    ruedas.fechaCambio | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Kilometros">
-                  <span class="span-center">{{ ruedas.kilometros }} Km</span>
-                </td>
-                <td data-titulo="Precio">
-                  <span class="span-center">{{ ruedas.precio }}€</span>
-                </td>
-                <td class="botones-td">
-                  <button (click)="saveRuedas(ruedas)" class="btn btn-info">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn btn-danger ms-2">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="title">
+              {{ ruedas.marca }}
+            </div>
+            <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
+          </div>
+          <!-- INFO PRINCIPAL -->
+          <div class="card-main">
+            <div class="km">{{ ruedas.kilometros }} km</div>
+            <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <!-- FOOTER -->
+          <div class="card-footer">
+            <div class="precio">{{ ruedas.precio }} €</div>
+            <div class="acciones">
+              <button (click)="saveRuedas(ruedas)" class="btn btn-info" appPressEffect>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn btn-danger" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -262,55 +219,50 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="segurosList && segurosList.length > 0" class="contenedor-tabla">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Modelidad</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Precio</th>
-                <th>Notas</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let seguro of segurosList">
-                <td data-titulo="Nombre">
-                  <span class="span-center">{{ seguro.nombreSeguro }}</span>
-                </td>
-                <td data-titulo="Modalidad">
-                  <span class="span-center">{{ seguro.modoSeguro }}</span>
-                </td>
-                <td data-titulo="Fecha Inicio">
-                  <span class="span-center">{{
-                    seguro.fechaInicio | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Fecha Fin">
-                  <span class="span-center">{{
-                    seguro.fechaFin | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Precio">
-                  <span class="span-center">{{ seguro.precio }}€</span>
-                </td>
-                <td data-titulo="Notas">
-                  <span class="span-center">{{ seguro.notas }}</span>
-                </td>
-                <td class="botones-td">
-                  <button (click)="saveSeguro(seguro)" class="btn btn-info">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button (click)="deleteDato(seguro.idSeguro, 'seguro')" class="btn btn-danger ms-2">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="segurosList && segurosList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let seguro of segurosList">
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="title">
+              {{ seguro.nombreSeguro }}
+            </div>
+            <span class="badge-ok">{{ seguro.modoSeguro }}</span>
+          </div>
+
+          <!-- INFO PRINCIPAL -->
+          <div class="card-main">
+            <div class="separador-titulo">
+              <span>Periodo</span>
+            </div>
+
+            <div class="km fechas-seguro">
+              <span>{{ seguro.fechaInicio | date:'dd/MM/yyyy' }}</span>
+              <span class="separador">a</span>
+              <span>{{ seguro.fechaFin | date:'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+
+          <!-- NOTAS (solo si hay) -->
+          <div *ngIf="seguro.notas" class="seguro-notas">
+            <div class="separador-titulo">
+              <span>Notas</span>
+            </div>{{ seguro.notas }}
+          </div>
+
+          <div class="separador-linea"></div>
+
+          <!-- FOOTER -->
+          <div class="card-footer">
+            <div class="precio">{{ seguro.precio }} €</div>
+            <div class="acciones">
+              <button (click)="saveSeguro(seguro)" class="btn btn-info" appPressEffect>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteDato(seguro.idSeguro, 'seguro')" class="btn btn-danger" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -325,47 +277,50 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="itvList && itvList.length > 0" class="contenedor-tabla">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Fecha ITV</th>
-                <th>Fecha Próxima ITV</th>
-                <th>Sitio</th>
-                <th>Notas</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let itv of itvList">
-                <td data-titulo="Fecha ITV">
-                  <span class="span-center">{{
-                    itv.fechaITV | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Fecha Proxima ITV">
-                  <span class="span-center">{{
-                    itv.fechaProximaITV | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td data-titulo="Sitio">
-                  <span class="span-center">{{ itv.sitioITV }}</span>
-                </td>
-                <td data-titulo="Notas">
-                  <span class="span-center">{{ itv.notasITV }}</span>
-                </td>
-                <td class="botones-td">
-                  <button (click)="saveITV(itv)" class="btn btn-info">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button (click)="deleteDato(itv.idITV, 'itv')" class="btn btn-danger ms-2">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="itvList && itvList.length > 0" class="cards-container">
+
+        <div class="mantenimiento-card" *ngFor="let itv of itvList">
+
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="title">
+              {{ itv.sitioITV }}
+            </div>
+          </div>
+
+          <!-- INFO PRINCIPAL -->
+          <div class="separador-titulo">
+            <span>Periodo</span>
+          </div>
+
+          <div class="km fechas-seguro">
+            <span>{{ itv.fechaITV | date:'dd/MM/yyyy' }}</span>
+            <span class="separador">a</span>
+            <span>{{ itv.fechaProximaITV | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <!-- NOTAS -->
+          
+          <div *ngIf="itv.notasITV" class="seguro-notas">
+            <div class="separador-titulo">
+              <span>Notas</span>
+            </div>
+            {{ itv.notasITV }}
+          </div>
+          <!-- SEPARADOR -->
+          <div class="separador-linea"></div>
+          <!-- FOOTER -->
+          <div class="card-footer">
+            <div class="precio"></div>
+            <div class="acciones">
+              <button (click)="saveITV(itv)" class="btn btn-info" appPressEffect>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteDato(itv.idITV, 'itv')" class="btn btn-danger" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -380,38 +335,36 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="notasList && notasList.length > 0" class="contenedor-tabla">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Texto</th>
-                <th>Fecha</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let nota of notasList">
-                <td data-titulo="Nota">
-                  <textarea class="form-control-plaintext nota-textarea" [value]="nota.texto" readonly rows="3">
-                  </textarea>
-                </td>
-                <td data-titulo="Fecha">
-                  <span class="span-center">{{
-                    nota.fechaNota | date : "dd/MM/yyyy"
-                    }}</span>
-                </td>
-                <td class="botones-td botones-notas">
-                  <button (click)="saveNotas(nota)" class="btn btn-info">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button (click)="deleteDato(nota.idNota, 'nota')" class="btn btn-danger ms-2">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div *ngIf="notasList && notasList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let nota of notasList">
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="title">
+              Nota
+            </div>
+            <span class="badge-ok">
+              {{ nota.fechaNota | date:'dd/MM/yyyy' }}
+            </span>
+          </div>
+          <div class="separador-linea"></div>
+          <!-- TEXTO -->
+          <div class="nota-texto">
+            {{ nota.texto }}
+          </div>
+          <!-- SEPARADOR -->
+          <div class="separador-linea"></div>
+          <!-- FOOTER -->
+          <div class="card-footer">
+            <div class="precio"></div>
+            <div class="acciones">
+              <button (click)="saveNotas(nota)" class="btn btn-info botton-press" appPressEffect>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteDato(nota.idNota, 'nota')" class="btn btn-danger botton-press" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

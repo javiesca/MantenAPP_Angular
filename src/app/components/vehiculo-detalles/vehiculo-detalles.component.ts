@@ -215,14 +215,4 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
       .deleteConfirm(requestFactory, () => this.ngOnInit())
       .subscribe();
   }
-
-  // Mensaje informativo genérico para los iconos de los filtros
-  info(texto: string) {
-    Swal.fire({
-      text: texto,
-      width: '65%',
-      showConfirmButton: false
-    });
-  }
-
 }

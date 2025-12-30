@@ -13,7 +13,8 @@
         </div>
         <button
           type="submit"
-          class="btn btn-primary w-100 d-flex justify-content-center align-items-center"
+          class="btn btn-primary w-100 d-flex justify-content-center align-items-center botton-press"
+          appPressEffect
           [disabled]="isLoading">
           <span *ngIf="!isLoading">Login</span>
           <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

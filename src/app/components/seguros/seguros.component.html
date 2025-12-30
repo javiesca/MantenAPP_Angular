@@ -1,37 +1,38 @@
 <div class="col-md-6 offset-md-3">
-    <h3 class="text-center">{{ edit ? 'Modificar seguro' : 'Nuevo seguro'}}</h3>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
+  <h3 class="text-center">{{ edit ? 'Modificar seguro' : 'Nuevo seguro'}}</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
 
-        <div class="elemento-form">
-          <label>Nombre</label>
-          <input type="text" class="form-control" id="nombreSeguro" [(ngModel)]="seguro.nombreSeguro" name="nombreSeguro">
-        </div>
-        <div class="elemento-form">
-          <label>Modalidad</label>
-          <input type="text" class="form-control" id="modoSeguro" [(ngModel)]="seguro.modoSeguro" name="modoSeguro">
-        </div>
-        <div class="elemento-form">
-          <label>Fecha Inicio</label>
-          <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="seguro.fechaInicio" name="fechaInicio">
-        </div>
-        <div class="elemento-form">
-            <label>Fecha Fin</label>
-            <input type="date" class="form-control" id="fechaFin" [(ngModel)]="seguro.fechaFin" name="fechaFin">
-          </div>
-        <div class="elemento-form">
-          <label>Precio</label>
-          <input type="number" class="form-control" id="precio" [(ngModel)]="seguro.precio" name="precio">
-        </div>
-        <div class="elemento-form">
-          <label>Notas</label>
-          <input type="text" class="form-control" id="notas" [(ngModel)]="seguro.notas" name="notas">
-        </div>
-        <div class="boton-form">
-          <button class="btn btn-success">{{ edit ? 'Actualizar' : 'Guardar' }}</button>
-        </div>
+      <div class="elemento-form">
+        <label>Nombre</label>
+        <input type="text" class="form-control" id="nombreSeguro" [(ngModel)]="seguro.nombreSeguro" name="nombreSeguro">
       </div>
-    </form>
-  </div>
-
-
+      <div class="elemento-form">
+        <label>Modalidad</label>
+        <input type="text" class="form-control" id="modoSeguro" [(ngModel)]="seguro.modoSeguro" name="modoSeguro">
+      </div>
+      <div class="elemento-form">
+        <label>Fecha Inicio</label>
+        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio"
+          [ngModel]="seguro.fechaInicio | date:'yyyy-MM-dd'"
+          (ngModelChange)="onFechaInicioChange($event)">
+      </div>
+      <div class="elemento-form">
+        <label>Fecha Fin</label>
+        <input type="date" class="form-control" id="fechaFin" name="fechaFin"
+          [ngModel]="seguro.fechaFin | date:'yyyy-MM-dd'"> 
+      </div>
+      <div class="elemento-form">
+        <label>Precio</label>
+        <input type="number" class="form-control" id="precio" [(ngModel)]="seguro.precio" name="precio">
+      </div>
+      <div class="elemento-form">
+        <label>Notas</label>
+        <input type="text" class="form-control" id="notas" [(ngModel)]="seguro.notas" name="notas">
+      </div>
+      <div class="boton-form">
+        <button class="btn btn-success botton-press" appPressEffect>{{ edit ? 'Actualizar' : 'Guardar' }}</button>
+      </div>
+    </div>
+  </form>
+</div>
