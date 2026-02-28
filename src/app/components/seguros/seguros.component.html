@@ -14,13 +14,13 @@
       <div class="elemento-form">
         <label>Fecha Inicio</label>
         <input type="date" class="form-control" id="fechaInicio" name="fechaInicio"
-          [ngModel]="seguro.fechaInicio | date:'yyyy-MM-dd'"
-          (ngModelChange)="onFechaInicioChange($event)">
+          [(ngModel)]="seguro.fechaInicio"
+          (ngModelChange)="calcularFin($event)">
       </div>
       <div class="elemento-form">
         <label>Fecha Fin</label>
         <input type="date" class="form-control" id="fechaFin" name="fechaFin"
-          [ngModel]="seguro.fechaFin | date:'yyyy-MM-dd'"> 
+        [(ngModel)]="seguro.fechaFin">
       </div>
       <div class="elemento-form">
         <label>Precio</label>

@@ -49,10 +49,10 @@ export class SegurosComponent implements OnInit {
       this.saveSeguro();
   }
 
-  onFechaInicioChange(fecha: string) {
+  calcularFin(fecha: any) {
     if (!fecha) return;
 
-    const inicio = new Date(fecha + 'T00:00:00'); 
+    const inicio = new Date(fecha);
     const fin = new Date(inicio);
     fin.setFullYear(fin.getFullYear() + 1);
 

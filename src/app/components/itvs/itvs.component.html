@@ -5,19 +5,23 @@
 
       <div class="elemento-form">
         <label>Fecha ITV</label>
-        <input type="date" class="form-control" id="nombreSeguro" [(ngModel)]="itv.fechaITV" name="fechaITV">
+        <input type="date" class="form-control" id="nombreSeguro"
+          [(ngModel)]="itv.fechaITV" name="fechaITV">
       </div>
       <div class="elemento-form">
         <label>Fecha Próx. ITV</label>
-        <input type="date" class="form-control" id="modoSeguro" [(ngModel)]="itv.fechaProximaITV" name="fechaProxITV">
+        <input type="date" class="form-control" id="modoSeguro"
+          [(ngModel)]="itv.fechaProximaITV" name="fechaProxITV">
       </div>
       <div class="elemento-form">
         <label>Lugar</label>
-        <input type="text" class="form-control" id="fechaInicio" [(ngModel)]="itv.sitioITV" name="lugar">
+        <input type="text" class="form-control" id="fechaInicio"
+          [(ngModel)]="itv.sitioITV" name="lugar">
       </div>
       <div class="elemento-form">
           <label>Notas</label>
-          <input type="text" class="form-control" id="fechaFin" [(ngModel)]="itv.notasITV" name="notas">
+          <input type="text" class="form-control" id="fechaFin"
+            [(ngModel)]="itv.notasITV" name="notas">
         </div>
       <div class="boton-form">
         <button class="btn btn-success botton-press" appPressEffect>{{ edit ? 'Actualizar' : 'Guardar' }}</button>
