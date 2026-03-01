@@ -7,7 +7,7 @@ export class Filtros {
   filtroAire: boolean;
   filtroCombustible: boolean;
   filtroHabitaculo: boolean;
-  fechaCambio: Date;
+  fechaCambio: String;
   kilometros: number;
   precio: number;
   vehiculo: Vehiculo;

@@ -2,7 +2,7 @@ import { Vehiculo } from "./vehiculo";
 
 export class Notas{
     idNota:number;
-    fechaNota:Date;
+    fechaNota:String;
     texto:string;
     vehiculo:Vehiculo;
 }

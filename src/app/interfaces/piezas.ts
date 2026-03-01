@@ -3,7 +3,7 @@ import { Vehiculo } from "./vehiculo";
 export class Piezas {
   idPieza:number;
   descripcion:String;
-  fechaCambio:Date;
+  fechaCambio:String;
   kilometros:number;
   precio:number;
   vehiculo:Vehiculo

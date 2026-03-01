@@ -4,7 +4,7 @@ export class Ruedas {
   idRuedas: number;
   numeroRuedas: number;
   marca: string;
-  fechaCambio: Date;
+  fechaCambio!: String;
   kilometros: number;
   precio: number;
   vehiculo : Vehiculo;

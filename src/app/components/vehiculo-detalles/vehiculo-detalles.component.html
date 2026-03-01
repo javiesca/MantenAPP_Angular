@@ -106,7 +106,7 @@
           <!-- KM + FECHA -->
           <div class="card-main">
             <div class="km">{{ filtro.kilometros }} km</div>
-            <div class="fecha">{{ filtro.fechaCambio | date:'dd/MM/yyyy' }}</div>
+            <div class="fecha">{{ filtro.fechaCambio}}</div>
           </div>
           <div class="separador-linea"></div>
           <!-- FOOTER -->
@@ -150,7 +150,7 @@
           <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="km">{{ pieza.kilometros }} km</div>
-            <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
+            <div class="fecha">{{ pieza.fechaCambio}}</div>
           </div>
           <div class="separador-linea"></div>
           <!-- FOOTER -->
@@ -191,7 +191,7 @@
           <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="km">{{ ruedas.kilometros }} km</div>
-            <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
+            <div class="fecha">{{ ruedas.fechaCambio}}</div>
           </div>
           <!-- FOOTER -->
           <div class="card-footer">
@@ -294,13 +294,13 @@
           </div>
 
           <div class="km fechas-seguro">
-            <span>{{ itv.fechaITV | date:'dd/MM/yyyy' }}</span>
+            <span>{{ itv.fechaITV}}</span>
             <span class="separador">a</span>
-            <span>{{ itv.fechaProximaITV | date:'dd/MM/yyyy' }}</span>
+            <span>{{ itv.fechaProximaITV}}</span>
           </div>
 
           <!-- NOTAS -->
-          
+
           <div *ngIf="itv.notasITV" class="seguro-notas">
             <div class="separador-titulo">
               <span>Notas</span>
@@ -343,7 +343,7 @@
               Nota
             </div>
             <span class="badge-ok">
-              {{ nota.fechaNota | date:'dd/MM/yyyy' }}
+              {{ nota.fechaNota}}
             </span>
           </div>
           <div class="separador-linea"></div>

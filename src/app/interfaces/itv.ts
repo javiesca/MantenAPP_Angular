@@ -3,8 +3,8 @@ import { Vehiculo } from "./vehiculo";
 export class ITV{
     idITV: number;
     sitioITV: String;
-    fechaITV: Date;
-    fechaProximaITV: Date;
+    fechaITV: String;
+    fechaProximaITV: String;
     notasITV: string;
     vehiculo: Vehiculo;
 }
