@@ -1,16 +1,26 @@
 <nav *ngIf="authService.isLoggedIn()" class="navbar navbar-dark bg-dark px-3">
-  <a class="navbar-brand d-flex align-items-center botton-press" routerLink="/vehiculos" aria-label="Ir a vehículos">
+
+  <a class="navbar-brand d-flex align-items-center botton-press"
+     routerLink="/vehiculos"
+     aria-label="Ir a vehículos">
     <i class="fa fa-home fs-4"></i>
   </a>
 
-  <span class="navbar-text text-light fw-semibold text-truncate">
+  <span class="navbar-text text-light fw-semibold text-truncate ms-3">
     {{ authService.getUsername() }}
   </span>
 
-  <button (click)="logout()" class="btn btn-danger">
-    <!-- Este es el icono de logout de Font Awesome -->
-    <i class="fa fa-sign-out-alt"></i>
-  </button>
+  <!-- Contenedor a la derecha -->
+  <div class="ms-auto d-flex gap-2">
+    <button (click)="dispararNotificaciones()" class="btn btn-warning">
+      <i class="fa fa-bell"></i>
+    </button>
+
+    <button (click)="logout()" class="btn btn-danger">
+      <i class="fa fa-sign-out-alt"></i>
+    </button>
+  </div>
+
 </nav>
 
 <div class="container text-center">
