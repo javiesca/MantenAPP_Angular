@@ -5,8 +5,8 @@ export class Seguro {
     nombreSeguro: string;
     precio: number;
     modoSeguro: string;
-    fechaInicio: Date;
-    fechaFin: Date;
+    fechaInicio!: string;
+    fechaFin!: string;
     notas: string;
     vehiculo: Vehiculo;
 }

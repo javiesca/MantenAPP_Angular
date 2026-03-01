@@ -49,15 +49,19 @@ export class SegurosComponent implements OnInit {
       this.saveSeguro();
   }
 
-  calcularFin(fecha: any) {
-    if (!fecha) return;
+calcularFin(fecha: string) {
+  if (!fecha) return;
 
-    const inicio = new Date(fecha);
-    const fin = new Date(inicio);
-    fin.setFullYear(fin.getFullYear() + 1);
+  const [y, m, d] = fecha.split('-').map(Number);
+  const fin = new Date(y, m - 1, d);      // local, sin UTC
+  fin.setFullYear(fin.getFullYear() + 1);
 
-    this.seguro.fechaFin = fin;
-  }
+  const yy = fin.getFullYear();
+  const mm = String(fin.getMonth() + 1).padStart(2, '0');
+  const dd = String(fin.getDate()).padStart(2, '0');
+
+  this.seguro.fechaFin = `${yy}-${mm}-${dd}`;
+}
 
   getSeguro(): void {
     this.idSeguro = this.route.snapshot.params['idSeguro'];
