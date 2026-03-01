@@ -8,11 +8,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class NotificacionService {
 
-  private baseURL = environment.apiBaseURL; // acaba en '/'
+  private baseURL = environment.apiBaseURL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   disparar(): Observable<string> {
-    return this.http.post(`${this.baseURL}disparar`, {}, { responseType: 'text' });
+    const token = sessionStorage.getItem('token');
+
+    return this.http.post(
+      `${this.baseURL}avisos`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        responseType: 'text'
+      }
+    );
   }
 }
