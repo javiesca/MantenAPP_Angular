@@ -106,7 +106,7 @@
           <!-- KM + FECHA -->
           <div class="card-main">
             <div class="km">{{ filtro.kilometros }} km</div>
-            <div class="fecha">{{ filtro.fechaCambio}}</div>
+            <div class="fecha">{{ filtro.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
           <div class="separador-linea"></div>
           <!-- FOOTER -->
@@ -150,7 +150,7 @@
           <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="km">{{ pieza.kilometros }} km</div>
-            <div class="fecha">{{ pieza.fechaCambio}}</div>
+            <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
           <div class="separador-linea"></div>
           <!-- FOOTER -->
@@ -191,7 +191,7 @@
           <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="km">{{ ruedas.kilometros }} km</div>
-            <div class="fecha">{{ ruedas.fechaCambio}}</div>
+            <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
           <!-- FOOTER -->
           <div class="card-footer">
@@ -294,9 +294,9 @@
           </div>
 
           <div class="km fechas-seguro">
-            <span>{{ itv.fechaITV}}</span>
+            <span>{{ itv.fechaITV | date:'dd/MM/yyyy' }}</span>
             <span class="separador">a</span>
-            <span>{{ itv.fechaProximaITV}}</span>
+            <span>{{ itv.fechaProximaITV | date:'dd/MM/yyyy' }}</span>
           </div>
 
           <!-- NOTAS -->
@@ -343,7 +343,7 @@
               Nota
             </div>
             <span class="badge-ok">
-              {{ nota.fechaNota}}
+              {{ nota.fechaNota | date:'dd/MM/yyyy' }}
             </span>
           </div>
           <div class="separador-linea"></div>

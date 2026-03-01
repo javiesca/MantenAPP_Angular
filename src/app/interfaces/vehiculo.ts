@@ -4,7 +4,7 @@ export class Vehiculo {
   idVehiculo:number;
   marca:String;
   modelo:String;
-  fechaCompra!:String;
+  fechaCompra:string;
   image?:Image;
   matricula:String;
 }
