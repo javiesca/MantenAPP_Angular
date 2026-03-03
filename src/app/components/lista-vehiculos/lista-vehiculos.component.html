@@ -1,5 +1,23 @@
 <div class="row tabla-principal">
 
+  <div class="loading-home" *ngIf="loading">
+    <div class="loading-title">
+      <span class="loading-dot"></span>
+      Cargando vehiculos y alertas...
+    </div>
+
+    <div class="loading-grid">
+      <div class="loading-card" *ngFor="let card of loadingCards">
+        <div class="loading-line loading-line-lg"></div>
+        <div class="loading-line loading-line-sm"></div>
+        <div class="loading-line loading-line-sm"></div>
+        <div class="loading-block"></div>
+        <div class="loading-line loading-line-md"></div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!loading">
   <div class="col-lg-5" *ngFor="let vehiculo of vehiculos">
     <div
       class="card mb-3 vehicle-card botton-press"
@@ -11,6 +29,19 @@
         <span><b>{{vehiculo.marca}} - {{vehiculo.modelo}}</b></span><br>
         <span><b>Fecha de fabricación: </b>{{vehiculo.fechaCompra | date:'dd/MM/yyyy' }}</span><br>
         <span><b>Matrícula: </b>{{vehiculo.matricula?.toUpperCase()}}</span>
+
+        <div class="alertas-fecha" *ngIf="!loading && alertasPorVehiculo[vehiculo.idVehiculo]?.length">
+          <div
+            *ngFor="let alerta of alertasPorVehiculo[vehiculo.idVehiculo]"
+            class="alerta-item"
+            [ngClass]="getClaseAlerta(alerta)">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span>
+              {{ getMensajeAlerta(alerta) }}
+              <ng-container *ngIf="alerta.fecha">({{ alerta.fecha | date:'dd/MM/yyyy' }})</ng-container>
+            </span>
+          </div>
+        </div>
       </div>
 
       <div class="card-body text-center vehicle-body">
@@ -57,5 +88,6 @@
       Nuevo Vehículo
     </button>
   </div>
+  </ng-container>
 
 </div>

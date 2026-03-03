@@ -24,6 +24,6 @@
 
 </nav>
 
-<div class="container text-center">
+<div [class.container]="authService.isLoggedIn()" [class.text-center]="authService.isLoggedIn()">
   <router-outlet></router-outlet>
 </div>
