@@ -27,6 +27,7 @@ constructor(
         idVehiculo: this.formBuilder.control(null),
         marca: this.formBuilder.control(''),
         modelo: this.formBuilder.control(''),
+        tipoVehiculo: this.formBuilder.control('COCHE'),
         matricula: this.formBuilder.control(''),
         fechaCompra: this.formBuilder.control(null),
         image: this.formBuilder.control(null)
@@ -161,6 +162,7 @@ constructor(
         idVehiculo: this.vehiculo.idVehiculo,
         marca: this.vehiculo.marca,
         modelo: this.vehiculo.modelo,
+        tipoVehiculo: this.vehiculo.tipoVehiculo ?? 'COCHE',
         matricula: this.vehiculo.matricula,
         fechaCompra: this.vehiculo.fechaCompra,
         image: this.vehiculo.image

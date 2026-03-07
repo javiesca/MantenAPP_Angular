@@ -31,6 +31,18 @@
   box-shadow: 0 8px 20px rgba(0,0,0,.08);
 }
 
+.itv-vigente {
+  background: #ffffff;
+  border: 1px solid #dcefe1;
+}
+
+.itv-pasada {
+  background: #f2f2f2;
+  border: 1px solid #d8d8d8;
+  box-shadow: none;
+  opacity: 0.9;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -135,6 +147,44 @@
   margin: 8px 0;
 }
 
+.seguro-card-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.seguro-card-title {
+  justify-self: start;
+}
+
+.seguro-card-mode {
+  justify-self: center;
+}
+
+.seguro-card-state {
+  justify-self: end;
+}
+
+.itv-primary-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 18px 0 10px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #edf9f0 0%, #dff3e5 100%);
+  border: 1px solid #c7e5cf;
+}
+
+.itv-primary-button {
+  min-width: 230px;
+  min-height: 48px;
+  font-weight: 700;
+  border-radius: 14px;
+  box-shadow: 0 10px 20px rgba(40, 167, 69, 0.18);
+}
+
 .nota-texto {
   white-space: pre-wrap;
 }
@@ -161,6 +211,27 @@
   textarea {
     height: 100%;
   }
+
+  .itv-primary-action {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .itv-primary-button {
+    min-width: 100%;
+  }
+
+  .seguro-card-header {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .seguro-card-title,
+  .seguro-card-mode,
+  .seguro-card-state {
+    justify-self: center;
+  }
+
   .contenedor-tabla {
     background-color: rgba(99, 97, 233, 0.075);
     padding: 10px;

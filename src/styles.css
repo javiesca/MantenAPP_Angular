@@ -258,6 +258,31 @@ h1,h2 {
   }
 }
 
+.itv-swal-popup {
+  max-width: min(760px, calc(100vw - 2rem)) !important;
+}
+
+.itv-swal-popup .swal2-html-container,
+.itv-swal-html {
+  overflow-x: hidden !important;
+}
+
+.itv-swal-popup .swal2-input,
+.itv-swal-popup .swal2-textarea,
+.itv-swal-popup .itv-swal-textarea {
+  width: calc(100% - 2em) !important;
+  max-width: calc(100% - 2em) !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.itv-swal-popup .swal2-textarea,
+.itv-swal-popup .itv-swal-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
 
 
 

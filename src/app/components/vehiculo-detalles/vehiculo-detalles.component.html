@@ -1,7 +1,6 @@
 <div class="container px-0">
   <h2 class="text-center">{{ vehiculo?.marca }} {{ vehiculo?.modelo }}</h2>
 
-  <!-- Añade este select justo antes de los tabs -->
   <select class="form-select mobile-tabs" (change)="cambiarTab($event)">
     <option value="mantenimientos">Mantenimientos</option>
     <option value="piezas">Piezas</option>
@@ -11,7 +10,6 @@
     <option value="notas">Notas</option>
   </select>
 
-  <!-- Navegación de Pestañas -->
   <ul class="nav nav-tabs desktop-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="mantenimientos-tab" data-bs-toggle="tab" data-bs-target="#mantenimientos"
@@ -51,9 +49,7 @@
     </li>
   </ul>
 
-  <!-- Contenido de las Pestañas -->
   <div class="tab-content" id="myTabContent">
-    <!-- Pestaña Mantenimientos -->
     <div class="tab-pane fade show active" id="mantenimientos" role="tabpanel" aria-labelledby="mantenimientos-tab">
       <div *ngIf="!filtrosList || filtrosList.length === 0">
         <h3 class="text-center no-datos">No hay datos de mantenimientos de motor</h3>
@@ -65,16 +61,12 @@
       </div>
       <div *ngIf="filtrosList && filtrosList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let filtro of filtrosList">
-          <!-- HEADER -->
           <div class="card-header">
             <div class="title">
               <i class="fas fa-oil-can"></i>
               Cambio de Aceite
             </div>
-            <span class="badge-ok" *ngIf="filtro.aceite; else badgeNo">
-              OK
-            </span>
-
+            <span class="badge-ok" *ngIf="filtro.aceite; else badgeNo">OK</span>
             <ng-template #badgeNo>
               <span class="badge-no">NO</span>
             </ng-template>
@@ -82,7 +74,6 @@
           <div class="separador-titulo">
             <span>Filtros</span>
           </div>
-          <!-- FILTROS -->
           <div class="filters-grid">
             <div class="filter-item" [class.ok]="filtro.filtroAceite">
               <i class="fas fa-oil-can"></i>
@@ -98,18 +89,16 @@
             </div>
             <div class="filter-item" [class.ok]="filtro.filtroHabitaculo">
               <i class="fas fa-fan"></i>
-              <span>Habitáculo</span>
+              <span>Habitaculo</span>
             </div>
           </div>
 
           <div class="separador-linea"></div>
-          <!-- KM + FECHA -->
           <div class="card-main">
             <div class="km">{{ filtro.kilometros }} km</div>
             <div class="fecha">{{ filtro.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
           <div class="separador-linea"></div>
-          <!-- FOOTER -->
           <div class="card-footer">
             <div class="precio">{{ filtro.precio }} €</div>
             <div class="acciones">
@@ -125,7 +114,6 @@
       </div>
     </div>
 
-    <!-- Pestaña Piezas -->
     <div class="tab-pane fade" id="piezas" role="tabpanel" aria-labelledby="piezas-tab">
       <div *ngIf="!piezasList || piezasList.length === 0">
         <h3 class="text-center no-datos">No hay datos de cambios de piezas</h3>
@@ -137,23 +125,18 @@
       </div>
       <div *ngIf="piezasList && piezasList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let pieza of piezasList">
-          <div class="separador-titulo">
-            Descripción
-          </div>
-          <!-- HEADER -->
+          <div class="separador-titulo">Descripcion</div>
           <div class="card-header">
             <div class="text-center seguro-notas" style="width: 100%;">
               {{ pieza.descripcion }}
             </div>
           </div>
           <div class="separador-linea"></div>
-          <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="km">{{ pieza.kilometros }} km</div>
             <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
           <div class="separador-linea"></div>
-          <!-- FOOTER -->
           <div class="card-footer">
             <div class="precio">{{ pieza.precio }} €</div>
             <div class="acciones">
@@ -169,7 +152,6 @@
       </div>
     </div>
 
-    <!-- Pestaña Ruedas -->
     <div class="tab-pane fade" id="ruedas" role="tabpanel" aria-labelledby="ruedas-tab">
       <div *ngIf="!ruedasList || ruedasList.length === 0">
         <h3 class="text-center no-datos">No hay datos de cambios de ruedas</h3>
@@ -181,19 +163,14 @@
       </div>
       <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
-          <!-- HEADER -->
           <div class="card-header">
-            <div class="title">
-              {{ ruedas.marca }}
-            </div>
+            <div class="title">{{ ruedas.marca }}</div>
             <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
           </div>
-          <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="km">{{ ruedas.kilometros }} km</div>
             <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
-          <!-- FOOTER -->
           <div class="card-footer">
             <div class="precio">{{ ruedas.precio }} €</div>
             <div class="acciones">
@@ -209,7 +186,6 @@
       </div>
     </div>
 
-    <!-- Pestaña Seguro -->
     <div class="tab-pane fade" id="seguros" role="tabpanel" aria-labelledby="seguros-tab">
       <div *ngIf="!segurosList || segurosList.length === 0">
         <h3 class="text-center no-datos">No hay datos seguros</h3>
@@ -220,16 +196,22 @@
         </button>
       </div>
       <div *ngIf="segurosList && segurosList.length > 0" class="cards-container">
-        <div class="mantenimiento-card" *ngFor="let seguro of segurosList">
-          <!-- HEADER -->
-          <div class="card-header">
-            <div class="title">
-              {{ seguro.nombreSeguro }}
+        <div
+          class="mantenimiento-card"
+          *ngFor="let seguro of orderedSegurosList"
+          [class.itv-vigente]="isSeguroEnVigor(seguro)"
+          [class.itv-pasada]="isSeguroPasado(seguro)">
+          <div class="card-header seguro-card-header">
+            <div class="title seguro-card-title">{{ seguro.nombreSeguro }}</div>
+            <div class="seguro-card-mode">
+              <span class="badge-ok">{{ seguro.modoSeguro }}</span>
             </div>
-            <span class="badge-ok">{{ seguro.modoSeguro }}</span>
+            <div class="seguro-card-state">
+              <span class="badge-ok" *ngIf="isSeguroEnVigor(seguro)">EN VIGOR</span>
+              <span class="badge-no" *ngIf="isSeguroPasado(seguro)">REGISTRO</span>
+            </div>
           </div>
 
-          <!-- INFO PRINCIPAL -->
           <div class="card-main">
             <div class="separador-titulo">
               <span>Periodo</span>
@@ -242,7 +224,15 @@
             </div>
           </div>
 
-          <!-- NOTAS (solo si hay) -->
+          <div *ngIf="isSeguroEnVigorPrincipal(seguro)" class="itv-primary-action">
+            <button
+              (click)="renovarSeguro(seguro)"
+              class="btn btn-success itv-primary-button"
+              appPressEffect>
+              Renovar seguro
+            </button>
+          </div>
+
           <div *ngIf="seguro.notas" class="seguro-notas">
             <div class="separador-titulo">
               <span>Notas</span>
@@ -251,11 +241,10 @@
 
           <div class="separador-linea"></div>
 
-          <!-- FOOTER -->
           <div class="card-footer">
             <div class="precio">{{ seguro.precio }} €</div>
             <div class="acciones">
-              <button (click)="saveSeguro(seguro)" class="btn btn-info" appPressEffect>
+              <button *ngIf="!isSeguroPasado(seguro)" (click)="saveSeguro(seguro)" class="btn btn-info" appPressEffect>
                 <i class="fas fa-edit"></i>
               </button>
               <button (click)="deleteDato(seguro.idSeguro, 'seguro')" class="btn btn-danger" appPressEffect>
@@ -267,7 +256,6 @@
       </div>
     </div>
 
-    <!-- Pestaña ITV -->
     <div class="tab-pane fade" id="itv" role="tabpanel" aria-labelledby="itv-tab">
       <div *ngIf="!itvList || itvList.length === 0">
         <h3 class="text-center no-datos">No hay ITV</h3>
@@ -278,17 +266,17 @@
         </button>
       </div>
       <div *ngIf="itvList && itvList.length > 0" class="cards-container">
-
-        <div class="mantenimiento-card" *ngFor="let itv of itvList">
-
-          <!-- HEADER -->
+        <div
+          class="mantenimiento-card"
+          *ngFor="let itv of orderedItvList"
+          [class.itv-vigente]="isItvEnVigor(itv)"
+          [class.itv-pasada]="isItvPasada(itv)">
           <div class="card-header">
-            <div class="title">
-              {{ itv.sitioITV }}
-            </div>
+            <div class="title">{{ itv.sitioITV }}</div>
+            <span class="badge-ok" *ngIf="isItvEnVigor(itv)">EN VIGOR</span>
+            <span class="badge-no" *ngIf="isItvPasada(itv)">REGISTRO</span>
           </div>
 
-          <!-- INFO PRINCIPAL -->
           <div class="separador-titulo">
             <span>Periodo</span>
           </div>
@@ -299,7 +287,18 @@
             <span>{{ itv.fechaProximaITV | date:'dd/MM/yyyy' }}</span>
           </div>
 
-          <!-- NOTAS -->
+          <div class="seguro-notas">
+            <b>Estado:</b> {{ isItvEnVigor(itv) ? 'En vigor' : 'Registro historico' }}
+          </div>
+
+          <div *ngIf="isItvEnVigorPrincipal(itv)" class="itv-primary-action">
+            <button
+              (click)="marcarItvPasada(itv)"
+              class="btn btn-success itv-primary-button"
+              appPressEffect>
+              Registrar ITV
+            </button>
+          </div>
 
           <div *ngIf="itv.notasITV" class="seguro-notas">
             <div class="separador-titulo">
@@ -307,13 +306,13 @@
             </div>
             {{ itv.notasITV }}
           </div>
-          <!-- SEPARADOR -->
+
           <div class="separador-linea"></div>
-          <!-- FOOTER -->
+
           <div class="card-footer">
             <div class="precio"></div>
             <div class="acciones">
-              <button (click)="saveITV(itv)" class="btn btn-info" appPressEffect>
+              <button *ngIf="!isItvPasada(itv)" (click)="saveITV(itv)" class="btn btn-info" appPressEffect>
                 <i class="fas fa-edit"></i>
               </button>
               <button (click)="deleteDato(itv.idITV, 'itv')" class="btn btn-danger" appPressEffect>
@@ -325,7 +324,6 @@
       </div>
     </div>
 
-    <!-- Pestaña Notas -->
     <div class="tab-pane fade" id="notas" role="tabpanel" aria-labelledby="notas-tab">
       <div *ngIf="!notasList || notasList.length === 0">
         <h3 class="text-center no-datos">No hay notas</h3>
@@ -337,23 +335,13 @@
       </div>
       <div *ngIf="notasList && notasList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let nota of notasList">
-          <!-- HEADER -->
           <div class="card-header">
-            <div class="title">
-              Nota
-            </div>
-            <span class="badge-ok">
-              {{ nota.fechaNota | date:'dd/MM/yyyy' }}
-            </span>
+            <div class="title">Nota</div>
+            <span class="badge-ok">{{ nota.fechaNota | date:'dd/MM/yyyy' }}</span>
           </div>
           <div class="separador-linea"></div>
-          <!-- TEXTO -->
-          <div class="nota-texto">
-            {{ nota.texto }}
-          </div>
-          <!-- SEPARADOR -->
+          <div class="nota-texto">{{ nota.texto }}</div>
           <div class="separador-linea"></div>
-          <!-- FOOTER -->
           <div class="card-footer">
             <div class="precio"></div>
             <div class="acciones">

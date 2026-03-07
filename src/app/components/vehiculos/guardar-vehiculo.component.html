@@ -11,7 +11,14 @@
         <input type="text" class="form-control" id="modelo" formControlName="modelo">
       </div>
       <div class="label-save">
-        <label>Matrícula</label>
+        <label>Tipo</label>
+        <select class="form-control" id="tipoVehiculo" formControlName="tipoVehiculo">
+          <option value="COCHE">Coche</option>
+          <option value="MOTO">Moto</option>
+        </select>
+      </div>
+      <div class="label-save">
+        <label>Matricula</label>
         <input type="text" class="form-control" id="matricula" formControlName="matricula">
       </div>
       <div class="label-save">
@@ -24,7 +31,6 @@
         <input type="file" class="form-control-file" id="imagen" (change)="changeImage($event)" accept="image/*">
       </div>
 
-      <!-- Muestra la imagen actual -->
       <div class="label-save">
         <div class="imagen-form" *ngIf="previewUrl">
           <img [src]="previewUrl" class="imagen-preview" alt="Imagen previa">
