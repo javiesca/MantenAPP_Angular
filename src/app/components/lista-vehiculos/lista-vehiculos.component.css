@@ -13,6 +13,16 @@
   justify-content: center;
 }
 
+.vehicle-name {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #214132;
+  letter-spacing: -0.02em;
+}
+
 .vehicle-action-btn {
   display: inline-flex;
   align-items: center;
@@ -117,6 +127,12 @@
   color: #495057;
   background-color: #e9ecef;
   border: 1px solid #ced4da;
+}
+
+@media (max-width: 768px) {
+  .vehicle-name {
+    font-size: 21px;
+  }
 }
 
 .loading-home {

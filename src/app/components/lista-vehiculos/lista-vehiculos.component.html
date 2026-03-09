@@ -26,9 +26,7 @@
       style="cursor: pointer;">
 
       <div class="card-header vehicle-header">
-        <span><b>{{vehiculo.marca}} - {{vehiculo.modelo}}</b></span><br>
-        <span><b>Fecha de matriculación: </b>{{vehiculo.fechaCompra | date:'dd/MM/yyyy' }}</span><br>
-        <span><b>Matrícula: </b>{{vehiculo.matricula?.toUpperCase()}}</span>
+        <div class="vehicle-name">{{vehiculo.marca}} - {{vehiculo.modelo}}</div>
 
         <div class="alertas-fecha" *ngIf="!loading && alertasPorVehiculo[vehiculo.idVehiculo]?.length">
           <div
