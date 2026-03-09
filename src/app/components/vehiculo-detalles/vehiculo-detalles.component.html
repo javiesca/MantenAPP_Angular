@@ -287,10 +287,6 @@
             <span>{{ itv.fechaProximaITV | date:'dd/MM/yyyy' }}</span>
           </div>
 
-          <div class="seguro-notas">
-            <b>Estado:</b> {{ isItvEnVigor(itv) ? 'En vigor' : 'Registro historico' }}
-          </div>
-
           <div *ngIf="isItvEnVigorPrincipal(itv)" class="itv-primary-action">
             <button
               (click)="marcarItvPasada(itv)"
