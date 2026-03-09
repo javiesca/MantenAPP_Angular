@@ -1,5 +1,8 @@
 <div class="container px-0">
   <h2 class="text-center">{{ vehiculo?.marca }} {{ vehiculo?.modelo }}</h2>
+  <div *ngIf="loadErrors.vehiculo" class="alert alert-warning text-center">
+    {{ loadErrors.vehiculo }}
+  </div>
 
   <select class="form-select mobile-tabs" (change)="cambiarTab($event)">
     <option value="mantenimientos">Mantenimientos</option>
@@ -51,11 +54,14 @@
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="mantenimientos" role="tabpanel" aria-labelledby="mantenimientos-tab">
-      <div *ngIf="!filtrosList || filtrosList.length === 0">
+      <div *ngIf="loadErrors.mantenimientos" class="alert alert-warning text-center">
+        {{ loadErrors.mantenimientos }}
+      </div>
+      <div *ngIf="!loadErrors.mantenimientos && (!filtrosList || filtrosList.length === 0)">
         <h3 class="text-center no-datos">No hay datos de mantenimientos de motor</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button (click)="saveFiltros(vehiculo.idVehiculo)" class="btn btn-success">
+        <button (click)="saveFiltros()" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -115,11 +121,14 @@
     </div>
 
     <div class="tab-pane fade" id="piezas" role="tabpanel" aria-labelledby="piezas-tab">
-      <div *ngIf="!piezasList || piezasList.length === 0">
+      <div *ngIf="loadErrors.piezas" class="alert alert-warning text-center">
+        {{ loadErrors.piezas }}
+      </div>
+      <div *ngIf="!loadErrors.piezas && (!piezasList || piezasList.length === 0)">
         <h3 class="text-center no-datos">No hay datos de cambios de piezas</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button (click)="savePiezas(vehiculo.idVehiculo)" class="btn btn-success">
+        <button (click)="savePiezas()" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -153,11 +162,14 @@
     </div>
 
     <div class="tab-pane fade" id="ruedas" role="tabpanel" aria-labelledby="ruedas-tab">
-      <div *ngIf="!ruedasList || ruedasList.length === 0">
+      <div *ngIf="loadErrors.ruedas" class="alert alert-warning text-center">
+        {{ loadErrors.ruedas }}
+      </div>
+      <div *ngIf="!loadErrors.ruedas && (!ruedasList || ruedasList.length === 0)">
         <h3 class="text-center no-datos">No hay datos de cambios de ruedas</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button (click)="saveRuedas(vehiculo.idVehiculo)" class="btn btn-success">
+        <button (click)="saveRuedas()" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -187,11 +199,14 @@
     </div>
 
     <div class="tab-pane fade" id="seguros" role="tabpanel" aria-labelledby="seguros-tab">
-      <div *ngIf="!segurosList || segurosList.length === 0">
+      <div *ngIf="loadErrors.seguros" class="alert alert-warning text-center">
+        {{ loadErrors.seguros }}
+      </div>
+      <div *ngIf="!loadErrors.seguros && (!segurosList || segurosList.length === 0)">
         <h3 class="text-center no-datos">No hay datos seguros</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button (click)="saveSeguro(vehiculo.idVehiculo)" class="btn btn-success">
+        <button (click)="saveSeguro()" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -208,7 +223,7 @@
             </div>
             <div class="seguro-card-state">
               <span class="badge-ok" *ngIf="isSeguroEnVigor(seguro)">EN VIGOR</span>
-              <span class="badge-no" *ngIf="isSeguroPasado(seguro)">REGISTRO</span>
+              <span class="badge-no" *ngIf="isSeguroPasado(seguro)">HISTORICO</span>
             </div>
           </div>
 
@@ -257,11 +272,14 @@
     </div>
 
     <div class="tab-pane fade" id="itv" role="tabpanel" aria-labelledby="itv-tab">
-      <div *ngIf="!itvList || itvList.length === 0">
+      <div *ngIf="loadErrors.itv" class="alert alert-warning text-center">
+        {{ loadErrors.itv }}
+      </div>
+      <div *ngIf="!loadErrors.itv && (!itvList || itvList.length === 0)">
         <h3 class="text-center no-datos">No hay ITV</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button (click)="saveITV(vehiculo.idVehiculo)" class="btn btn-success">
+        <button (click)="saveITV()" class="btn btn-success">
           Nuevo
         </button>
       </div>
@@ -274,7 +292,7 @@
           <div class="card-header">
             <div class="title">{{ itv.sitioITV }}</div>
             <span class="badge-ok" *ngIf="isItvEnVigor(itv)">EN VIGOR</span>
-            <span class="badge-no" *ngIf="isItvPasada(itv)">REGISTRO</span>
+            <span class="badge-no" *ngIf="isItvPasada(itv)">HISTORICO</span>
           </div>
 
           <div class="separador-titulo">
@@ -321,11 +339,14 @@
     </div>
 
     <div class="tab-pane fade" id="notas" role="tabpanel" aria-labelledby="notas-tab">
-      <div *ngIf="!notasList || notasList.length === 0">
+      <div *ngIf="loadErrors.notas" class="alert alert-warning text-center">
+        {{ loadErrors.notas }}
+      </div>
+      <div *ngIf="!loadErrors.notas && (!notasList || notasList.length === 0)">
         <h3 class="text-center no-datos">No hay notas</h3>
       </div>
       <div class="text-center mt-3 mb-3">
-        <button (click)="saveNotas(vehiculo.idVehiculo)" class="btn btn-success">
+        <button (click)="saveNotas()" class="btn btn-success">
           Nuevo
         </button>
       </div>

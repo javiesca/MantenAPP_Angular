@@ -20,6 +20,7 @@ export class SegurosComponent implements OnInit {
   seguro: Seguro = new Seguro();
   vehiculo: Vehiculo = new Vehiculo();
   edit: boolean = false;
+  private prefill: Partial<Seguro> | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,36 +32,62 @@ export class SegurosComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.resetState();
+
       if (params['idSeguro']) {
         this.edit = true;
         this.idSeguro = params['idSeguro'];
         this.getSeguro();
       } else if (params['idVehiculo']) {
         this.idVehiculo = params['idVehiculo'];
+        this.prefill = history.state?.prefill ?? null;
         this.getVehiculo();
       }
     });
   }
 
+  private resetState(): void {
+    this.edit = false;
+    this.idVehiculo = undefined as unknown as number;
+    this.idSeguro = undefined as unknown as number;
+    this.prefill = null;
+    this.seguro = new Seguro();
+    this.seguro.fechaInicio = this.getTodayIsoDate();
+    this.seguro.fechaFin = this.getNextYearIsoDate(this.seguro.fechaInicio);
+    this.vehiculo = new Vehiculo();
+  }
+
   onSubmit() {
-    if (this.edit)
+    if (this.isEditMode())
       this.updateSeguro();
     else
       this.saveSeguro();
   }
 
+  isEditMode(): boolean {
+    return this.edit && !!this.idSeguro;
+  }
+
+  private getTodayIsoDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  private getNextYearIsoDate(fechaInicio: string): string {
+    const [y, m, d] = fechaInicio.split('-').map(Number);
+    const fin = new Date(y, m - 1, d);
+    fin.setFullYear(fin.getFullYear() + 1);
+
+    const yy = fin.getFullYear();
+    const mm = String(fin.getMonth() + 1).padStart(2, '0');
+    const dd = String(fin.getDate()).padStart(2, '0');
+
+    return `${yy}-${mm}-${dd}`;
+  }
+
 calcularFin(fecha: string) {
   if (!fecha) return;
 
-  const [y, m, d] = fecha.split('-').map(Number);
-  const fin = new Date(y, m - 1, d);      // local, sin UTC
-  fin.setFullYear(fin.getFullYear() + 1);
-
-  const yy = fin.getFullYear();
-  const mm = String(fin.getMonth() + 1).padStart(2, '0');
-  const dd = String(fin.getDate()).padStart(2, '0');
-
-  this.seguro.fechaFin = `${yy}-${mm}-${dd}`;
+  this.seguro.fechaFin = this.getNextYearIsoDate(fecha);
 }
 
   getSeguro(): void {
@@ -74,6 +101,13 @@ calcularFin(fecha: string) {
     this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
       this.vehiculo = data;
       this.seguro.vehiculo = this.vehiculo;
+      if (this.prefill) {
+        this.seguro = {
+          ...this.seguro,
+          ...this.prefill,
+          vehiculo: this.vehiculo
+        };
+      }
     })
   }
 

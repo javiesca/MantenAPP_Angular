@@ -30,6 +30,8 @@ export class GuardarPiezasComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.resetState();
+
       if (params['idPiezas']) {
         this.edit = true;
         this.idPiezas = params['idPiezas'];
@@ -41,11 +43,28 @@ export class GuardarPiezasComponent implements OnInit {
     });
   }
 
+  private resetState(): void {
+    this.edit = false;
+    this.idVehiculo = undefined as unknown as number;
+    this.idPiezas = undefined as unknown as number;
+    this.piezas = new Piezas();
+    this.piezas.fechaCambio = this.getTodayIsoDate();
+    this.vehiculo = new Vehiculo();
+  }
+
+  private getTodayIsoDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
   onSubmit() {
-    if(this.edit)
+    if(this.isEditMode())
       this.uptadaPiezas();
     else
       this.savePiezas();
+  }
+
+  isEditMode(): boolean {
+    return this.edit && !!this.idPiezas;
   }
 
   getVehiculo(){

@@ -27,13 +27,14 @@ declare const bootstrap: any;
 })
 export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
   idVehiculo: number;
-  filtrosList: Filtros[];
-  ruedasList: Ruedas[];
-  piezasList: Piezas[];
-  notasList: Notas[];
-  segurosList: Seguro[];
-  itvList: ITV[];
-  vehiculo: Vehiculo;
+  filtrosList: Filtros[] = [];
+  ruedasList: Ruedas[] = [];
+  piezasList: Piezas[] = [];
+  notasList: Notas[] = [];
+  segurosList: Seguro[] = [];
+  itvList: ITV[] = [];
+  vehiculo: Vehiculo = new Vehiculo();
+  loadErrors: Partial<Record<'vehiculo' | 'mantenimientos' | 'ruedas' | 'piezas' | 'notas' | 'seguros' | 'itv', string>> = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -80,7 +81,7 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.idVehiculo = this.route.snapshot.params['idVehiculo'];
+    this.idVehiculo = Number(this.route.snapshot.params['idVehiculo']);
     this.getVehiculo(this.idVehiculo);
     this.getMantenimientoMotor(this.idVehiculo);
     this.getRuedas(this.idVehiculo);
@@ -91,44 +92,93 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
   }
 
   getVehiculo(idVehiculo: number) {
-    this.vs.getVehiculoById(idVehiculo).subscribe(data => {
-      this.vehiculo = data;
+    this.vs.getVehiculoById(idVehiculo).subscribe({
+      next: data => {
+        this.vehiculo = data;
+        delete this.loadErrors.vehiculo;
+      },
+      error: () => {
+        this.vehiculo = new Vehiculo();
+        this.loadErrors.vehiculo = 'No se pudo cargar el vehículo.';
+      }
     });
   }
 
   getMantenimientoMotor(idVehiculo: number) {
-    this.sf.getListaMantenimentos(idVehiculo).subscribe(data => {
-      this.filtrosList = data;
+    this.sf.getListaMantenimentos(idVehiculo).subscribe({
+      next: data => {
+        this.filtrosList = data;
+        delete this.loadErrors.mantenimientos;
+      },
+      error: () => {
+        this.filtrosList = [];
+        this.loadErrors.mantenimientos = 'No se pudieron cargar los mantenimientos.';
+      }
     });
   }
 
   getRuedas(idVehiculo: number) {
-    this.rs.getListaCambiosRuedas(idVehiculo).subscribe(data => {
-      this.ruedasList = data;
+    this.rs.getListaCambiosRuedas(idVehiculo).subscribe({
+      next: data => {
+        this.ruedasList = data;
+        delete this.loadErrors.ruedas;
+      },
+      error: () => {
+        this.ruedasList = [];
+        this.loadErrors.ruedas = 'No se pudieron cargar los cambios de ruedas.';
+      }
     });
   }
 
   getPiezas(idVehiculo: number) {
-    this.ps.getListaPiezas(idVehiculo).subscribe(data => {
-      this.piezasList = data;
+    this.ps.getListaPiezas(idVehiculo).subscribe({
+      next: data => {
+        this.piezasList = data;
+        delete this.loadErrors.piezas;
+      },
+      error: () => {
+        this.piezasList = [];
+        this.loadErrors.piezas = 'No se pudieron cargar las piezas.';
+      }
     });
   }
 
   getNotas(idVehiculo: number) {
-    this.ns.getNotas(idVehiculo).subscribe(data => {
-      this.notasList = data;
+    this.ns.getNotas(idVehiculo).subscribe({
+      next: data => {
+        this.notasList = data;
+        delete this.loadErrors.notas;
+      },
+      error: () => {
+        this.notasList = [];
+        this.loadErrors.notas = 'No se pudieron cargar las notas.';
+      }
     });
   }
 
   getSeguros(idVehiculo: number) {
-    this.ss.getListaSeguros(idVehiculo).subscribe(data => {
-      this.segurosList = data;
+    this.ss.getListaSeguros(idVehiculo).subscribe({
+      next: data => {
+        this.segurosList = data;
+        delete this.loadErrors.seguros;
+      },
+      error: () => {
+        this.segurosList = [];
+        this.loadErrors.seguros = 'No se pudieron cargar los seguros.';
+      }
     });
   }
 
   getItvs(idVehiculo: number) {
-    this.itvs.getITVs(idVehiculo).subscribe(data => {
-      this.itvList = data;
+    this.itvs.getITVs(idVehiculo).subscribe({
+      next: data => {
+        this.itvList = data;
+        delete this.loadErrors.itv;
+      },
+      error: () => {
+        this.itvList = [];
+        this.loadErrors.itv = 'No se pudieron cargar las ITV.';
+      }
     });
   }
 
@@ -182,52 +232,99 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  saveFiltros(data: number | Filtros) {
-    if (typeof data === 'number') {
-      this.router.navigate(['guardar-mantenimiento', { idVehiculo: data }]);
-    } else {
-      this.router.navigate(['guardar-mantenimiento', { idFiltros: data.idFiltros }]);
+  saveFiltros(data?: number | Filtros) {
+    if (typeof data === 'number' || typeof data === 'undefined') {
+      const idVehiculo = this.getCurrentVehiculoId(data);
+      if (idVehiculo) {
+        this.router.navigate(['guardar-mantenimiento', 'vehiculo', idVehiculo]);
+      }
+      return;
     }
+
+    this.router.navigate(['guardar-mantenimiento', 'editar', data.idFiltros]);
   }
 
-  saveRuedas(data: number | Ruedas) {
-    if (typeof data === 'number') {
-      this.router.navigate(['guardar-ruedas', { idVehiculo: data }]);
-    } else {
-      this.router.navigate(['guardar-ruedas', { idRuedas: data.idRuedas }]);
+  saveRuedas(data?: number | Ruedas) {
+    if (typeof data === 'number' || typeof data === 'undefined') {
+      const idVehiculo = this.getCurrentVehiculoId(data);
+      if (idVehiculo) {
+        this.router.navigate(['guardar-ruedas', 'vehiculo', idVehiculo]);
+      }
+      return;
     }
+
+    this.router.navigate(['guardar-ruedas', 'editar', data.idRuedas]);
   }
 
-  savePiezas(data: number | Piezas) {
-    if (typeof data === 'number') {
-      this.router.navigate(['guardar-piezas', { idVehiculo: data }]);
-    } else {
-      this.router.navigate(['guardar-piezas', { idPiezas: data.idPieza }]);
+  savePiezas(data?: number | Piezas) {
+    if (typeof data === 'number' || typeof data === 'undefined') {
+      const idVehiculo = this.getCurrentVehiculoId(data);
+      if (idVehiculo) {
+        this.router.navigate(['guardar-piezas', 'vehiculo', idVehiculo]);
+      }
+      return;
     }
+
+    this.router.navigate(['guardar-piezas', 'editar', data.idPieza]);
   }
 
-  saveNotas(data: number | Notas) {
-    if (typeof data === 'number') {
-      this.router.navigate(['guardar-notas', { idVehiculo: data }]);
-    } else {
-      this.router.navigate(['guardar-notas', { idNota: data.idNota }]);
+  saveNotas(data?: number | Notas) {
+    if (typeof data === 'number' || typeof data === 'undefined') {
+      const idVehiculo = this.getCurrentVehiculoId(data);
+      if (idVehiculo) {
+        this.router.navigate(['guardar-notas', 'vehiculo', idVehiculo]);
+      }
+      return;
     }
+
+    this.router.navigate(['guardar-notas', 'editar', data.idNota]);
   }
 
-  saveSeguro(data: number | Seguro) {
-    if (typeof data === 'number') {
-      this.router.navigate(['guardar-seguro', { idVehiculo: data }]);
-    } else {
-      this.router.navigate(['guardar-seguro', { idSeguro: data.idSeguro }]);
+  saveSeguro(data?: number | Seguro) {
+    if (typeof data === 'number' || typeof data === 'undefined') {
+      const idVehiculo = this.getCurrentVehiculoId(data);
+      if (idVehiculo) {
+        this.router.navigate(['guardar-seguro', 'vehiculo', idVehiculo]);
+      }
+      return;
     }
+
+    this.router.navigate(['guardar-seguro', 'editar', data.idSeguro]);
   }
 
-  saveITV(data: number | ITV) {
-    if (typeof data === 'number') {
-      this.router.navigate(['guardar-itv', { idVehiculo: data }]);
-    } else {
-      this.router.navigate(['guardar-itv', { idITV: data.idITV }]);
+  saveITV(data?: number | ITV) {
+    if (typeof data === 'number' || typeof data === 'undefined') {
+      const idVehiculo = this.getCurrentVehiculoId(data);
+      if (idVehiculo) {
+        this.router.navigate(['guardar-itv', 'vehiculo', idVehiculo]);
+      }
+      return;
     }
+
+    this.router.navigate(['guardar-itv', 'editar', data.idITV]);
+  }
+
+  private getCurrentVehiculoId(id?: number): number | null {
+    const candidates = [
+      id,
+      this.idVehiculo,
+      Number(this.route.snapshot.paramMap.get('idVehiculo')),
+      this.vehiculo?.idVehiculo
+    ];
+
+    const vehiculoId = candidates.find(value => typeof value === 'number' && !Number.isNaN(value) && value > 0);
+    if (vehiculoId) {
+      return vehiculoId;
+    }
+
+    Swal.fire({
+      title: 'No se pudo abrir el formulario',
+      text: 'No se ha encontrado el vehículo asociado.',
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    });
+
+    return null;
   }
 
   deleteDato(id: number, tipo: string) {
@@ -306,80 +403,15 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     const proximaItv = this.calcularFechaProximaITV(fechaFinActual, fechaCompra, tipoVehiculo);
     const proximaItvIso = this.toIsoDate(proximaItv);
 
-    Swal.fire({
-      title: 'Pasar ITV',
-      width: 760,
-      customClass: {
-        popup: 'itv-swal-popup',
-        htmlContainer: 'itv-swal-html'
-      },
-      html: `
-        <div style="text-align:left; margin: 0 0 6px 4px; font-weight:600;">Lugar de la siguiente ITV</div>
-        <input id="swal-itv-lugar" class="swal2-input" placeholder="Ej: ITV Miere" value="${itvActual?.sitioITV ?? ''}">
-        <div style="text-align:left; margin: 8px 0 6px 4px; font-weight:600;">Notas para la siguiente ITV</div>
-        <textarea id="swal-itv-notas" class="swal2-textarea" style="width:100%; min-height:160px; box-sizing:border-box;" placeholder="Ej: Revisar luces y desgaste neumaticos antes de llevarlo"></textarea>
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      preConfirm: () => {
-        const lugarEl = document.getElementById('swal-itv-lugar') as HTMLInputElement | null;
-        const notasEl = document.getElementById('swal-itv-notas') as HTMLTextAreaElement | null;
-        const sitioITV = (lugarEl?.value ?? '').trim();
-        const notasITV = (notasEl?.value ?? '').trim();
-        if (!sitioITV) {
-          Swal.showValidationMessage('Indica el lugar de la siguiente ITV.');
-          return null;
+    this.router.navigate(['guardar-itv', 'vehiculo', this.idVehiculo], {
+      state: {
+        prefill: {
+          sitioITV: itvActual?.sitioITV || '',
+          fechaITV: this.toIsoDate(fechaFinActual),
+          fechaProximaITV: proximaItvIso,
+          notasITV: ''
         }
-        return {
-          sitioITV,
-          notasITV
-        };
       }
-    }).then(result => {
-      if (!result.isConfirmed || !result.value) {
-        return;
-      }
-
-      const nuevaItv: ITV = {
-        idITV: 0,
-        sitioITV: result.value.sitioITV || itvActual?.sitioITV || '',
-        fechaITV: this.toIsoDate(fechaFinActual),
-        fechaProximaITV: proximaItvIso,
-        notasITV: result.value.notasITV || '',
-        vehiculo: this.vehiculo
-      };
-
-      this.swalFlow
-        .saveWith(
-          this.itvs.saveITV(nuevaItv),
-          {
-            successTitle: 'Siguiente ITV creada',
-            successText: ''
-          },
-          () => {}
-        )
-        .subscribe((saved: any) => {
-          const savedId = Number(saved?.idITV);
-          const savedProxima = this.normalizeIsoDate(saved?.fechaProximaITV);
-
-          if (savedId && savedProxima && savedProxima !== proximaItvIso) {
-            const itvCorregida: ITV = {
-              ...saved,
-              fechaProximaITV: proximaItvIso,
-              vehiculo: this.vehiculo
-            };
-
-            this.itvs.updateITV(savedId, itvCorregida).subscribe({
-              next: () => this.getItvs(this.idVehiculo),
-              error: () => this.getItvs(this.idVehiculo)
-            });
-            return;
-          }
-
-          this.getItvs(this.idVehiculo);
-        });
     });
   }
 
@@ -397,86 +429,17 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
 
     const fechaFin = this.addYears(fechaInicio, 1);
 
-    Swal.fire({
-      title: 'Renovar seguro',
-      width: 760,
-      customClass: {
-        popup: 'itv-swal-popup',
-        htmlContainer: 'itv-swal-html'
-      },
-      html: `
-        <div style="text-align:left; margin: 0 0 6px 4px; font-weight:600;">Nombre</div>
-        <input id="swal-seguro-nombre" class="swal2-input" placeholder="Ej: Mapfre" value="${seguroActual?.nombreSeguro ?? ''}">
-        <div style="text-align:left; margin: 8px 0 6px 4px; font-weight:600;">Modalidad</div>
-        <input id="swal-seguro-modo" class="swal2-input" placeholder="Ej: Todo riesgo" value="${seguroActual?.modoSeguro ?? ''}">
-        <div style="text-align:left; margin: 8px 0 6px 4px; font-weight:600;">Fecha inicio</div>
-        <input id="swal-seguro-inicio" class="swal2-input" type="date" value="${this.toIsoDate(fechaInicio)}">
-        <div style="text-align:left; margin: 8px 0 6px 4px; font-weight:600;">Fecha fin</div>
-        <input id="swal-seguro-fin" class="swal2-input" type="date" value="${this.toIsoDate(fechaFin)}">
-        <div style="text-align:left; margin: 8px 0 6px 4px; font-weight:600;">Precio</div>
-        <input id="swal-seguro-precio" class="swal2-input" type="number" min="0" step="0.01" placeholder="Ej: 420" value="${seguroActual?.precio ?? ''}">
-        <div style="text-align:left; margin: 8px 0 6px 4px; font-weight:600;">Notas</div>
-        <textarea id="swal-seguro-notas" class="swal2-textarea" style="width:100%; min-height:140px; box-sizing:border-box;" placeholder="Notas del nuevo seguro">${seguroActual?.notas ?? ''}</textarea>
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      preConfirm: () => {
-        const nombreEl = document.getElementById('swal-seguro-nombre') as HTMLInputElement | null;
-        const modoEl = document.getElementById('swal-seguro-modo') as HTMLInputElement | null;
-        const inicioEl = document.getElementById('swal-seguro-inicio') as HTMLInputElement | null;
-        const finEl = document.getElementById('swal-seguro-fin') as HTMLInputElement | null;
-        const precioEl = document.getElementById('swal-seguro-precio') as HTMLInputElement | null;
-        const notasEl = document.getElementById('swal-seguro-notas') as HTMLTextAreaElement | null;
-
-        const nombreSeguro = (nombreEl?.value ?? '').trim();
-        const modoSeguro = (modoEl?.value ?? '').trim();
-        const fechaInicioValue = (inicioEl?.value ?? '').trim();
-        const fechaFinValue = (finEl?.value ?? '').trim();
-        const precioValue = (precioEl?.value ?? '').trim();
-        const notas = (notasEl?.value ?? '').trim();
-
-        if (!nombreSeguro || !modoSeguro || !fechaInicioValue || !fechaFinValue) {
-          Swal.showValidationMessage('Completa nombre, modalidad y fechas del seguro.');
-          return null;
+    this.router.navigate(['guardar-seguro', 'vehiculo', this.idVehiculo], {
+      state: {
+        prefill: {
+          nombreSeguro: seguroActual?.nombreSeguro || '',
+          modoSeguro: seguroActual?.modoSeguro || '',
+          fechaInicio: this.toIsoDate(fechaInicio),
+          fechaFin: this.toIsoDate(fechaFin),
+          precio: seguroActual?.precio ?? 0,
+          notas: seguroActual?.notas || ''
         }
-
-        return {
-          nombreSeguro,
-          modoSeguro,
-          fechaInicio: fechaInicioValue,
-          fechaFin: fechaFinValue,
-          precio: precioValue ? Number(precioValue) : 0,
-          notas
-        };
       }
-    }).then(result => {
-      if (!result.isConfirmed || !result.value) {
-        return;
-      }
-
-      const nuevoSeguro: Seguro = {
-        idSeguro: 0,
-        nombreSeguro: result.value.nombreSeguro,
-        modoSeguro: result.value.modoSeguro,
-        fechaInicio: result.value.fechaInicio,
-        fechaFin: result.value.fechaFin,
-        precio: result.value.precio,
-        notas: result.value.notas,
-        vehiculo: this.vehiculo
-      };
-
-      this.swalFlow
-        .saveWith(
-          this.ss.saveSeguro(nuevoSeguro),
-          {
-            successTitle: 'Seguro renovado',
-            successText: ''
-          },
-          () => this.getSeguros(this.idVehiculo)
-        )
-        .subscribe();
     });
   }
 

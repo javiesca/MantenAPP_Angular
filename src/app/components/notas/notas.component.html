@@ -1,5 +1,6 @@
 <div class="col-md-6 offset-md-3">
-    <h3 class="text-center">{{edit ? 'Modificar Nota' : 'Nueva Nota'}}</h3>
+  <div class="form-panel">
+    <h3 class="text-center">{{isEditMode() ? 'Modificar Nota' : 'Nueva Nota'}}</h3>
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
         <div class="elemento-form">
@@ -19,9 +20,12 @@
         </div>
 
         <div class="boton-form">
-          <button class="btn btn-success botton-press" appPressEffect>{{ edit ? 'Actualizar' : 'Guardar' }}</button>
+          <button type="button" class="btn btn-secondary botton-press" appPressEffect (click)="irDetalleVehiculo()">
+            Cancelar
+          </button>
+          <button class="btn btn-success botton-press" appPressEffect>{{ isEditMode() ? 'Actualizar' : 'Guardar' }}</button>
         </div>
       </div>
     </form>
   </div>
-
+</div>

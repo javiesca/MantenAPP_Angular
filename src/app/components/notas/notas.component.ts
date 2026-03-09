@@ -29,6 +29,8 @@ export class NotasComponent {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.resetState();
+
       if (params['idNota']) {
         this.edit = true;
         this.idNota = params['idNota'];
@@ -40,11 +42,28 @@ export class NotasComponent {
     });
   }
 
+  private resetState(): void {
+    this.edit = false;
+    this.idVehiculo = undefined as unknown as number;
+    this.idNota = undefined as unknown as number;
+    this.nota = new Notas();
+    this.nota.fechaNota = this.getTodayIsoDate();
+    this.vehiculo = new Vehiculo();
+  }
+
+  private getTodayIsoDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
   onSubmit() {
-    if (this.edit)
+    if (this.isEditMode())
       this.uptadaNota();
     else
       this.saveNota();
+  }
+
+  isEditMode(): boolean {
+    return this.edit && !!this.idNota;
   }
 
   getVehiculo() {
@@ -62,7 +81,7 @@ export class NotasComponent {
 
   saveNota() {
     this.swalFlow
-      .update(this.ns.saveNota(this.nota), () => this.irDetalleVehiculo())
+      .save(this.ns.saveNota(this.nota), () => this.irDetalleVehiculo())
       .subscribe();
   }
 

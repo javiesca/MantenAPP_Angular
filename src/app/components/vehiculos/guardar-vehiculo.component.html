@@ -1,43 +1,50 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">{{ edit ? 'Modificar Vehiculo' : 'Nuevo Vehiculo' }}</h3>
-  <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <div class="label-save">
-        <label>Marca</label>
-        <input type="text" class="form-control" id="marca" formControlName="marca">
-      </div>
-      <div class="label-save">
-        <label>Modelo</label>
-        <input type="text" class="form-control" id="modelo" formControlName="modelo">
-      </div>
-      <div class="label-save">
-        <label>Tipo</label>
-        <select class="form-control" id="tipoVehiculo" formControlName="tipoVehiculo">
-          <option value="COCHE">Coche</option>
-          <option value="MOTO">Moto</option>
-        </select>
-      </div>
-      <div class="label-save">
-        <label>Matricula</label>
-        <input type="text" class="form-control" id="matricula" formControlName="matricula">
-      </div>
-      <div class="label-save">
-        <label>Fecha Compra</label>
-        <input type="date" class="form-control" id="fechaCompra" formControlName="fechaCompra">
-      </div>
+  <div class="form-panel">
+    <h3 class="text-center">{{ edit ? 'Modificar Vehiculo' : 'Nuevo Vehiculo' }}</h3>
+    <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="label-save">
+          <label>Marca</label>
+          <input type="text" class="form-control" id="marca" formControlName="marca">
+        </div>
+        <div class="label-save">
+          <label>Modelo</label>
+          <input type="text" class="form-control" id="modelo" formControlName="modelo">
+        </div>
+        <div class="label-save">
+          <label>Tipo</label>
+          <select class="form-control" id="tipoVehiculo" formControlName="tipoVehiculo">
+            <option value="COCHE">Coche</option>
+            <option value="MOTO">Moto</option>
+          </select>
+        </div>
+        <div class="label-save">
+          <label>Matricula</label>
+          <input type="text" class="form-control" id="matricula" formControlName="matricula">
+        </div>
+        <div class="label-save">
+          <label>Fecha Compra</label>
+          <input type="date" class="form-control" id="fechaCompra" formControlName="fechaCompra">
+        </div>
 
-      <div class="label-save">
-        <label>Imagen</label>
-        <input type="file" class="form-control-file" id="imagen" (change)="changeImage($event)" accept="image/*">
-      </div>
+        <div class="label-save">
+          <label>Imagen</label>
+          <input type="file" class="form-control-file" id="imagen" (change)="changeImage($event)" accept="image/*">
+        </div>
 
-      <div class="label-save">
-        <div class="imagen-form" *ngIf="previewUrl">
-          <img [src]="previewUrl" class="imagen-preview" alt="Imagen previa">
+        <div class="label-save">
+          <div class="imagen-form" *ngIf="previewUrl">
+            <img [src]="previewUrl" class="imagen-preview" alt="Imagen previa">
+          </div>
         </div>
       </div>
-    </div>
 
-    <button class="btn btn-success botton-press">{{ edit ? 'Actualizar' : 'Guardar' }}</button>
-  </form>
+      <div class="boton-form">
+        <button type="button" class="btn btn-secondary botton-press" (click)="irListaVehiculos()">
+          Cancelar
+        </button>
+        <button class="btn btn-success botton-press">{{ edit ? 'Actualizar' : 'Guardar' }}</button>
+      </div>
+    </form>
+  </div>
 </div>

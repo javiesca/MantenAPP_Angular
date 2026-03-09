@@ -1,7 +1,8 @@
 <div class="col-md-6 offset-md-3">
-  <h3 class="text-center">{{ edit ? 'Modificar seguro' : 'Nuevo seguro'}}</h3>
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
+  <div class="form-panel">
+    <h3 class="text-center">{{ isEditMode() ? 'Modificar seguro' : 'Nuevo seguro'}}</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
 
       <div class="elemento-form">
         <label>Nombre</label>
@@ -28,11 +29,15 @@
       </div>
       <div class="elemento-form">
         <label>Notas</label>
-        <input type="text" class="form-control" id="notas" [(ngModel)]="seguro.notas" name="notas">
+        <textarea class="form-control" id="notas" [(ngModel)]="seguro.notas" name="notas" rows="4"></textarea>
       </div>
       <div class="boton-form">
-        <button class="btn btn-success botton-press" appPressEffect>{{ edit ? 'Actualizar' : 'Guardar' }}</button>
+        <button type="button" class="btn btn-secondary botton-press" appPressEffect (click)="irDetalleVehiculo()">
+          Cancelar
+        </button>
+        <button class="btn btn-success botton-press" appPressEffect>{{ isEditMode() ? 'Actualizar' : 'Guardar' }}</button>
       </div>
     </div>
   </form>
+  </div>
 </div>

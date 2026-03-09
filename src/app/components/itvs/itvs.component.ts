@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ITVService } from '../../services/itvs.service';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { SwalFlowService } from '../../services/swal-flow.service';
+import { VehiculoRecordsService } from '../../services/vehiculo-records.service';
 
 
 @Component({
@@ -19,34 +20,52 @@ export class ItvsComponent implements OnInit {
   itv: ITV = new ITV();
   vehiculo: Vehiculo = new Vehiculo();
   edit: boolean = false;
+  private prefill: Partial<ITV> | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private itvs: ITVService,
     private vs: VehiculoService,
-    private swalFlow: SwalFlowService
+    private swalFlow: SwalFlowService,
+    private vehiculoRecords: VehiculoRecordsService
   ) { }
 
 
   onSubmit() {
-    if (this.edit)
+    if (this.isEditMode())
       this.updateITV();
     else
       this.saveITV();
   }
 
+  isEditMode(): boolean {
+    return this.edit && !!this.idITV;
+  }
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.resetState();
+
       if (params['idITV']) {
         this.edit = true;
         this.idITV = params['idITV'];
         this.getITV();
       } else if (params['idVehiculo']) {
         this.idVehiculo = params['idVehiculo'];
+        this.prefill = history.state?.prefill ?? null;
         this.getVehiculo();
       }
     });
+  }
+
+  private resetState(): void {
+    this.edit = false;
+    this.idVehiculo = undefined as unknown as number;
+    this.idITV = undefined as unknown as number;
+    this.prefill = null;
+    this.itv = new ITV();
+    this.vehiculo = new Vehiculo();
   }
 
 
@@ -62,6 +81,14 @@ export class ItvsComponent implements OnInit {
     this.vs.getVehiculoById(this.idVehiculo).subscribe(data => {
       this.vehiculo = data;
       this.itv.vehiculo = this.vehiculo;
+      const prefill = this.prefill ?? this.vehiculoRecords.buildNewItvPrefill(this.vehiculo);
+      if (prefill) {
+        this.itv = {
+          ...this.itv,
+          ...prefill,
+          vehiculo: this.vehiculo
+        };
+      }
     })
   }
 
