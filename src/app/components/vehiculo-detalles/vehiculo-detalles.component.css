@@ -167,23 +167,23 @@
 }
 
 .summary-card-vencido {
-  background: linear-gradient(180deg, #fff7f7 0%, #fdeeee 100%);
-  border-color: #f0c4c8;
+  background: linear-gradient(180deg, #fff2f2 0%, #f9dede 100%);
+  border-color: #e7aeb5;
 }
 
 .summary-card-proximo {
-  background: linear-gradient(180deg, #fffaf0 0%, #fff3dc 100%);
-  border-color: #f1d69a;
+  background: linear-gradient(180deg, #fff7e8 0%, #fbe9bf 100%);
+  border-color: #e8c56e;
 }
 
 .summary-card-ok {
-  background: linear-gradient(180deg, #f7fcf8 0%, #edf7f0 100%);
-  border-color: #cfe3d5;
+  background: linear-gradient(180deg, #f2faf4 0%, #dff1e5 100%);
+  border-color: #b8d8c2;
 }
 
 .summary-card-empty {
-  background: linear-gradient(180deg, #fbfbfb 0%, #f2f4f3 100%);
-  border-color: #dde4df;
+  background: linear-gradient(180deg, #fafafa 0%, #ecefee 100%);
+  border-color: #d4dbd7;
 }
 
 .summary-card-link {

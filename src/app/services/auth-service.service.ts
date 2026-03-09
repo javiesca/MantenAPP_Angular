@@ -38,16 +38,18 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    if (typeof window !== 'undefined') {
-      this.token = sessionStorage.getItem('token');
+    const token = this.getStoredToken();
+    if (!token || this.isTokenExpired(token)) {
+      this.clearSession();
+      return false;
     }
-    return !!this.token;
+
+    this.token = token;
+    return true;
   }
 
   getUsername(): string | null {
-    const token =
-      this.token ||
-      (typeof window !== 'undefined' ? sessionStorage.getItem('token') : null);
+    const token = this.getStoredToken();
 
     if (!token) {
       return null;
@@ -61,6 +63,44 @@ export class AuthService {
       return payload.userName || payload.sub || null;
     } catch (e) {
       return null;
+    }
+  }
+
+  clearSession(): void {
+    this.token = null;
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('token');
+    }
+  }
+
+  private getStoredToken(): string | null {
+    if (typeof window !== 'undefined') {
+      this.token = sessionStorage.getItem('token');
+    }
+
+    return this.token;
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payloadBase64 = token.split('.')[1];
+      if (!payloadBase64) {
+        return true;
+      }
+
+      const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = atob(base64);
+      const payload = JSON.parse(jsonPayload);
+      const exp = Number(payload.exp);
+
+      if (!exp) {
+        return false;
+      }
+
+      const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+      return exp <= currentTimeInSeconds;
+    } catch {
+      return true;
     }
   }
 }
