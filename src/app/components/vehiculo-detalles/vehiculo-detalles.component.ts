@@ -339,6 +339,19 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getResumenCardClass(estado: 'vencido' | 'proximo' | 'ok' | 'sin_registro'): string {
+    switch (estado) {
+      case 'vencido':
+        return 'summary-card-vencido';
+      case 'proximo':
+        return 'summary-card-proximo';
+      case 'ok':
+        return 'summary-card-ok';
+      default:
+        return 'summary-card-empty';
+    }
+  }
+
   saveFiltros(data?: number | Filtros) {
     if (typeof data === 'number' || typeof data === 'undefined') {
       const idVehiculo = this.getCurrentVehiculoId(data);

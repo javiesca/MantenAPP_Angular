@@ -13,6 +13,33 @@
   justify-content: center;
 }
 
+.vehicle-card {
+  border: 1px solid #e3ebe6;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.vehicle-card-vencido {
+  border-color: #f0b8bd;
+  box-shadow: 0 10px 22px rgba(125, 28, 28, 0.10);
+}
+
+.vehicle-card-proximo {
+  border-color: #f2d48d;
+  box-shadow: 0 10px 22px rgba(122, 74, 0, 0.10);
+}
+
+.vehicle-card-ok {
+  border-color: #bfdcc8;
+  box-shadow: 0 10px 22px rgba(15, 81, 50, 0.08);
+}
+
+.vehicle-card-empty {
+  border-color: #d8e0db;
+  box-shadow: 0 10px 22px rgba(73, 80, 87, 0.06);
+}
+
 .vehicle-name {
   display: inline-block;
   margin-bottom: 8px;

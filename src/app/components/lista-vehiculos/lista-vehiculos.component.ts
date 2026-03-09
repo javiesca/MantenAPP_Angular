@@ -245,6 +245,36 @@ export class ListaVehiculosComponent implements OnInit {
     return 'alerta-ok';
   }
 
+  getIconoAlerta(alerta: AlertaFechaFin): string {
+    if (alerta.estado === 'vencido') {
+      return 'fa-times-circle';
+    }
+
+    if (alerta.estado === 'proximo') {
+      return 'fa-exclamation-circle';
+    }
+
+    return 'fa-check-circle';
+  }
+
+  getClaseCardVehiculo(idVehiculo: number): string {
+    const alertas = this.alertasPorVehiculo[idVehiculo] ?? [];
+
+    if (alertas.some(alerta => alerta.estado === 'vencido')) {
+      return 'vehicle-card-vencido';
+    }
+
+    if (alertas.some(alerta => alerta.estado === 'proximo')) {
+      return 'vehicle-card-proximo';
+    }
+
+    if (alertas.some(alerta => alerta.estado === 'ok')) {
+      return 'vehicle-card-ok';
+    }
+
+    return 'vehicle-card-empty';
+  }
+
   getMensajeAlerta(alerta: AlertaFechaFin): string {
     if (alerta.estado === 'sin_registro') {
       return `${alerta.tipo}: Sin registro`;

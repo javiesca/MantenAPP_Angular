@@ -21,6 +21,7 @@
   <div class="col-lg-5" *ngFor="let vehiculo of vehiculos">
     <div
       class="card mb-3 vehicle-card botton-press"
+      [ngClass]="getClaseCardVehiculo(vehiculo.idVehiculo)"
       appPressEffect
       (click)="detallesVehiculo(vehiculo.idVehiculo)"
       style="cursor: pointer;">
@@ -33,7 +34,7 @@
             *ngFor="let alerta of alertasPorVehiculo[vehiculo.idVehiculo]"
             class="alerta-item"
             [ngClass]="getClaseAlerta(alerta)">
-            <i class="fa fa-exclamation-triangle"></i>
+            <i class="fa" [ngClass]="getIconoAlerta(alerta)"></i>
             <span>
               {{ getMensajeAlerta(alerta) }}
               <ng-container *ngIf="alerta.fecha">({{ alerta.fecha | date:'dd/MM/yyyy' }})</ng-container>

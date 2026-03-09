@@ -47,7 +47,9 @@
       </div>
 
       <div class="summary-grid">
-        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+        <div class="summary-card summary-card-link botton-press"
+          [ngClass]="getResumenCardClass(getMantenimientoResumenEstado())"
+          appPressEffect role="button" tabindex="0"
           (click)="openTab('mantenimientos')" (keydown)="handleSummaryKeydown($event, 'mantenimientos')">
           <div class="summary-card-top">
             <div class="summary-card-title">Mantenimiento</div>
@@ -75,7 +77,9 @@
           </div>
         </div>
 
-        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+        <div class="summary-card summary-card-link botton-press"
+          [ngClass]="getResumenCardClass(getSeguroResumenEstado())"
+          appPressEffect role="button" tabindex="0"
           (click)="openTab('seguros')" (keydown)="handleSummaryKeydown($event, 'seguros')">
           <div class="summary-card-top">
             <div class="summary-card-title">Seguro</div>
@@ -109,7 +113,9 @@
           </div>
         </div>
 
-        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+        <div class="summary-card summary-card-link botton-press"
+          [ngClass]="getResumenCardClass(getItvResumenEstado())"
+          appPressEffect role="button" tabindex="0"
           (click)="openTab('itv')" (keydown)="handleSummaryKeydown($event, 'itv')">
           <div class="summary-card-top">
             <div class="summary-card-title">ITV</div>
