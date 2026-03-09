@@ -2,6 +2,38 @@
     margin: 25px;
 }
 
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #1f6f43;
+  border-bottom: 2px solid #1f6f43;
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+.form-select-vehiculo {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 44px;
+  cursor: pointer;
+  background-color: #f8fbf9;
+  border: 1px solid #c9e1d1;
+}
+
+.form-select-vehiculo:focus {
+  border-color: #78b48b;
+  box-shadow: 0 0 0 0.2rem rgba(31, 111, 67, 0.12);
+}
+
 .form-control-file {
   width: 100%;
   padding: 10px;

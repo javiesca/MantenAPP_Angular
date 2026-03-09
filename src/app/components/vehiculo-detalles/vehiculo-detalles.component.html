@@ -1,59 +1,231 @@
 <div class="container px-0">
-  <h2 class="text-center">{{ vehiculo?.marca }} {{ vehiculo?.modelo }}</h2>
   <div *ngIf="loadErrors.vehiculo" class="alert alert-warning text-center">
     {{ loadErrors.vehiculo }}
   </div>
 
-  <select class="form-select mobile-tabs" (change)="cambiarTab($event)">
-    <option value="mantenimientos">Mantenimientos</option>
-    <option value="piezas">Piezas</option>
-    <option value="ruedas">Ruedas</option>
-    <option value="seguros">Seguro</option>
-    <option value="itv">ITV</option>
-    <option value="notas">Notas</option>
-  </select>
-
-  <ul class="nav nav-tabs desktop-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="mantenimientos-tab" data-bs-toggle="tab" data-bs-target="#mantenimientos"
-        type="button" role="tab" aria-controls="mantenimientos" aria-selected="true">
-        Mantenimientos
+  <div class="section-nav">
+    <div class="section-nav-actions">
+      <a class="btn section-back-btn botton-press" appPressEffect routerLink="/vehiculos">
+        <i class="fas fa-list"></i>
+        <span>Vehículos</span>
+      </a>
+      <button *ngIf="currentTab !== 'resumen'" class="btn section-back-btn botton-press" appPressEffect (click)="openTab('resumen')">
+        <i class="fas fa-arrow-left"></i>
+        <span>Resumen</span>
       </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="piezas-tab" data-bs-toggle="tab" data-bs-target="#piezas" type="button" role="tab"
-        aria-controls="piezas" aria-selected="false">
-        Piezas
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="ruedas-tab" data-bs-toggle="tab" data-bs-target="#ruedas" type="button" role="tab"
-        aria-controls="ruedas" aria-selected="false">
-        Ruedas
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="seguros-tab" data-bs-toggle="tab" data-bs-target="#seguros" type="button" role="tab"
-        aria-controls="seguros" aria-selected="false">
-        Seguro
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="itv-tab" data-bs-toggle="tab" data-bs-target="#itv" type="button" role="tab"
-        aria-controls="itv" aria-selected="false">
-        ITV
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="notas-tab" data-bs-toggle="tab" data-bs-target="#notas" type="button" role="tab"
-        aria-controls="notas" aria-selected="false">
-        Notas
-      </button>
-    </li>
-  </ul>
+    </div>
+    <div class="section-nav-title">{{ currentTab === 'resumen' ? 'Ficha del vehículo' : getCurrentSectionLabel() }}</div>
+  </div>
 
   <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="mantenimientos" role="tabpanel" aria-labelledby="mantenimientos-tab">
+    <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
+      <div class="summary-hero">
+        <div class="summary-hero-media">
+          <ng-container *ngIf="vehiculo?.image?.imageUrl; else summaryNoImg">
+            <img [src]="vehiculo.image?.imageUrl" alt="Imagen del vehículo" class="summary-vehicle-image">
+          </ng-container>
+          <ng-template #summaryNoImg>
+            <div class="summary-vehicle-image summary-vehicle-image-empty">
+              <i class="fa fa-car"></i>
+            </div>
+          </ng-template>
+        </div>
+        <div class="summary-vehicle">
+          <div class="summary-overline">{{ vehiculo?.tipoVehiculo || 'Vehiculo' }}</div>
+          <div class="summary-vehicle-title">{{ vehiculo?.marca }} {{ vehiculo?.modelo }}</div>
+          <div class="summary-vehicle-meta-list">
+            <div class="summary-meta-row" *ngIf="vehiculo?.matricula">
+              <span class="summary-meta-label">Matricula</span>
+              <span class="summary-meta-value">{{ vehiculo.matricula?.toUpperCase() }}</span>
+            </div>
+            <div class="summary-meta-row" *ngIf="vehiculo?.fechaCompra">
+              <span class="summary-meta-label">Fecha matriculacion</span>
+              <span class="summary-meta-value">{{ vehiculo.fechaCompra | date:'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+          (click)="openTab('mantenimientos')" (keydown)="handleSummaryKeydown($event, 'mantenimientos')">
+          <div class="summary-card-top">
+            <div class="summary-card-title">Mantenimiento</div>
+            <span class="summary-badge"
+              [class.summary-badge-empty]="getMantenimientoResumenEstado() === 'sin_registro'"
+              [class.summary-badge-warning]="getMantenimientoResumenEstado() === 'proximo'"
+              [class.summary-badge-danger]="getMantenimientoResumenEstado() === 'vencido'">
+              {{ getResumenBadgeLabel(getMantenimientoResumenEstado()) }}
+            </span>
+          </div>
+          <div class="summary-card-body" *ngIf="latestMantenimiento; else emptyMantenimiento">
+            <div class="summary-main">{{ latestMantenimiento.kilometros }} km</div>
+            <div class="summary-sub">Ultimo cambio: {{ latestMantenimiento.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <ng-template #emptyMantenimiento>
+            <div class="summary-card-body">
+              <div class="summary-empty-text">Aun no has registrado ningun mantenimiento.</div>
+            </div>
+          </ng-template>
+          <div class="summary-actions">
+            <button class="btn btn-success summary-primary-btn" appPressEffect (click)="saveFiltros(); $event.stopPropagation()">
+              <i class="fas fa-plus"></i>
+              <span>Añadir</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+          (click)="openTab('seguros')" (keydown)="handleSummaryKeydown($event, 'seguros')">
+          <div class="summary-card-top">
+            <div class="summary-card-title">Seguro</div>
+            <span class="summary-badge"
+              [class.summary-badge-empty]="getSeguroResumenEstado() === 'sin_registro'"
+              [class.summary-badge-warning]="getSeguroResumenEstado() === 'proximo'"
+              [class.summary-badge-danger]="getSeguroResumenEstado() === 'vencido'">
+              {{ getResumenBadgeLabel(getSeguroResumenEstado()) }}
+            </span>
+          </div>
+          <div class="summary-card-body" *ngIf="seguroVigente; else emptySeguro">
+            <div class="summary-main">{{ seguroVigente.nombreSeguro }}</div>
+            <div class="summary-sub">
+              Hasta {{ seguroVigente.fechaFin | date:'dd/MM/yyyy' }} · {{ seguroVigente.modoSeguro }}
+            </div>
+          </div>
+          <ng-template #emptySeguro>
+            <div class="summary-card-body">
+              <div class="summary-empty-text">No hay seguro activo registrado para este vehiculo.</div>
+            </div>
+          </ng-template>
+          <div class="summary-actions">
+            <button *ngIf="!hasSeguroEnVigor()" class="btn btn-success summary-primary-btn" appPressEffect (click)="saveSeguro(); $event.stopPropagation()">
+              <i class="fas fa-plus"></i>
+              <span>Añadir</span>
+            </button>
+            <button *ngIf="seguroVigente" class="btn btn-success summary-primary-btn" appPressEffect (click)="renovarSeguro(seguroVigente); $event.stopPropagation()">
+              <i class="fas fa-sync-alt"></i>
+              <span>Renovar</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+          (click)="openTab('itv')" (keydown)="handleSummaryKeydown($event, 'itv')">
+          <div class="summary-card-top">
+            <div class="summary-card-title">ITV</div>
+            <span class="summary-badge"
+              [class.summary-badge-empty]="getItvResumenEstado() === 'sin_registro'"
+              [class.summary-badge-warning]="getItvResumenEstado() === 'proximo'"
+              [class.summary-badge-danger]="getItvResumenEstado() === 'vencido'">
+              {{ getResumenBadgeLabel(getItvResumenEstado()) }}
+            </span>
+          </div>
+          <div class="summary-card-body" *ngIf="itvVigente; else emptyItv">
+            <div class="summary-main">{{ itvVigente.sitioITV || 'ITV registrada' }}</div>
+            <div class="summary-sub">
+              Proxima: {{ itvVigente.fechaProximaITV | date:'dd/MM/yyyy' }}
+            </div>
+          </div>
+          <ng-template #emptyItv>
+            <div class="summary-card-body">
+              <div class="summary-empty-text">No hay ITV registrada para este vehiculo.</div>
+            </div>
+          </ng-template>
+          <div class="summary-actions">
+            <button *ngIf="!hasItvEnVigor()" class="btn btn-success summary-primary-btn" appPressEffect (click)="saveITV(); $event.stopPropagation()">
+              <i class="fas fa-plus"></i>
+              <span>Añadir</span>
+            </button>
+            <button *ngIf="itvVigente" class="btn btn-success summary-primary-btn" appPressEffect (click)="marcarItvPasada(itvVigente); $event.stopPropagation()">
+              <i class="fas fa-clipboard-check"></i>
+              <span>Registrar</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+          (click)="openTab('ruedas')" (keydown)="handleSummaryKeydown($event, 'ruedas')">
+          <div class="summary-card-top">
+            <div class="summary-card-title">Ruedas</div>
+            <span class="summary-badge" [class.summary-badge-empty]="!latestRuedas">
+              {{ latestRuedas ? 'REGISTRADO' : 'SIN REGISTROS' }}
+            </span>
+          </div>
+          <div class="summary-card-body" *ngIf="latestRuedas; else emptyRuedas">
+            <div class="summary-main">{{ latestRuedas.marca || 'Cambio de ruedas' }}</div>
+            <div class="summary-sub">
+              {{ latestRuedas.fechaCambio | date:'dd/MM/yyyy' }} · {{ latestRuedas.kilometros }} km
+            </div>
+          </div>
+          <ng-template #emptyRuedas>
+            <div class="summary-card-body">
+              <div class="summary-empty-text">Todavia no hay ningun cambio de ruedas guardado.</div>
+            </div>
+          </ng-template>
+          <div class="summary-actions">
+            <button class="btn btn-success summary-primary-btn" appPressEffect (click)="saveRuedas(); $event.stopPropagation()">
+              <i class="fas fa-plus"></i>
+              <span>Añadir</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+          (click)="openTab('piezas')" (keydown)="handleSummaryKeydown($event, 'piezas')">
+          <div class="summary-card-top">
+            <div class="summary-card-title">Piezas</div>
+            <span class="summary-badge" [class.summary-badge-empty]="!latestPieza">
+              {{ latestPieza ? 'REGISTRADO' : 'SIN REGISTROS' }}
+            </span>
+          </div>
+          <div class="summary-card-body" *ngIf="latestPieza; else emptyPieza">
+            <div class="summary-main">{{ latestPieza.descripcion || 'Ultima pieza' }}</div>
+            <div class="summary-sub">
+              {{ latestPieza.fechaCambio | date:'dd/MM/yyyy' }} · {{ latestPieza.kilometros }} km
+            </div>
+          </div>
+          <ng-template #emptyPieza>
+            <div class="summary-card-body">
+              <div class="summary-empty-text">No hay cambios de piezas registrados todavia.</div>
+            </div>
+          </ng-template>
+          <div class="summary-actions">
+            <button class="btn btn-success summary-primary-btn" appPressEffect (click)="savePiezas(); $event.stopPropagation()">
+              <i class="fas fa-plus"></i>
+              <span>Añadir</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-card summary-card-link botton-press" appPressEffect role="button" tabindex="0"
+          (click)="openTab('notas')" (keydown)="handleSummaryKeydown($event, 'notas')">
+          <div class="summary-card-top">
+            <div class="summary-card-title">Notas</div>
+            <span class="summary-badge" [class.summary-badge-empty]="!latestNota">
+              {{ latestNota ? notasList.length + ' REGISTROS' : 'SIN REGISTROS' }}
+            </span>
+          </div>
+          <div class="summary-card-body" *ngIf="latestNota; else emptyNota">
+            <div class="summary-main">Ultima nota</div>
+            <div class="summary-sub">{{ latestNota.fechaNota | date:'dd/MM/yyyy' }}</div>
+            <div class="summary-empty-text">{{ latestNota.texto }}</div>
+          </div>
+          <ng-template #emptyNota>
+            <div class="summary-card-body">
+              <div class="summary-empty-text">No hay notas guardadas todavia.</div>
+            </div>
+          </ng-template>
+          <div class="summary-actions">
+            <button class="btn btn-success summary-primary-btn" appPressEffect (click)="saveNotas(); $event.stopPropagation()">
+              <i class="fas fa-plus"></i>
+              <span>Añadir</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="mantenimientos" role="tabpanel" aria-labelledby="mantenimientos-tab">
       <div *ngIf="loadErrors.mantenimientos" class="alert alert-warning text-center">
         {{ loadErrors.mantenimientos }}
       </div>
@@ -108,89 +280,13 @@
           <div class="card-footer">
             <div class="precio">{{ filtro.precio }} €</div>
             <div class="acciones">
-              <button (click)="saveFiltros(filtro)" class="btn btn-info" appPressEffect>
+              <button (click)="saveFiltros(filtro)" class="btn card-action-btn card-action-edit" appPressEffect>
                 <i class="fas fa-edit"></i>
+                <span>Editar</span>
               </button>
-              <button (click)="deleteDato(filtro.idFiltros, 'filtro')" class="btn btn-danger" appPressEffect>
+              <button (click)="deleteDato(filtro.idFiltros, 'filtro')" class="btn card-action-btn card-action-delete" appPressEffect>
                 <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-pane fade" id="piezas" role="tabpanel" aria-labelledby="piezas-tab">
-      <div *ngIf="loadErrors.piezas" class="alert alert-warning text-center">
-        {{ loadErrors.piezas }}
-      </div>
-      <div *ngIf="!loadErrors.piezas && (!piezasList || piezasList.length === 0)">
-        <h3 class="text-center no-datos">No hay datos de cambios de piezas</h3>
-      </div>
-      <div class="text-center mt-3 mb-3">
-        <button (click)="savePiezas()" class="btn btn-success">
-          Nuevo
-        </button>
-      </div>
-      <div *ngIf="piezasList && piezasList.length > 0" class="cards-container">
-        <div class="mantenimiento-card" *ngFor="let pieza of piezasList">
-          <div class="separador-titulo">Descripcion</div>
-          <div class="card-header">
-            <div class="text-center seguro-notas" style="width: 100%;">
-              {{ pieza.descripcion }}
-            </div>
-          </div>
-          <div class="separador-linea"></div>
-          <div class="card-main">
-            <div class="km">{{ pieza.kilometros }} km</div>
-            <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
-          </div>
-          <div class="separador-linea"></div>
-          <div class="card-footer">
-            <div class="precio">{{ pieza.precio }} €</div>
-            <div class="acciones">
-              <button (click)="savePiezas(pieza)" class="btn btn-info" appPressEffect>
-                <i class="fas fa-edit"></i>
-              </button>
-              <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn btn-danger" appPressEffect>
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-pane fade" id="ruedas" role="tabpanel" aria-labelledby="ruedas-tab">
-      <div *ngIf="loadErrors.ruedas" class="alert alert-warning text-center">
-        {{ loadErrors.ruedas }}
-      </div>
-      <div *ngIf="!loadErrors.ruedas && (!ruedasList || ruedasList.length === 0)">
-        <h3 class="text-center no-datos">No hay datos de cambios de ruedas</h3>
-      </div>
-      <div class="text-center mt-3 mb-3">
-        <button (click)="saveRuedas()" class="btn btn-success">
-          Nuevo
-        </button>
-      </div>
-      <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
-        <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
-          <div class="card-header">
-            <div class="title">{{ ruedas.marca }}</div>
-            <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
-          </div>
-          <div class="card-main">
-            <div class="km">{{ ruedas.kilometros }} km</div>
-            <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
-          </div>
-          <div class="card-footer">
-            <div class="precio">{{ ruedas.precio }} €</div>
-            <div class="acciones">
-              <button (click)="saveRuedas(ruedas)" class="btn btn-info" appPressEffect>
-                <i class="fas fa-edit"></i>
-              </button>
-              <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn btn-danger" appPressEffect>
-                <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
               </button>
             </div>
           </div>
@@ -205,7 +301,7 @@
       <div *ngIf="!loadErrors.seguros && (!segurosList || segurosList.length === 0)">
         <h3 class="text-center no-datos">No hay datos seguros</h3>
       </div>
-      <div class="text-center mt-3 mb-3">
+      <div class="text-center mt-3 mb-3" *ngIf="!hasSeguroEnVigor()">
         <button (click)="saveSeguro()" class="btn btn-success">
           Nuevo
         </button>
@@ -259,11 +355,13 @@
           <div class="card-footer">
             <div class="precio">{{ seguro.precio }} €</div>
             <div class="acciones">
-              <button *ngIf="!isSeguroPasado(seguro)" (click)="saveSeguro(seguro)" class="btn btn-info" appPressEffect>
+              <button *ngIf="!isSeguroPasado(seguro)" (click)="saveSeguro(seguro)" class="btn card-action-btn card-action-edit" appPressEffect>
                 <i class="fas fa-edit"></i>
+                <span>Editar</span>
               </button>
-              <button (click)="deleteDato(seguro.idSeguro, 'seguro')" class="btn btn-danger" appPressEffect>
+              <button (click)="deleteDato(seguro.idSeguro, 'seguro')" class="btn card-action-btn card-action-delete" appPressEffect>
                 <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
               </button>
             </div>
           </div>
@@ -278,7 +376,7 @@
       <div *ngIf="!loadErrors.itv && (!itvList || itvList.length === 0)">
         <h3 class="text-center no-datos">No hay ITV</h3>
       </div>
-      <div class="text-center mt-3 mb-3">
+      <div class="text-center mt-3 mb-3" *ngIf="!hasItvEnVigor()">
         <button (click)="saveITV()" class="btn btn-success">
           Nuevo
         </button>
@@ -323,14 +421,98 @@
 
           <div class="separador-linea"></div>
 
-          <div class="card-footer">
+          <div class="card-footer card-footer-actions-right">
             <div class="precio"></div>
             <div class="acciones">
-              <button *ngIf="!isItvPasada(itv)" (click)="saveITV(itv)" class="btn btn-info" appPressEffect>
+              <button *ngIf="!isItvPasada(itv)" (click)="saveITV(itv)" class="btn card-action-btn card-action-edit" appPressEffect>
                 <i class="fas fa-edit"></i>
+                <span>Editar</span>
               </button>
-              <button (click)="deleteDato(itv.idITV, 'itv')" class="btn btn-danger" appPressEffect>
+              <button (click)="deleteDato(itv.idITV, 'itv')" class="btn card-action-btn card-action-delete" appPressEffect>
                 <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="ruedas" role="tabpanel" aria-labelledby="ruedas-tab">
+      <div *ngIf="loadErrors.ruedas" class="alert alert-warning text-center">
+        {{ loadErrors.ruedas }}
+      </div>
+      <div *ngIf="!loadErrors.ruedas && (!ruedasList || ruedasList.length === 0)">
+        <h3 class="text-center no-datos">No hay datos de cambios de ruedas</h3>
+      </div>
+      <div class="text-center mt-3 mb-3">
+        <button (click)="saveRuedas()" class="btn btn-success">
+          Nuevo
+        </button>
+      </div>
+      <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
+          <div class="card-header">
+            <div class="title">{{ ruedas.marca }}</div>
+            <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
+          </div>
+          <div class="card-main">
+            <div class="km">{{ ruedas.kilometros }} km</div>
+            <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <div class="card-footer">
+            <div class="precio">{{ ruedas.precio }} €</div>
+            <div class="acciones">
+              <button (click)="saveRuedas(ruedas)" class="btn card-action-btn card-action-edit" appPressEffect>
+                <i class="fas fa-edit"></i>
+                <span>Editar</span>
+              </button>
+              <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn card-action-btn card-action-delete" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="piezas" role="tabpanel" aria-labelledby="piezas-tab">
+      <div *ngIf="loadErrors.piezas" class="alert alert-warning text-center">
+        {{ loadErrors.piezas }}
+      </div>
+      <div *ngIf="!loadErrors.piezas && (!piezasList || piezasList.length === 0)">
+        <h3 class="text-center no-datos">No hay datos de cambios de piezas</h3>
+      </div>
+      <div class="text-center mt-3 mb-3">
+        <button (click)="savePiezas()" class="btn btn-success">
+          Nuevo
+        </button>
+      </div>
+      <div *ngIf="piezasList && piezasList.length > 0" class="cards-container">
+        <div class="mantenimiento-card" *ngFor="let pieza of piezasList">
+          <div class="separador-titulo">Descripcion</div>
+          <div class="card-header">
+            <div class="text-center seguro-notas" style="width: 100%;">
+              {{ pieza.descripcion }}
+            </div>
+          </div>
+          <div class="separador-linea"></div>
+          <div class="card-main">
+            <div class="km">{{ pieza.kilometros }} km</div>
+            <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <div class="separador-linea"></div>
+          <div class="card-footer">
+            <div class="precio">{{ pieza.precio }} €</div>
+            <div class="acciones">
+              <button (click)="savePiezas(pieza)" class="btn card-action-btn card-action-edit" appPressEffect>
+                <i class="fas fa-edit"></i>
+                <span>Editar</span>
+              </button>
+              <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn card-action-btn card-action-delete" appPressEffect>
+                <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
               </button>
             </div>
           </div>
@@ -359,14 +541,16 @@
           <div class="separador-linea"></div>
           <div class="nota-texto">{{ nota.texto }}</div>
           <div class="separador-linea"></div>
-          <div class="card-footer">
+          <div class="card-footer card-footer-actions-right">
             <div class="precio"></div>
             <div class="acciones">
-              <button (click)="saveNotas(nota)" class="btn btn-info botton-press" appPressEffect>
+              <button (click)="saveNotas(nota)" class="btn card-action-btn card-action-edit botton-press" appPressEffect>
                 <i class="fas fa-edit"></i>
+                <span>Editar</span>
               </button>
-              <button (click)="deleteDato(nota.idNota, 'nota')" class="btn btn-danger botton-press" appPressEffect>
+              <button (click)="deleteDato(nota.idNota, 'nota')" class="btn card-action-btn card-action-delete botton-press" appPressEffect>
                 <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
               </button>
             </div>
           </div>

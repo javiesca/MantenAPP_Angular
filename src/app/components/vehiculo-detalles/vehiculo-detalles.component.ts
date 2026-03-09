@@ -26,7 +26,10 @@ declare const bootstrap: any;
   styleUrl: './vehiculo-detalles.component.css'
 })
 export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
+  readonly diasAviso = 60;
+  private readonly milisegundosPorDia = 1000 * 60 * 60 * 24;
   idVehiculo: number;
+  currentTab = 'resumen';
   filtrosList: Filtros[] = [];
   ruedasList: Ruedas[] = [];
   piezasList: Piezas[] = [];
@@ -51,9 +54,7 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.route.fragment.subscribe(tabId => {
-      if (tabId) {
-        this.showTab(tabId);
-      }
+      this.showTab(tabId || 'resumen');
     });
   }
 
@@ -63,7 +64,39 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     this.router.navigate([], { fragment: tabId, replaceUrl: true });
   }
 
+  openTab(tabId: string): void {
+    this.showTab(tabId);
+    this.router.navigate([], { fragment: tabId, replaceUrl: true });
+  }
+
+  getCurrentSectionLabel(): string {
+    switch (this.currentTab) {
+      case 'mantenimientos':
+        return 'Mantenimientos';
+      case 'seguros':
+        return 'Seguro';
+      case 'itv':
+        return 'ITV';
+      case 'ruedas':
+        return 'Ruedas';
+      case 'piezas':
+        return 'Piezas';
+      case 'notas':
+        return 'Notas';
+      default:
+        return 'Resumen';
+    }
+  }
+
+  handleSummaryKeydown(event: KeyboardEvent, tabId: string): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.openTab(tabId);
+    }
+  }
+
   private showTab(tabId: string) {
+    this.currentTab = tabId;
     const btn = document.getElementById(`${tabId}-tab`);
     if (btn && typeof bootstrap !== 'undefined') {
       bootstrap.Tab.getOrCreateInstance(btn).show();
@@ -232,6 +265,80 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  get latestMantenimiento(): Filtros | undefined {
+    return this.getLatestByDate(this.filtrosList, item => item.fechaCambio, item => item.idFiltros);
+  }
+
+  get latestRuedas(): Ruedas | undefined {
+    return this.getLatestByDate(this.ruedasList, item => item.fechaCambio, item => item.idRuedas);
+  }
+
+  get latestPieza(): Piezas | undefined {
+    return this.getLatestByDate(this.piezasList, item => item.fechaCambio, item => item.idPieza);
+  }
+
+  get latestNota(): Notas | undefined {
+    return this.getLatestByDate(this.notasList, item => item.fechaNota, item => item.idNota);
+  }
+
+  get seguroVigente(): Seguro | undefined {
+    return this.getSeguroEnVigorPrincipal();
+  }
+
+  get itvVigente(): ITV | undefined {
+    return this.getItvEnVigorPrincipal();
+  }
+
+  getMantenimientoResumenEstado(): 'vencido' | 'proximo' | 'ok' | 'sin_registro' {
+    if (!this.latestMantenimiento) {
+      return 'sin_registro';
+    }
+
+    const fechaCambio = this.parseDateOnly(this.latestMantenimiento.fechaCambio);
+    if (!fechaCambio) {
+      return 'sin_registro';
+    }
+
+    const fechaVencimiento = new Date(
+      fechaCambio.getFullYear() + 1,
+      fechaCambio.getMonth(),
+      fechaCambio.getDate()
+    );
+
+    return this.getEstadoResumenDesdeFecha(fechaVencimiento);
+  }
+
+  getSeguroResumenEstado(): 'vencido' | 'proximo' | 'ok' | 'sin_registro' {
+    if (!this.seguroVigente?.fechaFin) {
+      return 'sin_registro';
+    }
+
+    const fechaFin = this.parseDateOnly(this.seguroVigente.fechaFin);
+    return fechaFin ? this.getEstadoResumenDesdeFecha(fechaFin) : 'sin_registro';
+  }
+
+  getItvResumenEstado(): 'vencido' | 'proximo' | 'ok' | 'sin_registro' {
+    if (!this.itvVigente?.fechaProximaITV) {
+      return 'sin_registro';
+    }
+
+    const fechaFin = this.parseDateOnly(this.itvVigente.fechaProximaITV);
+    return fechaFin ? this.getEstadoResumenDesdeFecha(fechaFin) : 'sin_registro';
+  }
+
+  getResumenBadgeLabel(estado: 'vencido' | 'proximo' | 'ok' | 'sin_registro'): string {
+    switch (estado) {
+      case 'vencido':
+        return 'CADUCADO';
+      case 'proximo':
+        return 'PROXIMO';
+      case 'ok':
+        return 'AL DIA';
+      default:
+        return 'SIN REGISTROS';
+    }
+  }
+
   saveFiltros(data?: number | Filtros) {
     if (typeof data === 'number' || typeof data === 'undefined') {
       const idVehiculo = this.getCurrentVehiculoId(data);
@@ -363,6 +470,10 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     return this.isItvEnVigor(itv);
   }
 
+  hasItvEnVigor(): boolean {
+    return !!this.getItvEnVigorPrincipal();
+  }
+
   isSeguroEnVigor(seguro: Seguro): boolean {
     const vigente = this.getSeguroEnVigorPrincipal();
     return !!vigente && vigente.idSeguro === seguro.idSeguro;
@@ -374,6 +485,10 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
 
   isSeguroEnVigorPrincipal(seguro: Seguro): boolean {
     return this.isSeguroEnVigor(seguro);
+  }
+
+  hasSeguroEnVigor(): boolean {
+    return !!this.getSeguroEnVigorPrincipal();
   }
 
   marcarItvPasada(itvActual: ITV): void {
@@ -573,5 +688,41 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
 
   private startOfDay(value: Date): Date {
     return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+  }
+
+  private getEstadoResumenDesdeFecha(fechaObjetivo: Date): 'vencido' | 'proximo' | 'ok' {
+    const hoy = this.startOfDay(new Date());
+    const diasRestantes = Math.floor((fechaObjetivo.getTime() - hoy.getTime()) / this.milisegundosPorDia);
+
+    if (diasRestantes < 0) {
+      return 'vencido';
+    }
+
+    if (diasRestantes <= this.diasAviso) {
+      return 'proximo';
+    }
+
+    return 'ok';
+  }
+
+  private getLatestByDate<T>(
+    items: T[] | undefined,
+    dateSelector: (item: T) => string | null | undefined,
+    idSelector: (item: T) => number
+  ): T | undefined {
+    if (!items || items.length === 0) {
+      return undefined;
+    }
+
+    return [...items].sort((a, b) => {
+      const fechaA = this.parseDateOnly(dateSelector(a));
+      const fechaB = this.parseDateOnly(dateSelector(b));
+
+      if (fechaA && fechaB) {
+        return fechaB.getTime() - fechaA.getTime();
+      }
+
+      return idSelector(b) - idSelector(a);
+    })[0];
   }
 }

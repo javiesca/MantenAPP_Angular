@@ -27,7 +27,7 @@
 
       <div class="card-header vehicle-header">
         <span><b>{{vehiculo.marca}} - {{vehiculo.modelo}}</b></span><br>
-        <span><b>Fecha de fabricación: </b>{{vehiculo.fechaCompra | date:'dd/MM/yyyy' }}</span><br>
+        <span><b>Fecha de matriculación: </b>{{vehiculo.fechaCompra | date:'dd/MM/yyyy' }}</span><br>
         <span><b>Matrícula: </b>{{vehiculo.matricula?.toUpperCase()}}</span>
 
         <div class="alertas-fecha" *ngIf="!loading && alertasPorVehiculo[vehiculo.idVehiculo]?.length">
@@ -63,28 +63,31 @@
 
         <div class="botones">
           <button
-            class="btn btn-info botton-press"
+            class="btn vehicle-action-btn vehicle-action-edit botton-press"
             appPressEffect
             (click)="guardarVehiculo(vehiculo.idVehiculo); $event.stopPropagation()">
-            Modificar
+            <i class="fas fa-edit"></i>
+            <span>Editar</span>
           </button>
 
           <button
-            class="btn btn-danger ml-2 botton-press"
+            class="btn vehicle-action-btn vehicle-action-delete botton-press"
             appPressEffect
             (click)="deleteVehiculo(vehiculo.idVehiculo); $event.stopPropagation()">
-            Eliminar
+            <i class="fas fa-trash-alt"></i>
+            <span>Eliminar</span>
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="text-center mt-3 mb-3">
+  <div class="text-center mt-3 mb-3 vehicle-new-action">
     <button
-      class="btn btn-success botton-press"
+      class="btn btn-success vehicle-primary-btn botton-press"
       appPressEffect
       [routerLink]="['/guardar-vehiculo']">
+      <i class="fas fa-plus"></i>
       Nuevo Vehículo
     </button>
   </div>

@@ -1,24 +1,23 @@
-<nav *ngIf="authService.isLoggedIn()" class="navbar navbar-dark bg-dark px-3">
+<nav *ngIf="authService.isLoggedIn()" class="navbar app-navbar px-3">
+  <div class="app-navbar-user">
+    <div class="app-navbar-avatar">
+      {{ authService.getUsername()?.charAt(0)?.toUpperCase() }}
+    </div>
+    <div class="app-navbar-usertext">
+      <span class="app-navbar-label">Sesión activa</span>
+      <span class="app-navbar-name text-truncate">{{ authService.getUsername() }}</span>
+    </div>
+  </div>
 
-  <a class="navbar-brand d-flex align-items-center botton-press"
-     routerLink="/vehiculos"
-     aria-label="Ir a vehículos">
-    <i class="fa fa-home fs-4"></i>
-  </a>
-
-  <span class="navbar-text text-light fw-semibold text-truncate ms-3">
-    {{ authService.getUsername() }}
-  </span>
-
-  <!-- Contenedor a la derecha -->
   <div class="ms-auto d-flex gap-2">
     <!--
     <button (click)="dispararNotificaciones()" class="btn btn-warning">
       <i class="fa fa-bell"></i>
     </button>
     -->
-    <button (click)="logout()" class="btn btn-danger">
+    <button (click)="logout()" class="btn app-logout-btn">
       <i class="fa fa-sign-out-alt"></i>
+      <span>Salir</span>
     </button>
   </div>
 
