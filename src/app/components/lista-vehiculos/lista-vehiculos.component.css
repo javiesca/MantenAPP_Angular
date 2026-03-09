@@ -259,17 +259,13 @@
   }
 
   .vehicle-action-btn {
-    flex: 0 0 auto;
-    min-width: 42px;
-    padding: 8px 10px;
+    flex: 1 1 140px;
+    min-width: 0;
+    padding: 8px 12px;
   }
 
   .vehicle-primary-btn {
     width: 100%;
     justify-content: center;
-  }
-
-  .vehicle-action-btn span {
-    display: none;
   }
 }
