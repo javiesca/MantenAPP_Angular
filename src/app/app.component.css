@@ -1,0 +1,93 @@
+.app-navbar {
+  min-height: 72px;
+  background:
+    radial-gradient(circle at top left, rgba(40, 167, 69, 0.16), transparent 32%),
+    linear-gradient(135deg, #1e2b25 0%, #18211d 100%);
+  border-bottom: 1px solid rgba(201, 225, 209, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+.app-navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.app-navbar-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2ca85c 0%, #1f6f43 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 0 8px 18px rgba(31, 111, 67, 0.28);
+}
+
+.app-navbar-usertext {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-navbar-label {
+  color: rgba(233, 244, 237, 0.72);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.app-navbar-name {
+  color: #f5fbf7;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.app-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 199, 199, 0.3);
+  background: rgba(198, 60, 60, 0.14);
+  color: #ffe5e5;
+  font-weight: 700;
+}
+
+.app-logout-btn:hover {
+  background: rgba(198, 60, 60, 0.22);
+  color: #fff1f1;
+}
+
+@media (max-width: 560px) {
+  .app-navbar {
+    min-height: 64px;
+  }
+
+  .app-navbar-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .app-navbar-name {
+    font-size: 14px;
+  }
+
+  .app-logout-btn span {
+    display: none;
+  }
+
+  .app-logout-btn {
+    padding: 9px 12px;
+  }
+}

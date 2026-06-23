@@ -19,7 +19,7 @@ export class AppComponent {
     private notificacionService : NotificacionService) { }
 
   logout() {
-    sessionStorage.removeItem('token');
+    this.authService.clearSession();
     this.router.navigate(['/login']);
   }
 

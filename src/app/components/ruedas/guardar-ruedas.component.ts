@@ -34,6 +34,8 @@ export class GuardarRuedasComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.resetState();
+
       if (params['idRuedas']) {
         this.edit = true;
         this.idRuedas = params['idRuedas'];
@@ -46,12 +48,29 @@ export class GuardarRuedasComponent implements OnInit {
     });
   }
 
+  private resetState(): void {
+    this.edit = false;
+    this.idVehiculo = undefined as unknown as number;
+    this.idRuedas = undefined as unknown as number;
+    this.ruedas = new Ruedas();
+    this.ruedas.fechaCambio = this.getTodayIsoDate();
+    this.vehiculo = new Vehiculo();
+  }
+
+  private getTodayIsoDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
   onSubmit() {
-    if (this.edit) {
+    if (this.isEditMode()) {
       this.updateCambioRuedas();
     }else {
       this.saveCambioRuedas();
     }
+  }
+
+  isEditMode(): boolean {
+    return this.edit && !!this.idRuedas;
   }
 
   getVehiculo() {

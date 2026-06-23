@@ -21,11 +21,23 @@ const routes: Routes = [
   {path: 'guardar-vehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
   {path: 'guardar-vehiculo/:idVehiculo', component: GuardarVehiculoComponent, canActivate: [AuthGuard] },
   {path: 'guardar-mantenimiento', component: GuardarMantenimientoComponent, canActivate: [AuthGuard] },
+  {path: 'guardar-mantenimiento/vehiculo/:idVehiculo', component: GuardarMantenimientoComponent, canActivate: [AuthGuard] },
+  {path: 'guardar-mantenimiento/editar/:idFiltros', component: GuardarMantenimientoComponent, canActivate: [AuthGuard] },
   {path: 'guardar-ruedas', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-ruedas/vehiculo/:idVehiculo', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-ruedas/editar/:idRuedas', component: GuardarRuedasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-piezas', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-piezas/vehiculo/:idVehiculo', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-piezas/editar/:idPiezas', component: GuardarPiezasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-notas', component: NotasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-notas/vehiculo/:idVehiculo', component: NotasComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-notas/editar/:idNota', component: NotasComponent, canActivate: [AuthGuard]},
   {path: 'guardar-seguro', component: SegurosComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-seguro/vehiculo/:idVehiculo', component: SegurosComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-seguro/editar/:idSeguro', component: SegurosComponent, canActivate: [AuthGuard]},
   {path: 'guardar-itv', component: ItvsComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-itv/vehiculo/:idVehiculo', component: ItvsComponent, canActivate: [AuthGuard]},
+  {path: 'guardar-itv/editar/:idITV', component: ItvsComponent, canActivate: [AuthGuard]},
   { path: 'register', component: RegisterComponent }
 ];
 

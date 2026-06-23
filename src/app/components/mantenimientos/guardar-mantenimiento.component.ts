@@ -30,6 +30,8 @@ export class GuardarMantenimientoComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.resetState();
+
       if (params['idFiltros']) {
         this.edit = true;
         this.idFiltros = params['idFiltros'];
@@ -42,18 +44,34 @@ export class GuardarMantenimientoComponent implements OnInit {
     });
   }
 
+  private resetState(): void {
+    this.edit = false;
+    this.idVehiculo = undefined as unknown as number;
+    this.idFiltros = undefined as unknown as number;
+    this.filtros = new Filtros();
+    this.filtros.fechaCambio = this.getTodayIsoDate();
+    this.vehiculo = new Vehiculo();
+  }
+
+  private getTodayIsoDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
 
   onSubmit() {
-    if (this.edit)
+    if (this.isEditMode())
       this.updateFiltros();
     else
       this.saveFiltros();
   }
 
+  isEditMode(): boolean {
+    return this.edit && !!this.idFiltros;
+  }
+
 
   getFiltroId(id: number) {
     this.fs.getMantenimiento(id).subscribe(datos => {
-      console.log(datos);
       this.filtros = datos;
     })
   }

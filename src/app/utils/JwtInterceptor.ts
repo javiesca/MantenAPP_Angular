@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth-service.service';
 
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
   
   intercept(
     request: HttpRequest<any>, 
@@ -32,6 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
         msg.includes('Bad credentials');
       
       if (isAuthError) {
+        this.authService.clearSession();
         this.router.navigate(['/login']);
       }
     }
@@ -41,4 +43,3 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 }
   
-
