@@ -45,9 +45,9 @@
 
       <div class="card-body text-center vehicle-body">
         <div class="imagen-vehiculo">
-          <ng-container *ngIf="vehiculo.image?.imageUrl && !imgError[vehiculo.idVehiculo]; else noImg">
-            <img
-              [src]="vehiculo.image?.imageUrl"
+	          <ng-container *ngIf="imageObjectUrls[vehiculo.idVehiculo] && !imgError[vehiculo.idVehiculo]; else noImg">
+	            <img
+	              [src]="imageObjectUrls[vehiculo.idVehiculo]"
               class="imagen-vehiculo"
               alt="Imagen del vehículo"
               (error)="imgError[vehiculo.idVehiculo] = true">

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EMPTY } from 'rxjs';
@@ -25,7 +25,7 @@ declare const bootstrap: any;
   templateUrl: './vehiculo-detalles.component.html',
   styleUrl: './vehiculo-detalles.component.css'
 })
-export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
+export class VehiculoDetallesComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly diasAviso = 60;
   private readonly milisegundosPorDia = 1000 * 60 * 60 * 24;
   idVehiculo: number;
@@ -37,6 +37,7 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
   segurosList: Seguro[] = [];
   itvList: ITV[] = [];
   vehiculo: Vehiculo = new Vehiculo();
+  vehicleImageObjectUrl: string | null = null;
   loadErrors: Partial<Record<'vehiculo' | 'mantenimientos' | 'ruedas' | 'piezas' | 'notas' | 'seguros' | 'itv', string>> = {};
 
   constructor(
@@ -56,6 +57,10 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     this.route.fragment.subscribe(tabId => {
       this.showTab(tabId || 'resumen');
     });
+  }
+
+  ngOnDestroy(): void {
+    this.limpiarVehicleImageObjectUrl();
   }
 
   cambiarTab(event: any) {
@@ -128,13 +133,39 @@ export class VehiculoDetallesComponent implements OnInit, AfterViewInit {
     this.vs.getVehiculoById(idVehiculo).subscribe({
       next: data => {
         this.vehiculo = data;
+        this.cargarImagenVehiculo(data);
         delete this.loadErrors.vehiculo;
       },
       error: () => {
         this.vehiculo = new Vehiculo();
+        this.limpiarVehicleImageObjectUrl();
         this.loadErrors.vehiculo = 'No se pudo cargar el vehículo.';
       }
     });
+  }
+
+  private cargarImagenVehiculo(vehiculo: Vehiculo) {
+    this.limpiarVehicleImageObjectUrl();
+
+    if (!vehiculo.image?.imageUrl) {
+      return;
+    }
+
+    this.vs.getVehiculoImageObjectUrl(vehiculo.image.imageUrl).subscribe({
+      next: objectUrl => {
+        this.vehicleImageObjectUrl = objectUrl;
+      },
+      error: () => {
+        this.vehicleImageObjectUrl = null;
+      }
+    });
+  }
+
+  private limpiarVehicleImageObjectUrl() {
+    if (this.vehicleImageObjectUrl) {
+      URL.revokeObjectURL(this.vehicleImageObjectUrl);
+      this.vehicleImageObjectUrl = null;
+    }
   }
 
   getMantenimientoMotor(idVehiculo: number) {

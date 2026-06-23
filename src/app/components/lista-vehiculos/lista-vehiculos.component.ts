@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { Router } from '@angular/router';
@@ -26,12 +26,13 @@ interface AlertaFechaFin {
 })
 
 
-export class ListaVehiculosComponent implements OnInit {
+export class ListaVehiculosComponent implements OnInit, OnDestroy {
 
   vehiculos: Vehiculo[] = [];
   loading: boolean = false;
   readonly loadingCards = [1, 2, 3];
   imgError: Record<number, boolean> = {};
+  imageObjectUrls: Record<number, string> = {};
   pressedId: number | null = null;
   pressedBtn: string | null = null;
   alertasPorVehiculo: Record<number, AlertaFechaFin[]> = {};
@@ -49,6 +50,10 @@ export class ListaVehiculosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVehiculos();
+  }
+
+  ngOnDestroy(): void {
+    this.limpiarImageObjectUrls();
   }
 
   private getVehiculos() {
@@ -102,6 +107,7 @@ export class ListaVehiculosComponent implements OnInit {
 
         this.vehiculos = vehiculos;
         this.alertasPorVehiculo = mapaAlertas;
+        this.cargarImagenesVehiculos(vehiculos);
         this.loading = false;
       },
       error: () => {
@@ -311,6 +317,29 @@ export class ListaVehiculosComponent implements OnInit {
       diasRestantes: 0,
       estado: 'sin_registro'
     };
+  }
+
+  private cargarImagenesVehiculos(vehiculos: Vehiculo[]) {
+    this.limpiarImageObjectUrls();
+    this.imgError = {};
+
+    vehiculos
+      .filter(vehiculo => !!vehiculo.image?.imageUrl)
+      .forEach(vehiculo => {
+        this.vs.getVehiculoImageObjectUrl(vehiculo.image!.imageUrl).subscribe({
+          next: objectUrl => {
+            this.imageObjectUrls[vehiculo.idVehiculo] = objectUrl;
+          },
+          error: () => {
+            this.imgError[vehiculo.idVehiculo] = true;
+          }
+        });
+      });
+  }
+
+  private limpiarImageObjectUrls() {
+    Object.values(this.imageObjectUrls).forEach(objectUrl => URL.revokeObjectURL(objectUrl));
+    this.imageObjectUrls = {};
   }
 
   deleteVehiculo(id: number) {
