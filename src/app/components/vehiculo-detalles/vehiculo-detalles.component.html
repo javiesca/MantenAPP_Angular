@@ -21,8 +21,8 @@
     <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
       <div class="summary-hero">
         <div class="summary-hero-media">
-          <ng-container *ngIf="vehiculo?.image?.imageUrl; else summaryNoImg">
-            <img [src]="vehiculo.image?.imageUrl" alt="Imagen del vehículo" class="summary-vehicle-image">
+          <ng-container *ngIf="vehicleImageObjectUrl; else summaryNoImg">
+            <img [src]="vehicleImageObjectUrl" alt="Imagen del vehículo" class="summary-vehicle-image">
           </ng-container>
           <ng-template #summaryNoImg>
             <div class="summary-vehicle-image summary-vehicle-image-empty">

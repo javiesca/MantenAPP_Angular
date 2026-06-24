@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Vehiculo } from '../../interfaces/vehiculo';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,12 +12,13 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './guardar-vehiculo.component.html',
   styleUrl: './guardar-vehiculo.component.css'
 })
-export class GuardarVehiculoComponent implements OnInit {
+export class GuardarVehiculoComponent implements OnInit, OnDestroy {
   formVehiculo : FormGroup;
   vehiculo : Vehiculo = new Vehiculo();
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   edit : boolean = false;
+  private previewObjectUrl: string | null = null;
 
 constructor(
     private formBuilder: FormBuilder,
@@ -43,6 +44,10 @@ constructor(
       this.edit = true;
       this.getVehiculoId(+id!);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.limpiarPreviewObjectUrl();
   }
 
   updateVehiculo() {
@@ -92,8 +97,22 @@ constructor(
         image: this.vehiculo.image
       });
 
-      if (this.vehiculo.image) {
-        this.previewUrl = this.vehiculo.image.imageUrl;
+      if (this.vehiculo.image?.imageUrl) {
+        this.cargarPreviewImagen(this.vehiculo.image.imageUrl);
+      }
+    });
+  }
+
+  private cargarPreviewImagen(imageUrl: string) {
+    this.limpiarPreviewObjectUrl();
+
+    this.vehiculoService.getVehiculoImageObjectUrl(imageUrl).subscribe({
+      next: objectUrl => {
+        this.previewObjectUrl = objectUrl;
+        this.previewUrl = objectUrl;
+      },
+      error: () => {
+        this.previewUrl = null;
       }
     });
   }
@@ -109,6 +128,7 @@ constructor(
   changeImage(event: any){
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
+      this.limpiarPreviewObjectUrl();
       this.selectedFile = input.files[0];
 
       const reader = new FileReader();
@@ -116,6 +136,13 @@ constructor(
         this.previewUrl = reader.result;
       };
       reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  private limpiarPreviewObjectUrl() {
+    if (this.previewObjectUrl) {
+      URL.revokeObjectURL(this.previewObjectUrl);
+      this.previewObjectUrl = null;
     }
   }
 

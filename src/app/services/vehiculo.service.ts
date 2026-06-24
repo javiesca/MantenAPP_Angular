@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Vehiculo } from '../interfaces/vehiculo';
 import {environment } from '../utils/variables';
 
@@ -53,6 +53,29 @@ export class VehiculoService {
       formData.append('imagen', imagen);
     }
     return this.httpClient.put(`${this.baseURL}/${idVehiculo}/image`, formData);
+  }
+
+  getVehiculoImageObjectUrl(imageUrl: string): Observable<string> {
+    const apiUrl = this.buildApiImageUrl(imageUrl);
+    return this.httpClient.get(apiUrl, { responseType: 'blob' }).pipe(
+      map(blob => URL.createObjectURL(blob))
+    );
+  }
+
+  private buildApiImageUrl(imageUrl: string): string {
+    if (imageUrl.startsWith('http') || imageUrl.startsWith('blob:') || imageUrl.startsWith('data:')) {
+      return imageUrl;
+    }
+
+    if (imageUrl.startsWith(environment.apiBaseURL)) {
+      return imageUrl;
+    }
+
+    const apiPrefix = environment.apiBaseURL.endsWith('/')
+      ? environment.apiBaseURL.slice(0, -1)
+      : environment.apiBaseURL;
+    const path = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+    return `${apiPrefix}${path}`;
   }
 
 }
