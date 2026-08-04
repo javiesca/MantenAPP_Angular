@@ -455,30 +455,31 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container registros-container">
-        <div class="mantenimiento-card registro-card" *ngFor="let ruedas of ruedasList">
-          <div class="card-header">
-            <div class="title registro-descripcion">{{ ruedas.marca }}</div>
-            <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
+      <div *ngIf="ruedasList && ruedasList.length > 0" class="registro-list" role="list">
+        <article class="registro-list-item" *ngFor="let ruedas of ruedasList" role="listitem">
+          <div class="registro-list-date">
+            <i class="far fa-calendar-alt" aria-hidden="true"></i>
+            <span>{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</span>
           </div>
-          <div class="card-main">
-            <div class="km">{{ ruedas.kilometros }} km</div>
-            <div class="fecha">{{ ruedas.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          <div class="registro-list-content">
+            <div class="registro-list-description">{{ ruedas.marca }}</div>
+            <div class="registro-list-meta">
+              <span class="registro-list-chip"><i class="fas fa-road" aria-hidden="true"></i>{{ ruedas.kilometros }} km</span>
+              <span class="registro-list-chip registro-list-price"><i class="fas fa-euro-sign" aria-hidden="true"></i>{{ ruedas.precio }} €</span>
+              <span class="registro-list-chip"><i class="fas fa-circle" aria-hidden="true"></i>{{ ruedas.numeroRuedas }} uds</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <div class="precio">{{ ruedas.precio }} €</div>
-            <div class="acciones">
-              <button (click)="saveRuedas(ruedas)" class="btn card-action-btn card-action-edit" appPressEffect>
+          <div class="registro-list-actions">
+              <button (click)="saveRuedas(ruedas)" class="btn card-action-btn card-action-edit" appPressEffect aria-label="Editar cambio de ruedas">
                 <i class="fas fa-edit"></i>
                 <span>Editar</span>
               </button>
-              <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn card-action-btn card-action-delete" appPressEffect>
+              <button (click)="deleteDato(ruedas.idRuedas, 'rueda')" class="btn card-action-btn card-action-delete" appPressEffect aria-label="Eliminar cambio de ruedas">
                 <i class="fas fa-trash-alt"></i>
                 <span>Eliminar</span>
               </button>
-            </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
 
@@ -494,29 +495,30 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="piezasList && piezasList.length > 0" class="cards-container registros-container">
-        <div class="mantenimiento-card registro-card" *ngFor="let pieza of piezasList">
-          <div class="card-header">
-            <div class="title registro-descripcion">{{ pieza.descripcion }}</div>
+      <div *ngIf="piezasList && piezasList.length > 0" class="registro-list" role="list">
+        <article class="registro-list-item" *ngFor="let pieza of piezasList" role="listitem">
+          <div class="registro-list-date">
+            <i class="far fa-calendar-alt" aria-hidden="true"></i>
+            <span>{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</span>
           </div>
-          <div class="card-main">
-            <div class="km">{{ pieza.kilometros }} km</div>
-            <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
+          <div class="registro-list-content">
+            <div class="registro-list-description">{{ pieza.descripcion }}</div>
+            <div class="registro-list-meta">
+              <span class="registro-list-chip"><i class="fas fa-road" aria-hidden="true"></i>{{ pieza.kilometros }} km</span>
+              <span class="registro-list-chip registro-list-price"><i class="fas fa-euro-sign" aria-hidden="true"></i>{{ pieza.precio }} €</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <div class="precio">{{ pieza.precio }} €</div>
-            <div class="acciones">
-              <button (click)="savePiezas(pieza)" class="btn card-action-btn card-action-edit" appPressEffect>
+          <div class="registro-list-actions">
+              <button (click)="savePiezas(pieza)" class="btn card-action-btn card-action-edit" appPressEffect aria-label="Editar cambio de piezas">
                 <i class="fas fa-edit"></i>
                 <span>Editar</span>
               </button>
-              <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn card-action-btn card-action-delete" appPressEffect>
+              <button (click)="deleteDato(pieza.idPieza, 'pieza')" class="btn card-action-btn card-action-delete" appPressEffect aria-label="Eliminar cambio de piezas">
                 <i class="fas fa-trash-alt"></i>
                 <span>Eliminar</span>
               </button>
-            </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
 

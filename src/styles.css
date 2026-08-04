@@ -47,85 +47,134 @@ h1,h2 {
   resize: vertical;
 }
 
-/* Tarjetas compactas de piezas y ruedas */
-.registros-container .registro-card {
+/* Historial compacto de piezas y ruedas */
+.registro-list {
+  margin: 16px 10px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dfe9e2;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(27, 55, 39, 0.07);
+}
+
+.registro-list-item {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(170px, auto);
-  grid-template-areas:
-    "descripcion datos"
-    "pie pie";
+  grid-template-columns: 140px minmax(0, 1fr) auto;
+  grid-template-areas: "fecha contenido acciones";
   align-items: center;
-  column-gap: 40px;
-  row-gap: 16px;
+  gap: 24px;
+  min-height: 116px;
+  padding: 20px 22px;
+  transition: background-color 0.16s ease;
 }
 
-.registro-card > .card-header {
-  grid-area: descripcion;
+.registro-list-item + .registro-list-item {
+  border-top: 1px solid #e5ece7;
+}
+
+.registro-list-item:hover {
+  background: #f8fbf9;
+}
+
+.registro-list-date {
+  grid-area: fecha;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #637269;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.registro-list-date i {
+  color: #1f8d58;
+}
+
+.registro-list-content {
+  grid-area: contenido;
   min-width: 0;
-  padding: 0;
-  background: transparent;
-  border: 0;
 }
 
-.registro-card > .card-main {
-  grid-area: datos;
-  min-width: 170px;
-  text-align: right;
-}
-
-.registro-card > .card-footer {
-  grid-area: pie;
-  padding: 14px 0 0;
-  background: transparent;
-  border: 0;
-  border-top: 1px solid #e1ece5;
-}
-
-.registro-card .registro-descripcion {
-  color: #263b30;
+.registro-list-description {
+  color: #18251e;
   font-size: 16px;
+  font-weight: 600;
   line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.registro-list-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.registro-list-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  color: #496155;
+  background: #f2f6f3;
+  border: 1px solid #e1e9e4;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.registro-list-chip i {
+  color: #6b8074;
+  font-size: 12px;
+}
+
+.registro-list-price {
+  color: #167342;
+  background: #edf8f1;
+  border-color: #d5ebdd;
+}
+
+.registro-list-price i {
+  color: #1f8d58;
+}
+
+.registro-list-actions {
+  grid-area: acciones;
+  display: flex;
+  gap: 8px;
 }
 
 @media (max-width: 700px) {
-  .registros-container .registro-card {
-    grid-template-columns: 1fr;
+  .registro-list {
+    margin: 12px 8px;
+    border-radius: 16px;
+  }
+
+  .registro-list-item {
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      "descripcion"
-      "datos"
-      "pie";
-    gap: 14px;
+      "fecha acciones"
+      "contenido contenido";
+    gap: 14px 12px;
+    min-height: 0;
+    padding: 17px 16px;
   }
 
-  .registros-container .registro-card > .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+  .registro-list-actions .card-action-btn {
+    width: 40px;
+    min-width: 40px;
+    padding: 8px;
   }
 
-  .registros-container .registro-card > .card-main {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 4px 12px;
-    min-width: 0;
-    text-align: left;
+  .registro-list-actions .card-action-btn span {
+    display: none;
   }
 
-  .registros-container .registro-card > .card-footer {
-    align-items: stretch;
-  }
-
-  .registro-card .km {
-    font-size: 24px;
-  }
-
-  .registro-card .acciones {
-    width: 100%;
-  }
-
-  .registro-card .card-action-btn {
-    flex: 1 1 120px;
+  .registro-list-description {
+    font-size: 15px;
   }
 }
 
