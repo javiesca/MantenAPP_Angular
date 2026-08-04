@@ -29,7 +29,13 @@
       </div>
       <div class="elemento-form">
         <label>Notas</label>
-        <textarea class="form-control" id="notas" [(ngModel)]="seguro.notas" name="notas" rows="4"></textarea>
+        <textarea
+          class="form-control"
+          id="notas"
+          [(ngModel)]="seguro.notas"
+          name="notas"
+          rows="4"
+          placeholder="Añade coberturas, condiciones u otros detalles..."></textarea>
       </div>
       <div class="boton-form">
         <button type="button" class="btn btn-secondary botton-press" appPressEffect (click)="irDetalleVehiculo()">

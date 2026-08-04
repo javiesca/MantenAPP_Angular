@@ -5,7 +5,13 @@
       <div class="form-group">
         <div class="elemento-form">
           <label>Descripción</label>
-          <input type="text" class="form-control" id="descripcion" [(ngModel)]="piezas.descripcion" name="descripcion">
+          <textarea
+            class="form-control"
+            id="descripcion"
+            [(ngModel)]="piezas.descripcion"
+            name="descripcion"
+            rows="4"
+            placeholder="Describe las piezas, trabajos realizados u otros detalles..."></textarea>
         </div>
         <div class="elemento-form">
           <label>Fecha</label>

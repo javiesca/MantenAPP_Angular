@@ -456,6 +456,8 @@
   font-size: 13px;
   color: #666;
   margin: 8px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .seguro-card-header {
@@ -498,6 +500,7 @@
 
 .nota-texto {
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1000px) {
