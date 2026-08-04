@@ -455,8 +455,8 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
-        <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
+      <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container registros-container">
+        <div class="mantenimiento-card registro-card" *ngFor="let ruedas of ruedasList">
           <div class="card-header">
             <div class="title registro-descripcion">{{ ruedas.marca }}</div>
             <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
@@ -494,8 +494,8 @@
           Nuevo
         </button>
       </div>
-      <div *ngIf="piezasList && piezasList.length > 0" class="cards-container">
-        <div class="mantenimiento-card" *ngFor="let pieza of piezasList">
+      <div *ngIf="piezasList && piezasList.length > 0" class="cards-container registros-container">
+        <div class="mantenimiento-card registro-card" *ngFor="let pieza of piezasList">
           <div class="card-header">
             <div class="title registro-descripcion">{{ pieza.descripcion }}</div>
           </div>

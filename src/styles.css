@@ -47,6 +47,88 @@ h1,h2 {
   resize: vertical;
 }
 
+/* Tarjetas compactas de piezas y ruedas */
+.registros-container .registro-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(170px, auto);
+  grid-template-areas:
+    "descripcion datos"
+    "pie pie";
+  align-items: center;
+  column-gap: 40px;
+  row-gap: 16px;
+}
+
+.registro-card > .card-header {
+  grid-area: descripcion;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.registro-card > .card-main {
+  grid-area: datos;
+  min-width: 170px;
+  text-align: right;
+}
+
+.registro-card > .card-footer {
+  grid-area: pie;
+  padding: 14px 0 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid #e1ece5;
+}
+
+.registro-card .registro-descripcion {
+  color: #263b30;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .registros-container .registro-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "descripcion"
+      "datos"
+      "pie";
+    gap: 14px;
+  }
+
+  .registros-container .registro-card > .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .registros-container .registro-card > .card-main {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .registros-container .registro-card > .card-footer {
+    align-items: stretch;
+  }
+
+  .registro-card .km {
+    font-size: 24px;
+  }
+
+  .registro-card .acciones {
+    width: 100%;
+  }
+
+  .registro-card .card-action-btn {
+    flex: 1 1 120px;
+  }
+}
+
 /* SEPARADORES */
 
 .separador-linea {
