@@ -97,7 +97,11 @@ h1,h2 {
 }
 
 .registro-list-description {
+  padding: 14px 16px;
   color: #18251e;
+  background: #f6f9f7;
+  border: 1px solid #e3ebe6;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   line-height: 1.5;
@@ -109,7 +113,7 @@ h1,h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 11px;
+  margin-top: 16px;
 }
 
 .registro-list-chip {
@@ -174,7 +178,19 @@ h1,h2 {
   }
 
   .registro-list-description {
+    margin: 2px 0 0;
+    padding: 14px;
     font-size: 15px;
+  }
+
+  .registro-list-meta {
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .registro-list-chip {
+    justify-content: center;
   }
 }
 
