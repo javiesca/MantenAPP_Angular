@@ -158,7 +158,7 @@
             </span>
           </div>
           <div class="summary-card-body" *ngIf="latestRuedas; else emptyRuedas">
-            <div class="summary-main rueda-descripcion">{{ latestRuedas.marca || 'Cambio de ruedas' }}</div>
+            <div class="summary-main registro-descripcion">{{ latestRuedas.marca || 'Cambio de ruedas' }}</div>
             <div class="summary-sub">
               {{ latestRuedas.fechaCambio | date:'dd/MM/yyyy' }} · {{ latestRuedas.kilometros }} km
             </div>
@@ -458,7 +458,7 @@
       <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
           <div class="card-header">
-            <div class="title rueda-descripcion">{{ ruedas.marca }}</div>
+            <div class="title registro-descripcion">{{ ruedas.marca }}</div>
             <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
           </div>
           <div class="card-main">
@@ -496,18 +496,13 @@
       </div>
       <div *ngIf="piezasList && piezasList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let pieza of piezasList">
-          <div class="separador-titulo">Descripcion</div>
           <div class="card-header">
-            <div class="text-center seguro-notas" style="width: 100%;">
-              {{ pieza.descripcion }}
-            </div>
+            <div class="title registro-descripcion">{{ pieza.descripcion }}</div>
           </div>
-          <div class="separador-linea"></div>
           <div class="card-main">
             <div class="km">{{ pieza.kilometros }} km</div>
             <div class="fecha">{{ pieza.fechaCambio | date:'dd/MM/yyyy' }}</div>
           </div>
-          <div class="separador-linea"></div>
           <div class="card-footer">
             <div class="precio">{{ pieza.precio }} €</div>
             <div class="acciones">
