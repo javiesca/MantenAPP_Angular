@@ -5,8 +5,14 @@
       <div class="form-group">
 
         <div class="elemento-form">
-          <label>Marca</label>
-          <input type="text" class="form-control" id="marca" [(ngModel)]="ruedas.marca" name="marca">
+          <label>Descripción</label>
+          <textarea
+            class="form-control"
+            id="descripcion"
+            [(ngModel)]="ruedas.marca"
+            name="descripcion"
+            rows="4"
+            placeholder="Describe la marca, modelo, medidas u otros detalles..."></textarea>
         </div>
         <div class="elemento-form">
           <label>Numero de ruedas</label>

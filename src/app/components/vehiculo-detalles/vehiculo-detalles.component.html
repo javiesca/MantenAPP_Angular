@@ -158,7 +158,7 @@
             </span>
           </div>
           <div class="summary-card-body" *ngIf="latestRuedas; else emptyRuedas">
-            <div class="summary-main">{{ latestRuedas.marca || 'Cambio de ruedas' }}</div>
+            <div class="summary-main rueda-descripcion">{{ latestRuedas.marca || 'Cambio de ruedas' }}</div>
             <div class="summary-sub">
               {{ latestRuedas.fechaCambio | date:'dd/MM/yyyy' }} · {{ latestRuedas.kilometros }} km
             </div>
@@ -459,7 +459,7 @@
       <div *ngIf="ruedasList && ruedasList.length > 0" class="cards-container">
         <div class="mantenimiento-card" *ngFor="let ruedas of ruedasList">
           <div class="card-header">
-            <div class="title">{{ ruedas.marca }}</div>
+            <div class="title rueda-descripcion">{{ ruedas.marca }}</div>
             <span class="badge-ok">{{ ruedas.numeroRuedas }} uds</span>
           </div>
           <div class="card-main">

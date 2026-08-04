@@ -503,6 +503,11 @@
   overflow-wrap: anywhere;
 }
 
+.rueda-descripcion {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 1000px) {
   textarea {
     height: 100%;
