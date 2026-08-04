@@ -214,7 +214,6 @@
           <div class="summary-card-body" *ngIf="latestNota; else emptyNota">
             <div class="summary-main">Ultima nota</div>
             <div class="summary-sub">{{ latestNota.fechaNota | date:'dd/MM/yyyy' }}</div>
-            <div class="summary-empty-text">{{ latestNota.texto }}</div>
           </div>
           <ng-template #emptyNota>
             <div class="summary-card-body">
